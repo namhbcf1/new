@@ -25,16 +25,6 @@ const games = [
     { id: 'mu-origin', name: 'MU Origin', image: 'images/mu-origin.jpg' }
 ];
 
-// Initialize step navigation event listeners
-function initializeStepNavigation() {
-    document.querySelectorAll('.step').forEach((stepEl, index) => {
-        stepEl.addEventListener('click', function() {
-            const targetStep = index + 1;
-            navigateToStep(targetStep);
-        });
-    });
-}
-
 // Function để cập nhật trạng thái clickable của các step
 function updateStepStates() {
     const steps = document.querySelectorAll('.step');
@@ -72,7 +62,6 @@ function updateStepStates() {
 document.addEventListener('DOMContentLoaded', function() {
     updateBudgetDisplay();
     loadGames();
-    initializeStepNavigation();
     updateStepStates();
     console.log('🚀 Trường Phát Computer PC Builder initialized');
     
@@ -199,9 +188,12 @@ function showStep(step) {
 
 // Function để navigate đến step cụ thể
 function navigateToStep(targetStep) {
+    console.log(`🎯 Navigate to step ${targetStep}. Current state: budget=${selectedBudget}, cpu=${selectedCPU}, game=${selectedGame}`);
+    
     // Kiểm tra điều kiện để có thể chuyển step
     if (targetStep === 1) {
         // Luôn cho phép quay lại step 1
+        console.log('✅ Navigating to step 1');
         showStep(1);
         return;
     }
@@ -209,8 +201,10 @@ function navigateToStep(targetStep) {
     if (targetStep === 2) {
         // Cho phép đến step 2 nếu đã chọn budget
         if (selectedBudget) {
+            console.log('✅ Navigating to step 2');
             showStep(2);
         } else {
+            console.log('❌ Cannot navigate to step 2: no budget selected');
             alert('⚠️ Vui lòng chọn ngân sách trước!');
         }
         return;
@@ -219,8 +213,10 @@ function navigateToStep(targetStep) {
     if (targetStep === 3) {
         // Cho phép đến step 3 nếu đã chọn budget và CPU
         if (selectedBudget && selectedCPU) {
+            console.log('✅ Navigating to step 3');
             showStep(3);
         } else {
+            console.log('❌ Cannot navigate to step 3: missing requirements');
             alert('⚠️ Vui lòng hoàn thành bước chọn ngân sách và CPU trước!');
         }
         return;
@@ -229,14 +225,19 @@ function navigateToStep(targetStep) {
     if (targetStep === 4) {
         // Cho phép đến step 4 nếu đã hoàn thành các bước trước
         if (selectedBudget && selectedCPU && selectedGame) {
+            console.log('✅ Navigating to step 4');
             generateConfiguration();
             showStep(4);
         } else {
+            console.log('❌ Cannot navigate to step 4: missing requirements');
             alert('⚠️ Vui lòng hoàn thành tất cả các bước trước!');
         }
         return;
     }
 }
+
+// Make function available globally for inline onclick
+window.navigateToStep = navigateToStep;
 
 function generateConfiguration() {
     const budgetKey = selectedBudget + 'M';
