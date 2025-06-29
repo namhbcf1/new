@@ -13,9 +13,9 @@ app.use(cors());
 app.use(express.static(path.join(__dirname)));
 app.use(express.json());
 
-// Root route - serve main.html
+// Root route - serve index.html
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'main.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Start server
