@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trường Phát Computer - PC Builder</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Animation & Effect Libraries -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://unpkg.com/vanilla-tilt@1.8.0/dist/vanilla-tilt.min.js"></script>
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <style>
         * {
             margin: 0;
@@ -17,12 +29,77 @@
             color: #f8fafc;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Particles background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        /* Enhanced animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Glassmorphism effects */
+        .glass {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(79, 172, 254, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Floating animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Glow effects */
+        .glow {
+            box-shadow: 0 0 20px rgba(79, 172, 254, 0.3);
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .glow:hover {
+            box-shadow: 0 0 30px rgba(79, 172, 254, 0.5);
+        }
+        
+        /* Progressive loading */
+        .skeleton {
+            background: linear-gradient(90deg, #334155 25%, #475569 50%, #334155 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
         
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 1rem;
+            position: relative;
+            z-index: 1;
         }
         
         header {
@@ -351,6 +428,23 @@
             transition: all 0.3s;
             text-decoration: none;
             display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
         }
         
         .btn:hover {
@@ -460,6 +554,24 @@
             outline: none;
             border-color: #4facfe;
             box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+        }
+        
+        /* Enhanced Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
         }
         
         /* Touch-friendly improvements */
@@ -683,19 +795,25 @@
     </style>
 </head>
 <body>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Loading Progress Bar -->
+    <div id="nprogress"></div>
+    
     <!-- Header -->
-    <header>
+    <header data-aos="fade-down">
         <div class="container">
             <div class="header-content">
-                <div class="logo">
+                <div class="logo floating">
                     <span style="font-size: 2rem;">🖥️</span>
-                    <span>Trường Phát Computer</span>
+                    <span id="logo-text">Trường Phát Computer</span>
                 </div>
                 <div class="contact-links">
-                    <a href="components-overview.html" class="components-btn" style="background: linear-gradient(135deg, #22c55e, #16a34a); color: white;">🔧 Xem Tất Cả Linh Kiện</a>
-                    <a href="tel:0836768597" class="phone-btn">📞 0836.768.597</a>
-                    <a href="https://zalo.me/0836768597" target="_blank" class="zalo-btn">Zalo</a>
-                    <a href="https://www.facebook.com/tpcom.hb/" target="_blank" class="facebook-btn">Facebook</a>
+                    <a href="components-overview.html" class="components-btn glow" style="background: linear-gradient(135deg, #22c55e, #16a34a); color: white;">🔧 Xem Tất Cả Linh Kiện</a>
+                    <a href="tel:0836768597" class="phone-btn glow">📞 0836.768.597</a>
+                    <a href="https://zalo.me/0836768597" target="_blank" class="zalo-btn glow">Zalo</a>
+                    <a href="https://www.facebook.com/tpcom.hb/" target="_blank" class="facebook-btn glow">Facebook</a>
                 </div>
             </div>
         </div>
@@ -704,21 +822,21 @@
     <!-- Main Content -->
     <main class="container">
         <!-- Step Indicator -->
-        <div class="step-indicator">
+        <div class="step-indicator glass" data-aos="fade-up" data-aos-delay="100">
             <div class="steps-container">
-                <div class="step active" data-step="1" onclick="navigateToStep(1)">
+                <div class="step active" data-step="1" onclick="navigateToStep(1)" data-tilt>
                     <div class="step-number">1</div>
                     <div class="step-title">Chọn Ngân Sách</div>
                 </div>
-                <div class="step" data-step="2" onclick="navigateToStep(2)">
+                <div class="step" data-step="2" onclick="navigateToStep(2)" data-tilt>
                     <div class="step-number">2</div>
                     <div class="step-title">Chọn CPU</div>
                 </div>
-                <div class="step" data-step="3" onclick="navigateToStep(3)">
+                <div class="step" data-step="3" onclick="navigateToStep(3)" data-tilt>
                     <div class="step-number">3</div>
                     <div class="step-title">Chọn Game</div>
                 </div>
-                <div class="step" data-step="4" onclick="navigateToStep(4)">
+                <div class="step" data-step="4" onclick="navigateToStep(4)" data-tilt>
                     <div class="step-number">4</div>
                     <div class="step-title">Hoàn Thành</div>
                 </div>
@@ -726,7 +844,7 @@
         </div>
         
         <!-- Step 1: Budget Selection -->
-        <div id="step-1" class="card text-center">
+        <div id="step-1" class="card glass text-center" data-aos="zoom-in" data-aos-delay="200">
             <h1 class="title">💰 Chọn Ngân Sách</h1>
             <p class="subtitle">Chọn mức giá phù hợp để chúng tôi tư vấn cấu hình tốt nhất</p>
             
@@ -737,33 +855,33 @@
                 <p style="color: #94a3b8;">Ngân sách dự kiến</p>
             </div>
             
-            <button class="btn btn-primary" onclick="nextStep()">Tiếp Theo →</button>
+            <button class="btn btn-primary glow" onclick="nextStep()" data-aos="fade-up" data-aos-delay="400">Tiếp Theo →</button>
         </div>
         
         <!-- Step 2: CPU Selection -->
-        <div id="step-2" class="card text-center hidden">
+        <div id="step-2" class="card glass text-center hidden" data-aos="zoom-in">
             <h2 class="title">⚡ Chọn CPU</h2>
             <p class="subtitle">Intel hoặc AMD - Chọn theo sở thích của bạn</p>
             
             <div class="cpu-selection">
-                <div class="cpu-option" data-cpu="intel" onclick="selectCPU('intel')">
+                <div class="cpu-option glow" data-cpu="intel" onclick="selectCPU('intel')" data-tilt data-aos="flip-left" data-aos-delay="100">
                     <div class="cpu-logo" style="color: #0071c5;">Intel</div>
                     <div class="cpu-name">Intel Core</div>
                     <div class="cpu-description">Hiệu năng ổn định, tối ưu gaming</div>
                 </div>
                 
-                <div class="cpu-option" data-cpu="amd" onclick="selectCPU('amd')">
+                <div class="cpu-option glow" data-cpu="amd" onclick="selectCPU('amd')" data-tilt data-aos="flip-right" data-aos-delay="200">
                     <div class="cpu-logo" style="color: #ed1c24;">AMD</div>
                     <div class="cpu-name">AMD Ryzen</div>
                     <div class="cpu-description">Đa nhiệm mạnh mẽ, giá tốt</div>
                 </div>
             </div>
             
-            <button class="btn btn-primary" onclick="nextStep()">Tiếp Theo →</button>
+            <button class="btn btn-primary glow" onclick="nextStep()" data-aos="fade-up" data-aos-delay="300">Tiếp Theo →</button>
         </div>
         
         <!-- Step 3: Game Selection -->
-        <div id="step-3" class="card text-center hidden">
+        <div id="step-3" class="card glass text-center hidden" data-aos="zoom-in">
             <h2 class="title">🎮 Chọn Game Yêu Thích</h2>
             <p class="subtitle">Chọn game bạn thường chơi để tối ưu cấu hình</p>
             
@@ -771,21 +889,19 @@
                 <!-- Games will be populated here -->
             </div>
             
-            <button class="btn btn-primary" onclick="nextStep()">Xem Cấu Hình →</button>
+            <button class="btn btn-primary glow" onclick="nextStep()" data-aos="fade-up" data-aos-delay="400">Xem Cấu Hình →</button>
         </div>
         
         <!-- Step 4: Final Configuration with Component Customization -->
-        <div id="step-4" class="card hidden">
+        <div id="step-4" class="card glass hidden" data-aos="zoom-in">
             <div id="final-config-table"></div>
             
             <div class="component-selector" style="margin-top: 2rem;">
-                <h3 class="text-center" style="color: #4facfe; margin-bottom: 1rem;">🔧 Tùy Chỉnh Linh Kiện</h3>
+                <h3 class="text-center" style="color: #4facfe; margin-bottom: 1rem;" data-aos="fade-up">🔧 Tùy Chỉnh Linh Kiện</h3>
                 <div class="component-grid" id="component-grid">
                     <!-- Component selectors will be populated here -->
                 </div>
             </div>
-            
-
         </div>
     </main>
 
@@ -839,5 +955,221 @@
     
     <!-- Main PC Builder Script -->
     <script src="complete-pc-builder.js"></script>
+    
+    <!-- Enhanced Animation Scripts -->
+    <script>
+        // Initialize all libraries
+        document.addEventListener('DOMContentLoaded', function() {
+            // Start loading progress
+            NProgress.start();
+            
+            // Initialize AOS
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true,
+                mirror: false
+            });
+            
+            // Initialize Particles
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 80, density: { enable: true, value_area: 800 }},
+                    color: { value: '#4facfe' },
+                    shape: { type: 'circle' },
+                    opacity: { value: 0.5, random: false },
+                    size: { value: 3, random: true },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: '#4facfe',
+                        opacity: 0.4,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 2,
+                        direction: 'none',
+                        random: false,
+                        straight: false,
+                        out_mode: 'out',
+                        bounce: false
+                    }
+                },
+                interactivity: {
+                    detect_on: 'canvas',
+                    events: {
+                        onhover: { enable: true, mode: 'repulse' },
+                        onclick: { enable: true, mode: 'push' },
+                        resize: true
+                    },
+                    modes: {
+                        grab: { distance: 400, line_linked: { opacity: 1 }},
+                        bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 },
+                        repulse: { distance: 200, duration: 0.4 },
+                        push: { particles_nb: 4 },
+                        remove: { particles_nb: 2 }
+                    }
+                },
+                retina_detect: true
+            });
+            
+            // Initialize Vanilla Tilt
+            VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+                max: 15,
+                speed: 400,
+                glare: true,
+                "max-glare": 0.2,
+            });
+            
+            // Initialize Typed.js for logo
+            if (document.getElementById('logo-text')) {
+                new Typed('#logo-text', {
+                    strings: ['Trường Phát Computer', 'PC Builder Professional', 'Trường Phát Computer'],
+                    typeSpeed: 100,
+                    backSpeed: 50,
+                    loop: false,
+                    showCursor: false
+                });
+            }
+            
+            // Finish loading progress
+            setTimeout(() => {
+                NProgress.done();
+            }, 1000);
+            
+            // Add scroll animations
+            window.addEventListener('scroll', () => {
+                const elements = document.querySelectorAll('.fade-in');
+                elements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementVisible = 150;
+                    
+                    if (elementTop < window.innerHeight - elementVisible) {
+                        element.classList.add('visible');
+                    }
+                });
+            });
+            
+            // Enhanced button interactions
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    // Ripple effect
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.classList.add('ripple');
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+            
+            // Add ripple CSS
+            const style = document.createElement('style');
+            style.textContent = `
+                .ripple {
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.3);
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    pointer-events: none;
+                }
+                
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+        
+        // Enhanced step navigation with animations
+        const originalShowStep = window.showStep;
+        window.showStep = function(step) {
+            // Add exit animation
+            const currentStep = document.querySelector('[id^="step-"]:not(.hidden)');
+            if (currentStep) {
+                currentStep.style.animation = 'fadeOut 0.3s ease-out';
+                setTimeout(() => {
+                    originalShowStep(step);
+                    const newStep = document.getElementById(`step-${step}`);
+                    newStep.style.animation = 'fadeIn 0.3s ease-in';
+                }, 300);
+            } else {
+                originalShowStep(step);
+            }
+        };
+        
+        // Add animation CSS
+        const animationStyle = document.createElement('style');
+        animationStyle.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            
+            @keyframes fadeOut {
+                from { opacity: 1; transform: translateY(0); }
+                to { opacity: 0; transform: translateY(-20px); }
+            }
+        `;
+        document.head.appendChild(animationStyle);
+        
+        // Enhanced success messages
+        function showSuccessMessage(message) {
+            Swal.fire({
+                title: 'Thành công!',
+                text: message,
+                icon: 'success',
+                background: '#1e293b',
+                color: '#f8fafc',
+                confirmButtonColor: '#4facfe',
+                timer: 2000,
+                timerProgressBar: true,
+                showConfirmButton: false
+            });
+        }
+        
+        // Enhanced error messages
+        function showErrorMessage(message) {
+            Swal.fire({
+                title: 'Thông báo',
+                text: message,
+                icon: 'warning',
+                background: '#1e293b',
+                color: '#f8fafc',
+                confirmButtonColor: '#4facfe'
+            });
+        }
+        
+        // Page transition effects
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('a[href]:not([href^="#"]):not([target="_blank"])')) {
+                e.preventDefault();
+                const href = e.target.href;
+                
+                // Start page transition
+                NProgress.start();
+                document.body.style.opacity = '0.8';
+                
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 300);
+            }
+        });
+    </script>
 </body>
 </html>

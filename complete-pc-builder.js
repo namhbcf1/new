@@ -86,63 +86,186 @@ function updateBudgetDisplay() {
 function selectCPU(cpu) {
     selectedCPU = cpu;
     
-    // Update UI
+    // Update UI with animation
     document.querySelectorAll('.cpu-option').forEach(option => {
         option.classList.remove('selected');
+        option.style.transform = 'scale(1)';
     });
     const selectedOption = document.querySelector(`[data-cpu="${cpu}"]`);
     if (selectedOption) {
         selectedOption.classList.add('selected');
+        // Add selection animation
+        selectedOption.style.transform = 'scale(1.05)';
+        setTimeout(() => {
+            selectedOption.style.transform = 'scale(1)';
+        }, 200);
     }
     
     updateStepStates(); // Cập nhật trạng thái step khi chọn CPU
     console.log(`✅ CPU selected: ${cpu}`);
+    
+    // Success particle effect
+    if (window.particlesJS) {
+        // Add burst effect
+        setTimeout(() => {
+            showSuccessMessage(`Đã chọn ${cpu.toUpperCase()}! 🎉`);
+        }, 300);
+    }
 }
 
 function loadGames() {
     const gameGrid = document.getElementById('game-grid');
     if (!gameGrid) return;
     
-    gameGrid.innerHTML = games.map(game => `
-        <div class="game-option" data-game="${game.id}" onclick="selectGame('${game.id}')">
-            <img src="${game.image}" alt="${game.name}" class="game-image" onerror="this.style.display='none'">
-            <div class="game-name">${game.name}</div>
+    // Show loading skeleton first
+    gameGrid.innerHTML = games.map((game, index) => `
+        <div class="game-option skeleton" data-game="${game.id}" style="animation-delay: ${index * 100}ms">
+            <div class="game-image skeleton"></div>
+            <div class="game-name skeleton"></div>
         </div>
     `).join('');
+    
+    // Load actual content with animation
+    setTimeout(() => {
+        gameGrid.innerHTML = games.map((game, index) => `
+            <div class="game-option glow" data-game="${game.id}" onclick="selectGame('${game.id}')" 
+                 data-tilt data-aos="zoom-in" data-aos-delay="${index * 50}">
+                <img src="${game.image}" alt="${game.name}" class="game-image" 
+                     onerror="this.src='images/components/default.jpg'">
+                <div class="game-name">${game.name}</div>
+            </div>
+        `).join('');
+        
+        // Re-initialize tilt effect for new elements
+        VanillaTilt.init(gameGrid.querySelectorAll("[data-tilt]"), {
+            max: 10,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.1,
+        });
+        
+        // Re-initialize AOS for new elements
+        AOS.refresh();
+    }, 800);
 }
 
 function selectGame(gameId) {
     selectedGame = gameId;
     
-    // Update UI
+    // Update UI with animation
     document.querySelectorAll('.game-option').forEach(option => {
         option.classList.remove('selected');
+        option.style.transform = 'scale(1)';
     });
     const selectedOption = document.querySelector(`[data-game="${gameId}"]`);
     if (selectedOption) {
         selectedOption.classList.add('selected');
+        // Add selection animation
+        selectedOption.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+            selectedOption.style.transform = 'scale(1)';
+        }, 200);
     }
     
     updateStepStates(); // Cập nhật trạng thái step khi chọn game
     const gameName = games.find(g => g.id === gameId)?.name || gameId;
     console.log(`✅ Game selected: ${gameName}`);
+    
+    // Success effect
+    setTimeout(() => {
+        showSuccessMessage(`Đã chọn ${gameName}! 🎮`);
+    }, 300);
 }
 
 function nextStep() {
     if (currentStep === 2 && !selectedCPU) {
-        alert('Vui lòng chọn loại CPU!');
+        showErrorMessage('Vui lòng chọn loại CPU!');
         return;
     }
     
     if (currentStep === 3 && !selectedGame) {
-        alert('Vui lòng chọn game!');
+        showErrorMessage('Vui lòng chọn game!');
         return;
     }
     
     if (currentStep === 3) {
+        NProgress.start();
         generateConfiguration();
         loadComponentSelectors();
         displayFinalConfiguration();
+        setTimeout(() => {
+            NProgress.done();
+            // Special completion message with confetti effect
+            Swal.fire({
+                title: '🎉 Hoàn Thành!',
+                html: `
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 1rem;">🖥️✨</div>
+                        <p style="font-size: 1.2rem; margin-bottom: 1rem;">Cấu hình máy tính đã được tạo thành công!</p>
+                        <p style="color: #4facfe;">Bạn có thể tùy chỉnh thêm các linh kiện bên dưới</p>
+                    </div>
+                `,
+                icon: 'success',
+                background: '#1e293b',
+                color: '#f8fafc',
+                confirmButtonColor: '#4facfe',
+                confirmButtonText: 'Tuyệt vời! 🚀',
+                timer: 3000,
+                timerProgressBar: true,
+                showClass: {
+                    popup: 'animate__animated animate__bounceIn'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__bounceOut'
+                }
+            });
+            
+            // Add particle burst effect
+            if (window.particlesJS) {
+                // Temporarily increase particle count for celebration
+                const originalParticleCount = 80;
+                particlesJS('particles-js', {
+                    particles: {
+                        number: { value: 150, density: { enable: true, value_area: 800 }},
+                        color: { value: ['#4facfe', '#00f2fe', '#22c55e', '#f59e0b'] },
+                        shape: { type: ['circle', 'star'] },
+                        opacity: { value: 0.8, random: true },
+                        size: { value: 5, random: true },
+                        move: {
+                            enable: true,
+                            speed: 6,
+                            direction: 'none',
+                            random: true,
+                            straight: false,
+                            out_mode: 'out',
+                            bounce: true
+                        }
+                    }
+                });
+                
+                // Reset particles after 3 seconds
+                setTimeout(() => {
+                    particlesJS('particles-js', {
+                        particles: {
+                            number: { value: originalParticleCount, density: { enable: true, value_area: 800 }},
+                            color: { value: '#4facfe' },
+                            shape: { type: 'circle' },
+                            opacity: { value: 0.5, random: false },
+                            size: { value: 3, random: true },
+                            move: {
+                                enable: true,
+                                speed: 2,
+                                direction: 'none',
+                                random: false,
+                                straight: false,
+                                out_mode: 'out',
+                                bounce: false
+                            }
+                        }
+                    });
+                }, 3000);
+            }
+        }, 800);
     }
     
     currentStep++;
@@ -205,7 +328,7 @@ function navigateToStep(targetStep) {
             showStep(2);
         } else {
             console.log('❌ Cannot navigate to step 2: no budget selected');
-            alert('⚠️ Vui lòng chọn ngân sách trước!');
+            showErrorMessage('⚠️ Vui lòng chọn ngân sách trước!');
         }
         return;
     }
@@ -217,7 +340,7 @@ function navigateToStep(targetStep) {
             showStep(3);
         } else {
             console.log('❌ Cannot navigate to step 3: missing requirements');
-            alert('⚠️ Vui lòng hoàn thành bước chọn ngân sách và CPU trước!');
+            showErrorMessage('⚠️ Vui lòng hoàn thành bước chọn ngân sách và CPU trước!');
         }
         return;
     }
@@ -230,7 +353,7 @@ function navigateToStep(targetStep) {
             showStep(4);
         } else {
             console.log('❌ Cannot navigate to step 4: missing requirements');
-            alert('⚠️ Vui lòng hoàn thành tất cả các bước trước!');
+            showErrorMessage('⚠️ Vui lòng hoàn thành tất cả các bước trước!');
         }
         return;
     }
@@ -429,33 +552,57 @@ function loadComponentSelectors() {
         cpuCooler: '🌪️ CPU Cooler - Tản Nhiệt'
     };
     
-    componentGrid.innerHTML = components.map(component => {
-        const options = getComponentOptions(component);
-        const isEnabled = isComponentEnabled(component);
-        const statusText = getComponentStatus(component);
-        
-        return `
-            <div class="component-card ${!isEnabled ? 'disabled' : ''}" style="position: relative;">
-                <h4 style="color: ${!isEnabled ? '#94a3b8' : '#4facfe'}; margin-bottom: 1rem; font-size: 1.1rem;">${componentNames[component]}</h4>
-                <select class="component-select" id="${component}-select" 
-                        onchange="updateComponent('${component}', this.value)"
-                        ${!isEnabled ? 'disabled' : ''}
-                        style="background: ${!isEnabled ? '#f1f5f9' : '#1e293b'}; color: ${!isEnabled ? '#94a3b8' : 'white'};">
-                    ${options}
-                </select>
-                ${statusText ? `<div class="component-status" style="margin-top: 0.5rem; font-size: 0.85rem; color: #64748b; font-style: italic;">${statusText}</div>` : ''}
-                ${!isEnabled ? '<div class="component-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(148, 163, 184, 0.3); border-radius: 0.75rem; pointer-events: none;"></div>' : ''}
-            </div>
-        `;
-    }).join('');
+    // Show loading skeleton first
+    componentGrid.innerHTML = components.map((component, index) => `
+        <div class="component-card skeleton" style="animation-delay: ${index * 50}ms">
+            <div class="skeleton" style="height: 1.5rem; margin-bottom: 1rem; border-radius: 0.5rem;"></div>
+            <div class="skeleton" style="height: 2.5rem; border-radius: 0.5rem;"></div>
+        </div>
+    `).join('');
     
-    // Set current selections
-    components.forEach(component => {
-        const select = document.getElementById(`${component}-select`);
-        if (select && currentConfig[component]) {
-            select.value = currentConfig[component];
-        }
-    });
+    // Load actual content with animation
+    setTimeout(() => {
+        componentGrid.innerHTML = components.map((component, index) => {
+            const options = getComponentOptions(component);
+            const isEnabled = isComponentEnabled(component);
+            const statusText = getComponentStatus(component);
+            
+            return `
+                <div class="component-card glow ${!isEnabled ? 'disabled' : ''}" 
+                     data-tilt data-aos="fade-up" data-aos-delay="${index * 100}"
+                     style="position: relative;">
+                    <h4 style="color: ${!isEnabled ? '#94a3b8' : '#4facfe'}; margin-bottom: 1rem; font-size: 1.1rem;">${componentNames[component]}</h4>
+                    <select class="component-select" id="${component}-select" 
+                            onchange="updateComponent('${component}', this.value)"
+                            ${!isEnabled ? 'disabled' : ''}
+                            style="background: ${!isEnabled ? '#f1f5f9' : '#1e293b'}; color: ${!isEnabled ? '#94a3b8' : 'white'};">
+                        ${options}
+                    </select>
+                    ${statusText ? `<div class="component-status" style="margin-top: 0.5rem; font-size: 0.85rem; color: #64748b; font-style: italic;">${statusText}</div>` : ''}
+                    ${!isEnabled ? '<div class="component-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(148, 163, 184, 0.3); border-radius: 0.75rem; pointer-events: none;"></div>' : ''}
+                </div>
+            `;
+        }).join('');
+        
+        // Set current selections
+        components.forEach(component => {
+            const select = document.getElementById(`${component}-select`);
+            if (select && currentConfig[component]) {
+                select.value = currentConfig[component];
+            }
+        });
+        
+        // Re-initialize tilt effect for new elements
+        VanillaTilt.init(componentGrid.querySelectorAll("[data-tilt]"), {
+            max: 5,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.1,
+        });
+        
+        // Re-initialize AOS for new elements
+        AOS.refresh();
+    }, 600);
 }
 
 function isComponentEnabled(componentType) {
@@ -1178,7 +1325,7 @@ function getComponentData(type, id) {
 function saveImageHD() {
     const element = document.getElementById('final-config-table');
     if (!element) {
-        alert('❌ Không tìm thấy cấu hình để lưu!');
+                    showErrorMessage('❌ Không tìm thấy cấu hình để lưu!');
         return;
     }
 
@@ -1406,7 +1553,7 @@ function saveImageHD() {
             }
         }).catch(error => {
             console.error('Lỗi tạo ảnh:', error);
-            alert('❌ Có lỗi khi tạo ảnh! Vui lòng thử lại.');
+            showErrorMessage('❌ Có lỗi khi tạo ảnh! Vui lòng thử lại.');
             
             // Restore original buttons và header on error
             allButtons.forEach(btn => {
@@ -1830,7 +1977,7 @@ const printStyles = `
 function printConfiguration() {
     const configContent = document.getElementById('final-config-table');
     if (!configContent) {
-        alert('❌ Không tìm thấy nội dung cấu hình!');
+        showErrorMessage('❌ Không tìm thấy nội dung cấu hình!');
         return;
     }
     
