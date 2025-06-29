@@ -798,9 +798,6 @@
     <!-- Particles Background -->
     <div id="particles-js"></div>
     
-    <!-- Loading Progress Bar -->
-    <div id="nprogress"></div>
-    
     <!-- Header -->
     <header data-aos="fade-down">
         <div class="container">
@@ -958,84 +955,192 @@
     
     <!-- Enhanced Animation Scripts -->
     <script>
+        // Safe NProgress wrapper
+        const safeNProgress = {
+            start: function() {
+                try {
+                    if (typeof NProgress !== 'undefined') {
+                        NProgress.start();
+                    }
+                } catch(e) {
+                    console.log('NProgress start error:', e);
+                }
+            },
+            done: function() {
+                try {
+                    if (typeof NProgress !== 'undefined') {
+                        NProgress.done();
+                    }
+                } catch(e) {
+                    console.log('NProgress done error:', e);
+                }
+            },
+            configure: function(options) {
+                try {
+                    if (typeof NProgress !== 'undefined') {
+                        NProgress.configure(options);
+                    }
+                } catch(e) {
+                    console.log('NProgress configure error:', e);
+                }
+            }
+        };
+        
+        // Make safeNProgress globally available
+        window.safeNProgress = safeNProgress;
+        
+        // Global safe animation helpers
+        window.showSuccessMessage = function(message) {
+            try {
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        title: 'Thành công!',
+                        text: message,
+                        icon: 'success',
+                        background: '#1e293b',
+                        color: '#f8fafc',
+                        confirmButtonColor: '#4facfe',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    });
+                } else {
+                    console.log('✅ Success:', message);
+                }
+            } catch(e) {
+                console.log('✅ Success:', message);
+            }
+        };
+        
+        window.showErrorMessage = function(message) {
+            try {
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        title: 'Thông báo',
+                        text: message,
+                        icon: 'warning',
+                        background: '#1e293b',
+                        color: '#f8fafc',
+                        confirmButtonColor: '#4facfe'
+                    });
+                } else {
+                    alert(message);
+                }
+            } catch(e) {
+                alert(message);
+            }
+        };
+        
         // Initialize all libraries
         document.addEventListener('DOMContentLoaded', function() {
-            // Start loading progress
-            NProgress.start();
-            
-            // Initialize AOS
-            AOS.init({
-                duration: 800,
-                easing: 'ease-in-out',
-                once: true,
-                mirror: false
-            });
-            
-            // Initialize Particles
-            particlesJS('particles-js', {
-                particles: {
-                    number: { value: 80, density: { enable: true, value_area: 800 }},
-                    color: { value: '#4facfe' },
-                    shape: { type: 'circle' },
-                    opacity: { value: 0.5, random: false },
-                    size: { value: 3, random: true },
-                    line_linked: {
-                        enable: true,
-                        distance: 150,
-                        color: '#4facfe',
-                        opacity: 0.4,
-                        width: 1
-                    },
-                    move: {
-                        enable: true,
-                        speed: 2,
-                        direction: 'none',
-                        random: false,
-                        straight: false,
-                        out_mode: 'out',
-                        bounce: false
-                    }
-                },
-                interactivity: {
-                    detect_on: 'canvas',
-                    events: {
-                        onhover: { enable: true, mode: 'repulse' },
-                        onclick: { enable: true, mode: 'push' },
-                        resize: true
-                    },
-                    modes: {
-                        grab: { distance: 400, line_linked: { opacity: 1 }},
-                        bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 },
-                        repulse: { distance: 200, duration: 0.4 },
-                        push: { particles_nb: 4 },
-                        remove: { particles_nb: 2 }
-                    }
-                },
-                retina_detect: true
-            });
-            
-            // Initialize Vanilla Tilt
-            VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
-                max: 15,
+            // Configure NProgress before starting
+            safeNProgress.configure({
+                showSpinner: true,
                 speed: 400,
-                glare: true,
-                "max-glare": 0.2,
+                minimum: 0.1,
+                trickle: true,
+                trickleSpeed: 200,
+                parent: 'body'
             });
             
-            // Initialize Typed.js for logo
-            if (document.getElementById('logo-text')) {
-                new Typed('#logo-text', {
-                    strings: ['Trường Phát Computer', 'PC Builder Professional', 'Trường Phát Computer'],
-                    typeSpeed: 100,
-                    backSpeed: 50,
-                    loop: false,
-                    showCursor: false
-                });
+            // Start loading progress safely
+            safeNProgress.start();
+            
+            // Initialize AOS safely
+            try {
+                if (typeof AOS !== 'undefined') {
+                    AOS.init({
+                        duration: 800,
+                        easing: 'ease-in-out',
+                        once: true,
+                        mirror: false
+                    });
+                }
+            } catch(e) {
+                console.log('AOS init error:', e);
+            }
+            
+            // Initialize Particles safely
+            try {
+                if (typeof particlesJS !== 'undefined') {
+                    particlesJS('particles-js', {
+                        particles: {
+                            number: { value: 80, density: { enable: true, value_area: 800 }},
+                            color: { value: '#4facfe' },
+                            shape: { type: 'circle' },
+                            opacity: { value: 0.5, random: false },
+                            size: { value: 3, random: true },
+                            line_linked: {
+                                enable: true,
+                                distance: 150,
+                                color: '#4facfe',
+                                opacity: 0.4,
+                                width: 1
+                            },
+                            move: {
+                                enable: true,
+                                speed: 2,
+                                direction: 'none',
+                                random: false,
+                                straight: false,
+                                out_mode: 'out',
+                                bounce: false
+                            }
+                        },
+                        interactivity: {
+                            detect_on: 'canvas',
+                            events: {
+                                onhover: { enable: true, mode: 'repulse' },
+                                onclick: { enable: true, mode: 'push' },
+                                resize: true
+                            },
+                            modes: {
+                                grab: { distance: 400, line_linked: { opacity: 1 }},
+                                bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 },
+                                repulse: { distance: 200, duration: 0.4 },
+                                push: { particles_nb: 4 },
+                                remove: { particles_nb: 2 }
+                            }
+                        },
+                        retina_detect: true
+                    });
+                }
+            } catch(e) {
+                console.log('Particles.js init error:', e);
+            }
+            
+            // Initialize Vanilla Tilt safely
+            try {
+                if (typeof VanillaTilt !== 'undefined') {
+                    VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+                        max: 15,
+                        speed: 400,
+                        glare: true,
+                        "max-glare": 0.2,
+                    });
+                }
+            } catch(e) {
+                console.log('VanillaTilt init error:', e);
+            }
+            
+            // Initialize Typed.js for logo safely
+            try {
+                if (typeof Typed !== 'undefined' && document.getElementById('logo-text')) {
+                    new Typed('#logo-text', {
+                        strings: ['Trường Phát Computer', 'PC Builder Professional', 'Trường Phát Computer'],
+                        typeSpeed: 100,
+                        backSpeed: 50,
+                        loop: false,
+                        showCursor: false
+                    });
+                }
+            } catch(e) {
+                console.log('Typed.js init error:', e);
             }
             
             // Finish loading progress
             setTimeout(() => {
-                NProgress.done();
+                safeNProgress.done();
             }, 1000);
             
             // Add scroll animations
@@ -1128,32 +1233,7 @@
         `;
         document.head.appendChild(animationStyle);
         
-        // Enhanced success messages
-        function showSuccessMessage(message) {
-            Swal.fire({
-                title: 'Thành công!',
-                text: message,
-                icon: 'success',
-                background: '#1e293b',
-                color: '#f8fafc',
-                confirmButtonColor: '#4facfe',
-                timer: 2000,
-                timerProgressBar: true,
-                showConfirmButton: false
-            });
-        }
-        
-        // Enhanced error messages
-        function showErrorMessage(message) {
-            Swal.fire({
-                title: 'Thông báo',
-                text: message,
-                icon: 'warning',
-                background: '#1e293b',
-                color: '#f8fafc',
-                confirmButtonColor: '#4facfe'
-            });
-        }
+
         
         // Page transition effects
         document.addEventListener('click', function(e) {
@@ -1162,7 +1242,7 @@
                 const href = e.target.href;
                 
                 // Start page transition
-                NProgress.start();
+                safeNProgress.start();
                 document.body.style.opacity = '0.8';
                 
                 setTimeout(() => {

@@ -189,12 +189,16 @@ function nextStep() {
     }
     
     if (currentStep === 3) {
-        NProgress.start();
+        if (typeof safeNProgress !== 'undefined') {
+            safeNProgress.start();
+        }
         generateConfiguration();
         loadComponentSelectors();
         displayFinalConfiguration();
         setTimeout(() => {
-            NProgress.done();
+            if (typeof safeNProgress !== 'undefined') {
+                safeNProgress.done();
+            }
             // Special completion message with confetti effect
             Swal.fire({
                 title: '🎉 Hoàn Thành!',
