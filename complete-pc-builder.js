@@ -1837,7 +1837,7 @@ const printStyles = `
         
         td:nth-child(3) { 
             text-align: left; 
-            font-size: 6px;
+            font-size: 12px;
             padding: 2px 3px;
             color: #000;
             line-height: 1.0;
@@ -1846,7 +1846,7 @@ const printStyles = `
         
         /* Cân bằng 3 dòng text trong component names */
         td:nth-child(3) div {
-            font-size: 6px !important;
+            font-size: 12px !important;
             font-weight: bold !important;
             color: #000 !important;
             margin: 0 !important;
@@ -1855,8 +1855,8 @@ const printStyles = `
         }
         
         img { 
-            max-width: 30px; 
-            max-height: 30px; 
+            max-width: 40px; 
+            max-height: 40px; 
             object-fit: cover;
             border-radius: 2px;
         }
