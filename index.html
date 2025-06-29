@@ -574,7 +574,7 @@
             background: linear-gradient(135deg, #00f2fe, #4facfe);
         }
         
-        /* Touch-friendly improvements */
+        /* Touch-friendly improvements & Mobile Performance */
         @media (hover: none) and (pointer: coarse) {
             .step {
                 touch-action: manipulation;
@@ -588,6 +588,57 @@
             .btn, .cpu-option, .game-option {
                 touch-action: manipulation;
                 min-height: 44px;
+            }
+            
+            /* Mobile Performance Optimizations */
+            * {
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+                -webkit-perspective: 1000;
+                perspective: 1000;
+            }
+            
+            /* Disable complex animations on mobile */
+            .glow, .floating {
+                animation: none !important;
+                transition: none !important;
+            }
+            
+            /* Simplify hover effects for touch */
+            .cpu-option:hover, .game-option:hover {
+                transform: none !important;
+                box-shadow: 0 0 10px rgba(79, 172, 254, 0.3) !important;
+            }
+        }
+        
+        /* Additional mobile performance optimizations */
+        @media (max-width: 768px) {
+            /* GPU acceleration for smooth scrolling */
+            body {
+                -webkit-overflow-scrolling: touch;
+                will-change: scroll-position;
+            }
+            
+            /* Reduce blur effects on mobile */
+            .glass {
+                backdrop-filter: blur(10px) !important;
+            }
+            
+            /* Simpler shadows on mobile */
+            .card, .component-card {
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2) !important;
+            }
+            
+            /* Disable floating animation on mobile */
+            .floating {
+                animation: none !important;
+            }
+            
+            /* Optimize button effects */
+            .btn::before {
+                display: none !important;
             }
         }
         
@@ -1046,32 +1097,43 @@
             // Start loading progress safely
             safeNProgress.start();
             
-            // Initialize AOS safely
+            // Initialize AOS safely with mobile optimization
             try {
                 if (typeof AOS !== 'undefined') {
+                    const isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                    
                     AOS.init({
-                        duration: 800,
-                        easing: 'ease-in-out',
+                        duration: isMobile ? 400 : 800, // Giảm 50% thời gian animation trên mobile
+                        easing: 'ease-out', // Easing nhẹ hơn cho mobile
                         once: true,
-                        mirror: false
+                        mirror: false,
+                        disable: false, // Không tắt hoàn toàn
+                        offset: isMobile ? 50 : 120, // Trigger sớm hơn trên mobile
+                        delay: isMobile ? 0 : 100 // Bỏ delay trên mobile
                     });
                 }
             } catch(e) {
                 console.log('AOS init error:', e);
             }
             
-            // Initialize Particles safely
+            // Initialize Particles safely with mobile optimization
             try {
                 if (typeof particlesJS !== 'undefined') {
-                    particlesJS('particles-js', {
+                    // Detect mobile device
+                    const isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                    
+                    const particleConfig = {
                         particles: {
-                            number: { value: 80, density: { enable: true, value_area: 800 }},
+                            number: { 
+                                value: isMobile ? 30 : 80, // Giảm 60% particles trên mobile
+                                density: { enable: true, value_area: 800 }
+                            },
                             color: { value: '#4facfe' },
                             shape: { type: 'circle' },
-                            opacity: { value: 0.5, random: false },
-                            size: { value: 3, random: true },
+                            opacity: { value: isMobile ? 0.3 : 0.5, random: false },
+                            size: { value: isMobile ? 2 : 3, random: true },
                             line_linked: {
-                                enable: true,
+                                enable: !isMobile, // Tắt lines trên mobile để tăng FPS
                                 distance: 150,
                                 color: '#4facfe',
                                 opacity: 0.4,
@@ -1079,7 +1141,7 @@
                             },
                             move: {
                                 enable: true,
-                                speed: 2,
+                                speed: isMobile ? 1 : 2, // Giảm tốc độ trên mobile
                                 direction: 'none',
                                 random: false,
                                 straight: false,
@@ -1090,34 +1152,49 @@
                         interactivity: {
                             detect_on: 'canvas',
                             events: {
-                                onhover: { enable: true, mode: 'repulse' },
+                                onhover: { enable: !isMobile, mode: 'repulse' }, // Tắt hover effects trên mobile
                                 onclick: { enable: true, mode: 'push' },
                                 resize: true
                             },
                             modes: {
                                 grab: { distance: 400, line_linked: { opacity: 1 }},
                                 bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 },
-                                repulse: { distance: 200, duration: 0.4 },
-                                push: { particles_nb: 4 },
+                                repulse: { distance: isMobile ? 100 : 200, duration: 0.4 },
+                                push: { particles_nb: isMobile ? 2 : 4 },
                                 remove: { particles_nb: 2 }
                             }
                         },
                         retina_detect: true
-                    });
+                    };
+                    
+                    particlesJS('particles-js', particleConfig);
                 }
             } catch(e) {
                 console.log('Particles.js init error:', e);
             }
             
-            // Initialize Vanilla Tilt safely
+            // Initialize Vanilla Tilt safely with mobile optimization
             try {
                 if (typeof VanillaTilt !== 'undefined') {
-                    VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
-                        max: 15,
-                        speed: 400,
-                        glare: true,
-                        "max-glare": 0.2,
-                    });
+                    const isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                    
+                    if (!isMobile) {
+                        // Chỉ enable tilt trên desktop để tăng FPS mobile
+                        VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+                            max: 15,
+                            speed: 400,
+                            glare: true,
+                            "max-glare": 0.2,
+                        });
+                    } else {
+                        // Mobile: Chỉ add subtle tilt, không có glare
+                        VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+                            max: 5,
+                            speed: 800,
+                            glare: false,
+                            scale: 1.02,
+                        });
+                    }
                 }
             } catch(e) {
                 console.log('VanillaTilt init error:', e);
@@ -1143,8 +1220,11 @@
                 safeNProgress.done();
             }, 1000);
             
-            // Add scroll animations
-            window.addEventListener('scroll', () => {
+            // Add scroll animations with debouncing for mobile performance
+            let scrollTimeout;
+            const isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            const handleScroll = () => {
                 const elements = document.querySelectorAll('.fade-in');
                 elements.forEach(element => {
                     const elementTop = element.getBoundingClientRect().top;
@@ -1154,7 +1234,17 @@
                         element.classList.add('visible');
                     }
                 });
-            });
+            };
+            
+            window.addEventListener('scroll', () => {
+                if (isMobile) {
+                    // Debounce scroll events on mobile
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(handleScroll, 100);
+                } else {
+                    handleScroll();
+                }
+            }, { passive: true });
             
             // Enhanced button interactions
             document.querySelectorAll('.btn').forEach(btn => {

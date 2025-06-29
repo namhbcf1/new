@@ -136,13 +136,25 @@ function loadGames() {
             </div>
         `).join('');
         
-        // Re-initialize tilt effect for new elements
-        VanillaTilt.init(gameGrid.querySelectorAll("[data-tilt]"), {
-            max: 10,
-            speed: 400,
-            glare: true,
-            "max-glare": 0.1,
-        });
+        // Re-initialize tilt effect for new elements with mobile optimization
+        const isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        if (!isMobile) {
+            VanillaTilt.init(gameGrid.querySelectorAll("[data-tilt]"), {
+                max: 10,
+                speed: 400,
+                glare: true,
+                "max-glare": 0.1,
+            });
+        } else {
+            // Mobile: lighter tilt effect
+            VanillaTilt.init(gameGrid.querySelectorAll("[data-tilt]"), {
+                max: 3,
+                speed: 800,
+                glare: false,
+                scale: 1.01,
+            });
+        }
         
         // Re-initialize AOS for new elements
         AOS.refresh();
@@ -224,50 +236,67 @@ function nextStep() {
                 }
             });
             
-            // Add particle burst effect
+            // Add particle burst effect optimized for mobile
             if (window.particlesJS) {
+                const isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                
                 // Temporarily increase particle count for celebration
-                const originalParticleCount = 80;
+                const originalParticleCount = isMobile ? 30 : 80;
+                const celebrationCount = isMobile ? 60 : 150; // Giảm 60% trên mobile
+                
                 particlesJS('particles-js', {
                     particles: {
-                        number: { value: 150, density: { enable: true, value_area: 800 }},
+                        number: { value: celebrationCount, density: { enable: true, value_area: 800 }},
                         color: { value: ['#4facfe', '#00f2fe', '#22c55e', '#f59e0b'] },
-                        shape: { type: ['circle', 'star'] },
-                        opacity: { value: 0.8, random: true },
-                        size: { value: 5, random: true },
+                        shape: { type: isMobile ? 'circle' : ['circle', 'star'] }, // Chỉ circle trên mobile
+                        opacity: { value: isMobile ? 0.6 : 0.8, random: true },
+                        size: { value: isMobile ? 3 : 5, random: true },
                         move: {
                             enable: true,
-                            speed: 6,
+                            speed: isMobile ? 4 : 6,
                             direction: 'none',
                             random: true,
                             straight: false,
                             out_mode: 'out',
-                            bounce: true
+                            bounce: !isMobile // Tắt bounce trên mobile
                         }
                     }
                 });
                 
-                // Reset particles after 3 seconds
+                // Reset particles after shorter time on mobile
+                const resetTime = isMobile ? 2000 : 3000;
                 setTimeout(() => {
                     particlesJS('particles-js', {
                         particles: {
                             number: { value: originalParticleCount, density: { enable: true, value_area: 800 }},
                             color: { value: '#4facfe' },
                             shape: { type: 'circle' },
-                            opacity: { value: 0.5, random: false },
-                            size: { value: 3, random: true },
+                            opacity: { value: isMobile ? 0.3 : 0.5, random: false },
+                            size: { value: isMobile ? 2 : 3, random: true },
+                            line_linked: {
+                                enable: !isMobile, // Tắt lines trên mobile
+                                distance: 150,
+                                color: '#4facfe',
+                                opacity: 0.4,
+                                width: 1
+                            },
                             move: {
                                 enable: true,
-                                speed: 2,
+                                speed: isMobile ? 1 : 2,
                                 direction: 'none',
                                 random: false,
                                 straight: false,
                                 out_mode: 'out',
                                 bounce: false
                             }
+                        },
+                        interactivity: {
+                            events: {
+                                onhover: { enable: !isMobile, mode: 'repulse' }
+                            }
                         }
                     });
-                }, 3000);
+                }, resetTime);
             }
         }, 800);
     }
@@ -596,13 +625,29 @@ function loadComponentSelectors() {
             }
         });
         
-        // Re-initialize tilt effect for new elements
-        VanillaTilt.init(componentGrid.querySelectorAll("[data-tilt]"), {
-            max: 5,
-            speed: 400,
-            glare: true,
-            "max-glare": 0.1,
-        });
+        // Re-initialize tilt effect for new elements with mobile optimization
+        const isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        if (!isMobile) {
+            VanillaTilt.init(componentGrid.querySelectorAll("[data-tilt]"), {
+                max: 5,
+                speed: 400,
+                glare: true,
+                "max-glare": 0.1,
+            });
+        } else {
+            // Mobile: no tilt for component cards để tăng performance
+            // Chỉ add hover effect đơn giản
+            componentGrid.querySelectorAll("[data-tilt]").forEach(card => {
+                card.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                }, { passive: true });
+                
+                card.addEventListener('touchend', function() {
+                    this.style.transform = 'scale(1)';
+                }, { passive: true });
+            });
+        }
         
         // Re-initialize AOS for new elements
         AOS.refresh();
@@ -1744,11 +1789,12 @@ const printStyles = `
         
         th, td { 
             border: 1px solid #000; 
-            padding: 0px 1px; 
+            padding: 1px 2px; 
             text-align: center;
             vertical-align: middle;
             color: #000;
-            height: 10px;
+            height: 12px;
+            line-height: 1.1;
         }
         
         /* Xóa border đen cho các ô trong hàng tổng cộng */
@@ -1763,55 +1809,56 @@ const printStyles = `
             background: #e5e7eb !important;
             color: #000 !important;
             font-weight: bold; 
-            font-size: 5px;
+            font-size: 6px;
             text-transform: uppercase;
-            height: 10px;
-            padding: 0px 1px;
+            height: 14px;
+            padding: 2px 3px;
+            line-height: 1.0;
         }
         
-        /* Cột STT */
-        th:nth-child(1), td:nth-child(1) { width: 5%; }
-        /* Cột Hình ảnh */
-        th:nth-child(2), td:nth-child(2) { width: 8%; }
-        /* Cột Tên linh kiện */
-        th:nth-child(3), td:nth-child(3) { width: 30%; }
+        /* Cột STT - cân bằng lại */
+        th:nth-child(1), td:nth-child(1) { width: 6%; }
+        /* Cột Hình ảnh - tăng lên để cân đối */
+        th:nth-child(2), td:nth-child(2) { width: 10%; }
+        /* Cột Tên linh kiện - giảm xuống để cân bằng */
+        th:nth-child(3), td:nth-child(3) { width: 28%; }
         /* Cột ĐVT */
         th:nth-child(4), td:nth-child(4) { width: 8%; }
         /* Cột Số lượng */
         th:nth-child(5), td:nth-child(5) { width: 8%; }
-        /* Cột Đơn giá */
-        th:nth-child(6), td:nth-child(6) { width: 12%; }
-        /* Cột Thành tiền */
-        th:nth-child(7), td:nth-child(7) { width: 12%; }
+        /* Cột Đơn giá - tăng lên để đẹp hơn */
+        th:nth-child(6), td:nth-child(6) { width: 14%; }
+        /* Cột Thành tiền - tăng lên để nổi bật */
+        th:nth-child(7), td:nth-child(7) { width: 14%; }
         /* Cột Bảo hành */
-        th:nth-child(8), td:nth-child(8) { width: 7%; }
+        th:nth-child(8), td:nth-child(8) { width: 8%; }
         /* Cột Ghi chú */
-        th:nth-child(9), td:nth-child(9) { width: 10%; }
+        th:nth-child(9), td:nth-child(9) { width: 4%; }
         
         td:nth-child(3) { 
             text-align: left; 
-            font-size: 5px;
-            padding: 1px 2px;
+            font-size: 6px;
+            padding: 2px 3px;
             color: #000;
-            line-height: 0.9;
-            height: 10px;
+            line-height: 1.0;
+            height: 14px;
         }
         
         /* Cân bằng 3 dòng text trong component names */
         td:nth-child(3) div {
-            font-size: 13px !important;
+            font-size: 6px !important;
             font-weight: bold !important;
             color: #000 !important;
             margin: 0 !important;
             padding: 0 !important;
-            line-height: 0.8 !important;
+            line-height: 1.0 !important;
         }
         
         img { 
-            max-width: 25px; 
-            max-height: 25px; 
+            max-width: 30px; 
+            max-height: 30px; 
             object-fit: cover;
-            border-radius: 1px;
+            border-radius: 2px;
         }
         
         /* Tổng cộng nổi bật và cân đối hoàn hảo */
@@ -1824,15 +1871,15 @@ const printStyles = `
         }
         
         .total-row td {
-            font-size: 8px !important;
+            font-size: 9px !important;
             font-weight: 900 !important;
-            padding: 3px 2px !important;
+            padding: 4px 3px !important;
             color: #000 !important;
-            height: 16px !important;
+            height: 18px !important;
             text-transform: uppercase;
             text-align: center !important;
             vertical-align: middle !important;
-            line-height: 1.0;
+            line-height: 1.1;
             border: none !important;
         }
         
