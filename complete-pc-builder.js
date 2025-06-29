@@ -1305,13 +1305,13 @@ function addContactSectionAfterComponents() {
                 </a>
             </div>
             <div class="contact-item" style="padding: 0.5rem; border: 1px solid rgba(255,255,255,0.3); border-radius: 0.5rem; text-align: center; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
-                <a href="https://facebook.com/truongphatcomputer" target="_blank" style="text-decoration: none; color: white;">
+                <a href="https://www.facebook.com/tpcom.hb/" target="_blank" style="text-decoration: none; color: white;">
                     <strong style="display: block; font-size: 0.8rem;">📘 Facebook</strong>
                     <span style="font-size: 0.8rem;">Trường Phát Computer Hòa Bình</span>
                 </a>
         </div>
             <div class="contact-item" style="padding: 0.5rem; border: 1px solid rgba(255,255,255,0.3); border-radius: 0.5rem; text-align: center; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
-                <a href="https://m.me/truongphatcomputer" target="_blank" style="text-decoration: none; color: white;">
+                <a href="https://m.me/tpcom.hb" target="_blank" style="text-decoration: none; color: white;">
                     <strong style="display: block; font-size: 0.8rem;">💬 Messenger</strong>
                     <span style="font-size: 0.8rem;">Chat trực tiếp</span>
                 </a>
