@@ -25,10 +25,55 @@ const games = [
     { id: 'mu-origin', name: 'MU Origin', image: 'images/mu-origin.jpg' }
 ];
 
+// Initialize step navigation event listeners
+function initializeStepNavigation() {
+    document.querySelectorAll('.step').forEach((stepEl, index) => {
+        stepEl.addEventListener('click', function() {
+            const targetStep = index + 1;
+            navigateToStep(targetStep);
+        });
+    });
+}
+
+// Function để cập nhật trạng thái clickable của các step
+function updateStepStates() {
+    const steps = document.querySelectorAll('.step');
+    
+    steps.forEach((stepEl, index) => {
+        const stepNumber = index + 1;
+        stepEl.classList.remove('disabled');
+        
+        // Step 1 luôn clickable
+        if (stepNumber === 1) {
+            return;
+        }
+        
+        // Step 2 chỉ clickable khi đã chọn budget
+        if (stepNumber === 2 && !selectedBudget) {
+            stepEl.classList.add('disabled');
+            return;
+        }
+        
+        // Step 3 chỉ clickable khi đã chọn budget và CPU
+        if (stepNumber === 3 && (!selectedBudget || !selectedCPU)) {
+            stepEl.classList.add('disabled');
+            return;
+        }
+        
+        // Step 4 chỉ clickable khi đã hoàn thành tất cả
+        if (stepNumber === 4 && (!selectedBudget || !selectedCPU || !selectedGame)) {
+            stepEl.classList.add('disabled');
+            return;
+        }
+    });
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
     updateBudgetDisplay();
     loadGames();
+    initializeStepNavigation();
+    updateStepStates();
     console.log('🚀 Trường Phát Computer PC Builder initialized');
     
     // Setup budget slider
@@ -37,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
         budgetSlider.addEventListener('input', function(e) {
             selectedBudget = parseInt(e.target.value);
             updateBudgetDisplay();
+            updateStepStates(); // Cập nhật trạng thái step khi thay đổi budget
         });
     }
 });
@@ -60,6 +106,7 @@ function selectCPU(cpu) {
         selectedOption.classList.add('selected');
     }
     
+    updateStepStates(); // Cập nhật trạng thái step khi chọn CPU
     console.log(`✅ CPU selected: ${cpu}`);
 }
 
@@ -87,6 +134,7 @@ function selectGame(gameId) {
         selectedOption.classList.add('selected');
     }
     
+    updateStepStates(); // Cập nhật trạng thái step khi chọn game
     const gameName = games.find(g => g.id === gameId)?.name || gameId;
     console.log(`✅ Game selected: ${gameName}`);
 }
@@ -135,6 +183,59 @@ function showStep(step) {
             stepEl.classList.remove('active');
         }
     });
+    
+    currentStep = step;
+    
+    // Load games nếu đang ở step 3
+    if (step === 3) {
+        loadGames();
+    }
+    
+    // Load component selectors nếu đang ở step 4
+    if (step === 4) {
+        loadComponentSelectors();
+    }
+}
+
+// Function để navigate đến step cụ thể
+function navigateToStep(targetStep) {
+    // Kiểm tra điều kiện để có thể chuyển step
+    if (targetStep === 1) {
+        // Luôn cho phép quay lại step 1
+        showStep(1);
+        return;
+    }
+    
+    if (targetStep === 2) {
+        // Cho phép đến step 2 nếu đã chọn budget
+        if (selectedBudget) {
+            showStep(2);
+        } else {
+            alert('⚠️ Vui lòng chọn ngân sách trước!');
+        }
+        return;
+    }
+    
+    if (targetStep === 3) {
+        // Cho phép đến step 3 nếu đã chọn budget và CPU
+        if (selectedBudget && selectedCPU) {
+            showStep(3);
+        } else {
+            alert('⚠️ Vui lòng hoàn thành bước chọn ngân sách và CPU trước!');
+        }
+        return;
+    }
+    
+    if (targetStep === 4) {
+        // Cho phép đến step 4 nếu đã hoàn thành các bước trước
+        if (selectedBudget && selectedCPU && selectedGame) {
+            generateConfiguration();
+            showStep(4);
+        } else {
+            alert('⚠️ Vui lòng hoàn thành tất cả các bước trước!');
+        }
+        return;
+    }
 }
 
 function generateConfiguration() {
