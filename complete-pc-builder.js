@@ -1083,7 +1083,13 @@ function saveImageHD() {
     // Ẩn buttons và header khi save ảnh
     const actionButtons = element.querySelectorAll('button');
     const headerWithButtons = element.querySelector('div[style*="background: linear-gradient(135deg, #dc2626, #b91c1c)"]');
+    const saveImageButton = element.querySelector('button[onclick*="saveImageHD"]');
+    const printButton = element.querySelector('button[onclick*="printConfiguration"]');
     const originalButtonsHTML = [];
+    
+    // Ẩn cụ thể các nút Lưu Ảnh HD và In Cấu Hình
+    if (saveImageButton) saveImageButton.style.display = 'none';
+    if (printButton) printButton.style.display = 'none';
     
     actionButtons.forEach((btn, index) => {
         originalButtonsHTML[index] = btn.outerHTML;
@@ -1275,6 +1281,10 @@ function saveImageHD() {
                 btn.style.display = '';
             });
             
+            // Restore cụ thể các nút Lưu Ảnh HD và In Cấu Hình
+            if (saveImageButton) saveImageButton.style.display = '';
+            if (printButton) printButton.style.display = '';
+            
             if (headerWithButtons) {
                 headerWithButtons.style.display = '';
             }
@@ -1292,6 +1302,10 @@ function saveImageHD() {
             actionButtons.forEach((btn, index) => {
                 btn.style.display = '';
             });
+            
+            // Restore cụ thể các nút Lưu Ảnh HD và In Cấu Hình on error
+            if (saveImageButton) saveImageButton.style.display = '';
+            if (printButton) printButton.style.display = '';
             
             if (headerWithButtons) {
                 headerWithButtons.style.display = '';
