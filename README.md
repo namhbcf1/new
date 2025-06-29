@@ -9,7 +9,7 @@ Truy cập: **https://namhbcf1.github.io/new/**
 ## ✨ Tính năng chính
 
 ### 🎯 Cấu hình thông minh
-- **Chọn ngân sách**: 3-50 triệu VND
+- **Chọn ngân sách**: 3-30 triệu VND
 - **Chọn CPU**: Intel hoặc AMD  
 - **Chọn game**: Tối ưu cho từng game cụ thể
 - **Tương thích tự động**: Mainboard, RAM, Cooler phù hợp với CPU đã chọn
@@ -34,7 +34,7 @@ Truy cập: **https://namhbcf1.github.io/new/**
 ### 💼 Thông tin kinh doanh
 - **Công ty**: TRƯỜNG PHÁT COMPUTER HÒA BÌNH
 - **Địa chỉ**: Hòa Bình
-- **Hotline**: 0123456789
+- **Hotline**: 0836768597
 - **Tài khoản**: NGUYÊN THÀNH NAM - MB Bank
 
 ## 🛠️ Cài đặt
@@ -96,8 +96,8 @@ npm start
 
 ## 📞 Liên hệ hỗ trợ
 
-- **📱 Hotline**: 0123456789
-- **💬 Zalo**: 0123456789  
+- **📱 Hotline**: 0836768597
+- **💬 Zalo**: 0836768597  
 - **📘 Facebook**: Trường Phát Computer
 - **💌 Messenger**: m.me/truongphatcomputer
 
