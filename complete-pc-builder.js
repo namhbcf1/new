@@ -178,6 +178,11 @@ function generateConfiguration() {
             console.warn('⚠️ Using fallback configuration');
         }
     }
+    
+    // Không tự động thêm HDD và Monitor - để user tự chọn
+    console.log('⚙️ Configuration ready - HDD and Monitor optional');
+    
+    console.log('🎯 Final config with all components:', currentConfig);
 }
 
 function getAvailableBudgets() {
@@ -228,8 +233,6 @@ function generateFallbackConfig() {
             vga: "750ti",
             ram: "D38G",
             ssd: "sata-sstc-256",
-            hdd: "wd-blue-1tb",
-            monitor: "dell-s2725h",
             case: "gaming-start-ga3fg",
             cpuCooler: "STOCK",
             psu: "350W"
@@ -239,8 +242,6 @@ function generateFallbackConfig() {
             vga: "750ti",
             ram: "D38G",
             ssd: "sata-sstc-256",
-            hdd: "wd-blue-1tb",
-            monitor: "dell-s2725h",
             case: "gaming-start-ga3fg",
             cpuCooler: "STOCK",
             psu: "350W"
@@ -252,8 +253,6 @@ function generateFallbackConfig() {
             vga: "1660s",
             ram: "cosair-16",
             ssd: "sstc-256",
-            hdd: "wd-blue-1tb",
-            monitor: "duan-dt-v2218s",
             case: "GA",
             cpuCooler: "2ongdong",
             psu: "DT660"
@@ -263,8 +262,6 @@ function generateFallbackConfig() {
             vga: "1660s",
             ram: "cosair-16",
             ssd: "sstc-256",
-            hdd: "wd-blue-1tb",
-            monitor: "duan-dt-v2218s",
             case: "GA",
             cpuCooler: "2ongdong",
             psu: "DT660"
@@ -276,8 +273,6 @@ function generateFallbackConfig() {
             vga: "3070",
             ram: "cosair-16",
             ssd: "crucial-500",
-            hdd: "wd-blue-2tb",
-            monitor: "lg-ultragear-24gs50f-b",
             case: "GA",
             cpuCooler: "CR1000",
             psu: "VSP750"
@@ -287,8 +282,6 @@ function generateFallbackConfig() {
             vga: "3070",
             ram: "cosair-16",
             ssd: "crucial-500",
-            hdd: "wd-blue-2tb",
-            monitor: "lg-ultragear-24gs50f-b",
             case: "GA",
             cpuCooler: "CR1000",
             psu: "VSP750"
@@ -300,8 +293,6 @@ function generateFallbackConfig() {
             vga: "4070",
             ram: "cosair-32",
             ssd: "crucial-1tb",
-            hdd: "seagate-ironwolf-pro-4tb",
-            monitor: "asus-proart-pa248qv",
             case: "GA",
             cpuCooler: "TMR120SE",
             psu: "COSAIR850"
@@ -311,8 +302,6 @@ function generateFallbackConfig() {
             vga: "4070",
             ram: "cosair-32",
             ssd: "crucial-1tb",
-            hdd: "seagate-ironwolf-pro-4tb",
-            monitor: "asus-proart-pa248qv",
             case: "GA",
             cpuCooler: "TMR120SE",
             psu: "COSAIR850"
@@ -502,8 +491,10 @@ function updateComponent(componentType, componentId) {
     // Reload selectors để update compatibility
     loadComponentSelectors();
     
-    // Auto-update display
-    displayFinalConfiguration();
+    // Auto-update display với delay để đảm bảo DOM update
+    setTimeout(() => {
+        displayFinalConfiguration();
+    }, 50);
 }
 
 function resetDependentComponents(changedComponent) {
@@ -635,15 +626,15 @@ function displayFinalConfiguration() {
         <table class="config-table" style="width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 1rem; overflow: hidden;">
             <thead>
                 <tr>
-                    <th style="padding: 1rem; text-align: center; font-weight: bold; font-size: 0.75rem;">STT</th>
-                    <th style="padding: 1rem; text-align: center; font-weight: bold; font-size: 0.75rem;">HÌNH ẢNH</th>
-                    <th style="padding: 1rem; text-align: center; font-weight: bold; font-size: 0.75rem;">TÊN, MÃ, LOẠI LINH KIỆN</th>
-                    <th style="padding: 1rem; text-align: center; font-weight: bold; font-size: 0.75rem;">ĐVT</th>
-                    <th style="padding: 1rem; text-align: center; font-weight: bold; font-size: 0.75rem;">SỐ LƯỢNG</th>
-                    <th style="padding: 1rem; text-align: center; font-weight: bold; font-size: 0.75rem;">ĐƠN GIÁ</th>
-                    <th style="padding: 1rem; text-align: center; font-weight: bold; font-size: 0.75rem;">THÀNH TIỀN</th>
-                    <th style="padding: 1rem; text-align: center; font-weight: bold; font-size: 0.75rem;">BẢO HÀNH</th>
-                    <th style="padding: 1rem; text-align: center; font-weight: bold; font-size: 0.75rem;">GHI CHÚ</th>
+                    <th style="padding: 0.65rem; text-align: center; font-weight: bold; font-size: 0.65rem;">STT</th>
+                    <th style="padding: 0.65rem; text-align: center; font-weight: bold; font-size: 0.65rem;">HÌNH ẢNH</th>
+                    <th style="padding: 0.65rem; text-align: center; font-weight: bold; font-size: 0.65rem;">TÊN, MÃ, LOẠI LINH KIỆN</th>
+                    <th style="padding: 0.65rem; text-align: center; font-weight: bold; font-size: 0.65rem;">ĐVT</th>
+                    <th style="padding: 0.65rem; text-align: center; font-weight: bold; font-size: 0.65rem;">SỐ LƯỢNG</th>
+                    <th style="padding: 0.65rem; text-align: center; font-weight: bold; font-size: 0.65rem;">ĐƠN GIÁ</th>
+                    <th style="padding: 0.65rem; text-align: center; font-weight: bold; font-size: 0.65rem;">THÀNH TIỀN</th>
+                    <th style="padding: 0.65rem; text-align: center; font-weight: bold; font-size: 0.65rem;">BẢO HÀNH</th>
+                    <th style="padding: 0.65rem; text-align: center; font-weight: bold; font-size: 0.65rem;">GHI CHÚ</th>
                 </tr>
             </thead>
             <tbody>`;
@@ -667,8 +658,8 @@ function displayFinalConfiguration() {
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">1</td>
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #dc2626;">${formatPrice(cpu.price)}</td>
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">${formatPrice(cpu.price)}</td>
-                    <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">36 tháng</td>
-                    <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">NEW</td>
+                    <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">${cpu.warranty || '36 tháng'}</td>
+                    <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">${cpu.condition || 'NEW'}</td>
                 </tr>`;
         }
     }
@@ -689,8 +680,8 @@ function displayFinalConfiguration() {
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">1</td>
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #dc2626;">${formatPrice(mainboard.price)}</td>
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">${formatPrice(mainboard.price)}</td>
-                    <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">36 tháng</td>
-                    <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">NEW</td>
+                    <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">${mainboard.warranty || '36 tháng'}</td>
+                    <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">${mainboard.condition || 'NEW'}</td>
                 </tr>`;
         }
     }
@@ -711,8 +702,8 @@ function displayFinalConfiguration() {
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">1</td>
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #dc2626;">${formatPrice(ram.price)}</td>
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">${formatPrice(ram.price)}</td>
-                    <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">36 tháng</td>
-                    <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">NEW</td>
+                    <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">${ram.warranty || '36 tháng'}</td>
+                    <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">${ram.condition || 'NEW'}</td>
         </tr>`;
         }
     }
@@ -733,8 +724,8 @@ function displayFinalConfiguration() {
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">1</td>
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #dc2626;">${formatPrice(ssd.price)}</td>
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">${formatPrice(ssd.price)}</td>
-                    <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">36 tháng</td>
-                    <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">NEW</td>
+                    <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">${ssd.warranty || '36 tháng'}</td>
+                    <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">${ssd.condition || 'NEW'}</td>
         </tr>`;
         }
     }
@@ -755,8 +746,8 @@ function displayFinalConfiguration() {
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">1</td>
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #dc2626;">${formatPrice(vga.price)}</td>
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">${formatPrice(vga.price)}</td>
-                    <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">36 tháng</td>
-                    <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">NEW</td>
+                    <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">${vga.warranty || '36 tháng'}</td>
+                    <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">${vga.condition || 'NEW'}</td>
                 </tr>`;
         }
     }
@@ -777,8 +768,8 @@ function displayFinalConfiguration() {
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">1</td>
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #dc2626;">${formatPrice(caseItem.price)}</td>
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">${formatPrice(caseItem.price)}</td>
-                    <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">12 tháng</td>
-                    <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">NEW</td>
+                    <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">${caseItem.warranty || '12 tháng'}</td>
+                    <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">${caseItem.condition || 'NEW'}</td>
                 </tr>`;
         }
     }
@@ -799,8 +790,8 @@ function displayFinalConfiguration() {
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">1</td>
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #dc2626;">${formatPrice(cooler.price)}</td>
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">${formatPrice(cooler.price)}</td>
-                    <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">12 tháng</td>
-                    <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">NEW</td>
+                    <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">${cooler.warranty || '12 tháng'}</td>
+                    <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">${cooler.condition || 'NEW'}</td>
                 </tr>`;
         }
     }
@@ -821,8 +812,8 @@ function displayFinalConfiguration() {
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">1</td>
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #dc2626;">${formatPrice(psu.price)}</td>
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">${formatPrice(psu.price)}</td>
-                    <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">30 tháng</td>
-                    <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">NEW</td>
+                    <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">${psu.warranty || '36 tháng'}</td>
+                    <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">${psu.condition || 'NEW'}</td>
                 </tr>`;
         }
     }
@@ -843,8 +834,8 @@ function displayFinalConfiguration() {
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">1</td>
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #dc2626;">${formatPrice(hdd.price)}</td>
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">${formatPrice(hdd.price)}</td>
-                    <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">36 tháng</td>
-                    <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">NEW</td>
+                    <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">${hdd.warranty || '36 tháng'}</td>
+                    <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">${hdd.condition || 'NEW'}</td>
                 </tr>`;
         }
     }
@@ -865,8 +856,8 @@ function displayFinalConfiguration() {
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">1</td>
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #dc2626;">${formatPrice(monitor.price)}</td>
                     <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">${formatPrice(monitor.price)}</td>
-                    <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">36 tháng</td>
-                    <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">NEW</td>
+                    <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">${monitor.warranty || '36 tháng'}</td>
+                    <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">${monitor.condition || 'NEW'}</td>
                 </tr>`;
         }
     }
@@ -881,12 +872,109 @@ function displayFinalConfiguration() {
                         <span style="font-size: 1.1rem;">VNĐ</span>
                     </div>
                 </td>
-                <td colspan="2" style="padding: 1.5rem; text-align: center; font-size: 0.9rem; color: #fbbf24; font-weight: bold;">HOÀN THIỆN</td>
+                <td colspan="2" style="padding: 1.5rem; text-align: center; font-size: 0.9rem; color: #fbbf24; font-weight: bold;"></td>
         </tr>
         </tbody>
     </table>`;
 
     document.getElementById('final-config-table').innerHTML = tableHTML;
+    
+    // Đảm bảo hiển thị đầy đủ HDD và Monitor ngay sau khi tạo bảng
+    setTimeout(() => {
+        const table = document.querySelector('#final-config-table table tbody');
+        if (table && currentConfig) {
+            let hasHDD = false;
+            let hasMonitor = false;
+            
+            // Kiểm tra xem đã có HDD và Monitor chưa
+            const rows = table.querySelectorAll('tr:not(#total-row):not(.total-row-display)');
+            rows.forEach(row => {
+                const text = row.textContent;
+                if (text.includes('HDD')) hasHDD = true;
+                if (text.includes('Monitor')) hasMonitor = true;
+            });
+            
+            let stt = rows.length + 1;
+            
+            // Nếu thiếu HDD, thêm vào
+            if (!hasHDD && currentConfig.hdd) {
+                const hdd = getComponentData('hdd', currentConfig.hdd);
+                if (hdd) {
+                    const hddRow = document.createElement('tr');
+                    hddRow.style.borderBottom = '1px solid #e5e7eb';
+                    hddRow.innerHTML = `
+                        <td style="padding: 1rem; text-align: center; font-weight: bold; color: #dc2626;">${stt++}</td>
+                        <td style="padding: 1rem; text-align: center;"><img src="${hdd.image}" style="width: 45px; height: 45px; object-fit: cover; border-radius: 0.5rem; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/></td>
+                        <td style="padding: 1rem; text-align: left; font-weight: 500;">
+                                                         <div style="font-weight: bold; color: #ffffff; margin-bottom: 0.25rem; font-size: 1.1rem;">HDD</div>
+                             <div style="color: #ffffff; font-size: 1rem; font-weight: 600;">${hdd.name}</div>
+                             <div style="font-size: 0.9rem; color: #e5e7eb; font-weight: 500;">Thương hiệu: ${hdd.brand}</div>
+                        </td>
+                        <td style="padding: 1rem; text-align: center; color: #ef4444; font-weight: bold;">Chiếc</td>
+                        <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">1</td>
+                        <td style="padding: 1rem; text-align: center; font-weight: bold; color: #dc2626;">${formatPrice(hdd.price)}</td>
+                        <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">${formatPrice(hdd.price)}</td>
+                        <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">${hdd.warranty || '36 tháng'}</td>
+                        <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">${hdd.condition || 'NEW'}</td>
+                    `;
+                    
+                    // Thêm trước dòng tổng cộng
+                    const totalRow = table.querySelector('#total-row, .total-row-display');
+                    if (totalRow) {
+                        table.insertBefore(hddRow, totalRow);
+                    } else {
+                        table.appendChild(hddRow);
+                    }
+                }
+            }
+            
+            // Nếu thiếu Monitor, thêm vào
+            if (!hasMonitor && currentConfig.monitor) {
+                const monitor = getComponentData('monitor', currentConfig.monitor);
+                if (monitor) {
+                    const monitorRow = document.createElement('tr');
+                    monitorRow.style.borderBottom = '1px solid #e5e7eb';
+                    monitorRow.innerHTML = `
+                        <td style="padding: 1rem; text-align: center; font-weight: bold; color: #dc2626;">${stt++}</td>
+                        <td style="padding: 1rem; text-align: center;"><img src="${monitor.image}" style="width: 45px; height: 45px; object-fit: cover; border-radius: 0.5rem; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/></td>
+                        <td style="padding: 1rem; text-align: left; font-weight: 500;">
+                                                         <div style="font-weight: bold; color: #ffffff; margin-bottom: 0.25rem; font-size: 1.1rem;">Monitor</div>
+                             <div style="color: #ffffff; font-size: 1rem; font-weight: 600;">${monitor.name}</div>
+                             <div style="font-size: 0.9rem; color: #e5e7eb; font-weight: 500;">Thương hiệu: ${monitor.brand}</div>
+                        </td>
+                        <td style="padding: 1rem; text-align: center; color: #ef4444; font-weight: bold;">Chiếc</td>
+                        <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">1</td>
+                        <td style="padding: 1rem; text-align: center; font-weight: bold; color: #dc2626;">${formatPrice(monitor.price)}</td>
+                        <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">${formatPrice(monitor.price)}</td>
+                        <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">${monitor.warranty || '36 tháng'}</td>
+                        <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">${monitor.condition || 'NEW'}</td>
+                    `;
+                    
+                    // Thêm trước dòng tổng cộng
+                    const totalRow = table.querySelector('#total-row, .total-row-display');
+                    if (totalRow) {
+                        table.insertBefore(monitorRow, totalRow);
+                    } else {
+                        table.appendChild(monitorRow);
+                    }
+                }
+            }
+            
+            // Cập nhật lại tổng cộng
+            const updatedTotal = getTotalPrice();
+            const totalRows = table.querySelectorAll('#total-row, .total-row-display');
+            totalRows.forEach(row => {
+                const totalCell = row.querySelector('td:nth-child(7)');
+                if (totalCell) {
+                    totalCell.innerHTML = `
+                        <div style="text-align: center; line-height: 1.2; padding: 0.3rem; background: linear-gradient(135deg, #fbbf24, #f59e0b); border-radius: 0.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <span style="font-size: 1.8rem; font-weight: 900; color: #92400e; text-shadow: 0 1px 2px rgba(255,255,255,0.8);">${new Intl.NumberFormat('vi-VN').format(updatedTotal)}</span><span style="font-size: 1.3rem; font-weight: 700; color: #78350f; margin-left: 0.2rem; text-shadow: 0 1px 2px rgba(255,255,255,0.8);">VNĐ</span>
+                        </div>
+                    `;
+                }
+            });
+        }
+    }, 200);
     
     // Thêm phần liên hệ sau component selector
     addContactSectionAfterComponents();
@@ -992,8 +1080,9 @@ function saveImageHD() {
         return;
     }
 
-    // Ẩn buttons và hiển thị contact info
+    // Ẩn buttons và header khi save ảnh
     const actionButtons = element.querySelectorAll('button');
+    const headerWithButtons = element.querySelector('div[style*="background: linear-gradient(135deg, #dc2626, #b91c1c)"]');
     const originalButtonsHTML = [];
     
     actionButtons.forEach((btn, index) => {
@@ -1001,16 +1090,118 @@ function saveImageHD() {
         btn.style.display = 'none';
     });
     
-    // Đảm bảo tổng cộng có class đúng và nổi bật
+    // Ẩn cả header có chứa buttons
+    if (headerWithButtons) {
+        headerWithButtons.style.display = 'none';
+    }
+    
+    // Đảm bảo có đầy đủ tất cả components trong ảnh lưu - refresh toàn bộ
+    // Xóa tất cả và tạo lại để đảm bảo đầy đủ
+    const tableContainer = element.querySelector('table');
+    if (tableContainer && currentConfig) {
+        // Force refresh lại toàn bộ bảng với tất cả components
+        displayFinalConfiguration();
+        
+        // Đợi DOM update xong
+        setTimeout(() => {
+            const updatedTable = element.querySelector('table tbody');
+            if (updatedTable) {
+                // Đảm bảo có tất cả 10+ components
+                let componentCount = 0;
+                const rows = updatedTable.querySelectorAll('tr:not(#total-row):not(.total-row-display)');
+                componentCount = rows.length;
+                
+                console.log(`📊 Component count in save image: ${componentCount}`);
+                
+                // Nếu vẫn thiếu components, thêm thủ công
+                if (componentCount < 9) { // Ít nhất 9 components chính
+                    const components = ['cpu', 'mainboard', 'ram', 'ssd', 'vga', 'case', 'cpuCooler', 'psu', 'hdd', 'monitor'];
+                    let stt = componentCount + 1;
+                    
+                    components.forEach(compType => {
+                        if (currentConfig[compType]) {
+                            // Kiểm tra xem component này đã có trong bảng chưa
+                            let exists = false;
+                            rows.forEach(row => {
+                                const text = row.textContent.toLowerCase();
+                                if ((compType === 'cpu' && text.includes('cpu')) ||
+                                    (compType === 'mainboard' && text.includes('mainboard')) ||
+                                    (compType === 'ram' && text.includes('ram')) ||
+                                    (compType === 'ssd' && text.includes('ssd')) ||
+                                    (compType === 'vga' && text.includes('vga')) ||
+                                    (compType === 'case' && text.includes('case')) ||
+                                    (compType === 'cpuCooler' && (text.includes('tản nhiệt') || text.includes('cooler'))) ||
+                                    (compType === 'psu' && text.includes('nguồn')) ||
+                                    (compType === 'hdd' && text.includes('hdd')) ||
+                                    (compType === 'monitor' && text.includes('monitor'))) {
+                                    exists = true;
+                                }
+                            });
+                            
+                            if (!exists) {
+                                const compData = getComponentData(compType, currentConfig[compType]);
+                                if (compData) {
+                                    const newRow = document.createElement('tr');
+                                    newRow.style.borderBottom = '1px solid #e5e7eb';
+                                    
+                                    const displayName = compType === 'cpuCooler' ? 'Tản Nhiệt CPU' : 
+                                                      compType === 'psu' ? 'Nguồn' :
+                                                      compType === 'mainboard' ? 'Mainboard' :
+                                                      compType.toUpperCase();
+                                    
+                                    newRow.innerHTML = `
+                                        <td style="padding: 1rem; text-align: center; font-weight: bold; color: #dc2626;">${stt++}</td>
+                                        <td style="padding: 1rem; text-align: center;"><img src="${compData.image}" style="width: 45px; height: 45px; object-fit: cover; border-radius: 0.5rem; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/></td>
+                                        <td style="padding: 1rem; text-align: left; font-weight: 500;">
+                                                                     <div style="font-weight: bold; color: #ffffff; margin-bottom: 0.25rem; font-size: 1.1rem;">${displayName}</div>
+                         <div style="color: #ffffff; font-size: 1rem; font-weight: 600;">${compData.name}</div>
+                         <div style="font-size: 0.9rem; color: #e5e7eb; font-weight: 500;">Thương hiệu: ${compData.brand}</div>
+                                        </td>
+                                        <td style="padding: 1rem; text-align: center; color: #ef4444; font-weight: bold;">Chiếc</td>
+                                        <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">1</td>
+                                        <td style="padding: 1rem; text-align: center; font-weight: bold; color: #dc2626;">${formatPrice(compData.price)}</td>
+                                        <td style="padding: 1rem; text-align: center; font-weight: bold; color: #059669;">${formatPrice(compData.price)}</td>
+                                        <td style="padding: 1rem; text-align: center; color: #84cc16; font-weight: bold;">${compData.warranty || '36 tháng'}</td>
+                                        <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: bold;">${compData.condition || 'NEW'}</td>
+                                    `;
+                                    
+                                    // Thêm trước dòng tổng cộng
+                                    const totalRow = updatedTable.querySelector('#total-row, .total-row-display');
+                                    if (totalRow) {
+                                        updatedTable.insertBefore(newRow, totalRow);
+                                    } else {
+                                        updatedTable.appendChild(newRow);
+                                    }
+                                }
+                            }
+                        }
+                    });
+                                 }
+             }
+         }, 300);
+    }
+    
+    // Cập nhật lại tổng cộng sau khi thêm HDD/Monitor
+    const updatedTotal = getTotalPrice();
     const totalRows = element.querySelectorAll('tr[style*="background: linear-gradient(135deg, #059669, #10b981)"], .total-row-display');
     totalRows.forEach(row => {
         row.classList.add('total-row-display');
         row.style.cssText = 'background: linear-gradient(135deg, #059669, #10b981) !important; color: white !important; font-weight: bold; border: 3px solid #047857 !important;';
+        
+        // Cập nhật giá tổng cộng
+        const totalCell = row.querySelector('td:nth-child(7)');
+        if (totalCell) {
+            totalCell.innerHTML = `
+                <div style="text-align: center; line-height: 1.2; padding: 0.3rem; background: linear-gradient(135deg, #fbbf24, #f59e0b); border-radius: 0.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <span style="font-size: 1.8rem; font-weight: 900; color: #92400e; text-shadow: 0 1px 2px rgba(255,255,255,0.8);">${new Intl.NumberFormat('vi-VN').format(updatedTotal)}</span><span style="font-size: 1.3rem; font-weight: 700; color: #78350f; margin-left: 0.2rem; text-shadow: 0 1px 2px rgba(255,255,255,0.8);">VNĐ</span>
+                </div>
+            `;
+        }
     });
     
     // Thêm contact info ngay dưới bảng tổng cộng
-    const table = element.querySelector('table');
-    if (table) {
+    const tableElement = element.querySelector('table');
+    if (tableElement) {
         const contactInfo = document.createElement('div');
         contactInfo.className = 'temp-contact-info';
         
@@ -1048,20 +1239,30 @@ function saveImageHD() {
                 </div>
             </div>
         `;
-        table.parentNode.insertBefore(contactInfo, table.nextSibling);
+        tableElement.parentNode.insertBefore(contactInfo, tableElement.nextSibling);
     }
 
-    // Đợi một chút để DOM update
+    // Đợi lâu hơn để DOM update hoàn toàn
     setTimeout(() => {
-        // Tạo ảnh với độ phân giải FHD 1920x1080
+        // Scroll lên đầu để capture toàn bộ
+        element.scrollTop = 0;
+        
+        // Tính toán kích thước thực tế của element
+        const rect = element.getBoundingClientRect();
+        const actualHeight = element.scrollHeight;
+        const actualWidth = element.scrollWidth;
+        
+        // Tạo ảnh với kích thước phù hợp để capture toàn bộ nội dung
         html2canvas(element, {
-            scale: 1.5, // Tỷ lệ để đạt chất lượng FHD
+            scale: 1.2, // Giảm scale để capture được nhiều nội dung hơn
             useCORS: true,
             allowTaint: true,
             backgroundColor: '#ffffff',
-            width: 1920,
-            height: 1080,
-            timeout: 10000
+            width: Math.max(actualWidth, 1200), // Đảm bảo đủ rộng
+            height: Math.max(actualHeight, 800), // Đảm bảo đủ cao
+            scrollX: 0,
+            scrollY: 0,
+            timeout: 15000
         }).then(canvas => {
             // Tạo link download
             const link = document.createElement('a');
@@ -1069,10 +1270,14 @@ function saveImageHD() {
             link.href = canvas.toDataURL('image/png', 0.9);
             link.click();
 
-            // Restore original buttons
+            // Restore original buttons và header
             actionButtons.forEach((btn, index) => {
                 btn.style.display = '';
             });
+            
+            if (headerWithButtons) {
+                headerWithButtons.style.display = '';
+            }
             
             // Xóa contact info tạm thời
             const tempContact = element.querySelector('.temp-contact-info');
@@ -1083,10 +1288,14 @@ function saveImageHD() {
             console.error('Lỗi tạo ảnh:', error);
             alert('❌ Có lỗi khi tạo ảnh! Vui lòng thử lại.');
             
-            // Restore original buttons on error
+            // Restore original buttons và header on error
             actionButtons.forEach((btn, index) => {
                 btn.style.display = '';
             });
+            
+            if (headerWithButtons) {
+                headerWithButtons.style.display = '';
+            }
             
             // Xóa contact info tạm thời
             const tempContact = element.querySelector('.temp-contact-info');
@@ -1094,7 +1303,7 @@ function saveImageHD() {
                 tempContact.remove();
             }
         });
-    }, 200);
+    }, 500); // Tăng thời gian đợi để đảm bảo tất cả components được thêm
 }
 
 // CSS cho trang chính - header bảng màu sắc tương phản đẹp
@@ -1142,152 +1351,327 @@ const mainPageStyles = `
             background: linear-gradient(135deg, #059669, #10b981) !important;
             color: white !important;
             font-weight: bold;
-            border: 3px solid #047857 !important;
+            border: none !important;
+        }
+        
+        /* Cột thành tiền nổi bật trong main page */
+        .total-row-display td:nth-child(7) {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
+            border: none !important;
+            padding: 0.8rem !important;
         }
         
         .total-row-display td {
             color: white !important;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             font-weight: 900;
-            padding: 1.5rem !important;
+            padding: 1.2rem !important;
+            vertical-align: middle;
+            text-align: center;
+            border: none !important;
+        }
+        
+        /* Làm nổi bật "TỔNG CỘNG" trong main page */
+        .total-row-display td:nth-child(1),
+        .total-row-display td:nth-child(2),
+        .total-row-display td:nth-child(3) {
+            font-size: 1.8rem !important;
+        }
+        
+        /* Làm nổi bật "HOÀN THIỆN" trong main page */
+        .total-row-display td:nth-child(8),
+        .total-row-display td:nth-child(9) {
+            font-size: 1.6rem !important;
         }
     </style>
 `;
 
-// CSS cho in cấu hình - đẹp và chuyên nghiệp
+// CSS cho in cấu hình - đẹp và chuyên nghiệp, vừa 1 trang A4
 const printStyles = `
     <style>
         @page {
             size: A4 portrait;
-            margin: 8mm;
+            margin: 10mm;
         }
         
         body { 
             margin: 0; 
             padding: 0; 
             font-family: 'Times New Roman', Times, serif;
-            font-size: 12px;
-            line-height: 1.4;
+            font-size: 7px;
+            line-height: 0.9;
             color: #000;
+            background: white;
         }
         
         .header {
             text-align: center;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #2563eb;
-            padding-bottom: 10px;
+            margin-bottom: 1px;
+            border-bottom: 1px solid #2563eb;
+            padding-bottom: 0px;
+            position: relative;
+        }
+        
+        .date-info {
+            position: absolute;
+            right: 0;
+            bottom: 1px;
+            font-size: 10px;
+            color: #000;
+            font-style: italic;
         }
         
         .company-name {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             margin: 0;
-            color: #1e40af;
+            color: #000;
         }
         
         .company-address {
             font-size: 12px;
-            margin: 5px 0;
-            color: #374151;
+            margin: 0px 0;
+            color: #000;
         }
         
         .document-title {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
-            margin: 10px 0 5px 0;
-            color: #dc2626;
+            margin: 1px 0 1px 0;
+            color: #000;
             text-transform: uppercase;
         }
         
         .date-info {
-            font-size: 11px;
-            margin: 5px 0;
-            color: #6b7280;
+            font-size: 15px;
+            margin: 0px 0;
+            color: #000;
         }
         
         .customer-info {
-            margin: 15px 0;
+            margin: 1px 0;
             font-size: 12px;
-            line-height: 1.6;
+            line-height: 1.0;
+            color: #000;
         }
         
         table { 
             width: 100%; 
             border-collapse: collapse; 
-            margin-bottom: 15px;
-            font-size: 11px;
+            margin-bottom: 0px;
+            font-size: 7px;
+            table-layout: fixed;
         }
         
         th, td { 
-            border: 1px solid #374151; 
-            padding: 8px 4px; 
+            border: 1px solid #000; 
+            padding: 0px 1px; 
             text-align: center;
             vertical-align: middle;
+            color: #000;
+            height: 10px;
+        }
+        
+        /* Xóa border đen cho các ô trong hàng tổng cộng */
+        .total-row th,
+        .total-row td,
+        .total-row-display th,
+        .total-row-display td {
+            border: none !important;
         }
         
         th { 
-            background: #f3f4f6;
-            color: #222;
+            background: #e5e7eb !important;
+            color: #000 !important;
             font-weight: bold; 
-            font-size: 10px;
+            font-size: 5px;
             text-transform: uppercase;
+            height: 10px;
+            padding: 0px 1px;
         }
+        
+        /* Cột STT */
+        th:nth-child(1), td:nth-child(1) { width: 5%; }
+        /* Cột Hình ảnh */
+        th:nth-child(2), td:nth-child(2) { width: 8%; }
+        /* Cột Tên linh kiện */
+        th:nth-child(3), td:nth-child(3) { width: 30%; }
+        /* Cột ĐVT */
+        th:nth-child(4), td:nth-child(4) { width: 8%; }
+        /* Cột Số lượng */
+        th:nth-child(5), td:nth-child(5) { width: 8%; }
+        /* Cột Đơn giá */
+        th:nth-child(6), td:nth-child(6) { width: 12%; }
+        /* Cột Thành tiền */
+        th:nth-child(7), td:nth-child(7) { width: 12%; }
+        /* Cột Bảo hành */
+        th:nth-child(8), td:nth-child(8) { width: 7%; }
+        /* Cột Ghi chú */
+        th:nth-child(9), td:nth-child(9) { width: 10%; }
         
         td:nth-child(3) { 
             text-align: left; 
-            font-size: 10px;
-            padding-left: 6px;
+            font-size: 5px;
+            padding: 1px 2px;
+            color: #000;
+            line-height: 0.9;
+            height: 10px;
+        }
+        
+        /* Cân bằng 3 dòng text trong component names */
+        td:nth-child(3) div {
+            font-size: 13px !important;
+            font-weight: bold !important;
+            color: #000 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            line-height: 0.8 !important;
         }
         
         img { 
-            max-width: 35px; 
-            max-height: 35px; 
+            max-width: 25px; 
+            max-height: 25px; 
             object-fit: cover;
-            border-radius: 4px;
+            border-radius: 1px;
         }
         
-        /* Tổng cộng nổi bật */
+        /* Tổng cộng nổi bật và cân đối hoàn hảo */
         .total-row {
-            background: #f59e0b !important;
-            color: white !important;
-            font-weight: bold;
-            font-size: 12px;
-            border: 2px solid #d97706 !important;
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0) !important;
+            color: #000 !important;
+            font-weight: 900;
+            border: none !important;
+            text-align: center;
         }
         
         .total-row td {
+            font-size: 8px !important;
+            font-weight: 900 !important;
+            padding: 3px 2px !important;
+            color: #000 !important;
+            height: 16px !important;
+            text-transform: uppercase;
+            text-align: center !important;
+            vertical-align: middle !important;
+            line-height: 1.0;
+            border: none !important;
+        }
+        
+        /* Làm nổi bật cột "TỔNG CỘNG" */
+        .total-row td:nth-child(1),
+        .total-row td:nth-child(2),
+        .total-row td:nth-child(3) {
+            font-size: 18px !important;
+            font-weight: 900 !important;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Làm nổi bật cột "THÀNH TIỀN" - giá tiền */
+        .total-row td:nth-child(7) {
+            font-size: 14px !important;
+            font-weight: 900 !important;
+            color: #92400e !important;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
+            border: none !important;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+            padding: 8px 6px !important;
+            border-radius: 3px;
+        }
+        
+        /* Đảm bảo text trong print in đẹp */
+        .total-row td:nth-child(7) div {
+            border-radius: 3px !important;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
+            border: none !important;
+        }
+        
+        /* Loại bỏ hoàn toàn mọi border đen trong tổng cộng */
+        .total-row *,
+        .total-row-display * {
+            border: none !important;
+        }
+        
+        /* Các cột khác trong tổng cộng */
+        .total-row td:nth-child(4),
+        .total-row td:nth-child(5),
+        .total-row td:nth-child(6) {
+            font-size: 9px !important;
+            opacity: 0.8;
+        }
+        
+        /* Cột BẢO HÀNH và GHI CHÚ nổi bật hơn */
+        .total-row td:nth-child(8),
+        .total-row td:nth-child(9) {
             font-size: 12px !important;
-            font-weight: bold !important;
-            padding: 12px 4px !important;
+            font-weight: 900 !important;
+            opacity: 1;
         }
         
         .warranty-note {
-            margin-top: 15px;
-            font-size: 10px;
+            page-break-before: always;
+            margin-top: 20px;
+            font-size: 14px;
             color: #000;
-            line-height: 1.4;
+            line-height: 1.1;
         }
         
         .bank-info {
-            font-size: 11px;
+            font-size: 14px;
             font-weight: bold;
-            color: #1e40af;
-            margin-bottom: 10px;
+            color: #000;
+            margin-bottom: 1px;
         }
         
         .footer-info {
-            margin-top: 20px;
-            font-size: 11px;
+            margin-top: 30px;
+            padding-top: 20px;
+            font-size: 14px;
             text-align: center;
-            border-top: 1px solid #374151;
-            padding-top: 15px;
+            color: #000;
+            height: 200px;
+        }
+        
+        /* Đảm bảo warranty-note và footer luôn ở trang mới */
+        @media print {
+            .warranty-note {
+                break-before: page;
+                page-break-before: always;
+            }
+            .footer-info {
+                break-before: avoid;
+                page-break-before: avoid;
+            }
+        }
+        
+        /* Component name styles - tất cả 3 dòng đều to và bold như nhau */
+        .component-name {
+            color: #000 !important;
+            font-weight: bold !important;
+            font-size: 5px !important;
+        }
+        
+        .component-brand {
+            color: #000 !important;
+            font-size: 5px !important;
+            font-weight: bold !important;
         }
         
         @media print { 
-            body { margin: 0; }
+            body { 
+                margin: 0; 
+                color: #000 !important;
+                background: white !important;
+            }
             * { 
                 -webkit-print-color-adjust: exact !important;
                 color-adjust: exact !important;
+                color: #000 !important;
+            }
+            table * {
+                color: #000 !important;
+            }
+            .total-row * {
+                color: #000 !important;
             }
         }
     </style>
@@ -1305,23 +1689,49 @@ function printConfiguration() {
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = configContent.innerHTML;
     
-    // Xóa header "TRƯỜNG PHÁT COMPUTER XIN GỬI..."
-    const headerElements = tempDiv.querySelectorAll('h1, .header-title, [style*="TRƯỜNG PHÁT COMPUTER XIN GỬI"]');
+    // Xóa header "TRƯỜNG PHÁT COMPUTER XIN GỬI..." và header đỏ có ngày tháng
+    const headerElements = tempDiv.querySelectorAll('h1, .header-title, [style*="TRƯỜNG PHÁT COMPUTER XIN GỬI"], [style*="background: linear-gradient(135deg, #dc2626, #b91c1c)"]');
     headerElements.forEach(el => el.remove());
     
     // Xóa các nút "Lưu Ảnh HD", "In Cấu Hình"
     const buttons = tempDiv.querySelectorAll('button, .action-buttons, [onclick*="save"], [onclick*="print"]');
     buttons.forEach(el => el.remove());
     
-    // Xóa phần liên hệ và footer trong bản in
-    const contactSections = tempDiv.querySelectorAll('.contact-section, .contact-grid, .footer, [style*="Liên Hệ"], [style*="AMD Build"], [style*="PUBG"], .temp-contact-info, .contact-section-bottom');
+    // Xóa phần liên hệ, footer và các phần không cần thiết trong bản in
+    const contactSections = tempDiv.querySelectorAll('.contact-section, .contact-grid, .footer, [style*="Liên Hệ"], [style*="AMD Build"], [style*="PUBG"], .temp-contact-info, .contact-section-bottom, [style*="margin-top: 1rem; display: flex; justify-content: center"]');
     contactSections.forEach(el => el.remove());
+    
+    // Chuyển tất cả chữ màu trắng thành màu đen
+    const whiteTextElements = tempDiv.querySelectorAll('*');
+    whiteTextElements.forEach(el => {
+        const style = el.getAttribute('style') || '';
+        if (style.includes('color: #ffffff') || style.includes('color: white') || style.includes('color: #f8fafc') || style.includes('color: #e5e7eb')) {
+            el.setAttribute('style', style.replace(/color:\s*(#ffffff|white|#f8fafc|#e5e7eb)/g, 'color: #000'));
+        }
+        
+        // Đặc biệt cho các component names
+        if (el.textContent && (el.textContent.includes('CPU') || el.textContent.includes('Mainboard') || el.textContent.includes('RAM') || el.textContent.includes('SSD') || el.textContent.includes('VGA') || el.textContent.includes('HDD') || el.textContent.includes('Monitor') || el.textContent.includes('Case') || el.textContent.includes('Tản Nhiệt') || el.textContent.includes('Nguồn'))) {
+            el.className += ' component-name';
+        }
+    });
     
     // Đảm bảo tổng cộng có class đúng
     const totalRows = tempDiv.querySelectorAll('tr[style*="background: linear-gradient(135deg, #059669, #10b981)"], .total-row-display');
     totalRows.forEach(row => {
         row.className = 'total-row';
+        
+        // Cập nhật tổng cộng với tất cả components
+        const updatedTotal = getTotalPrice();
+        const totalCell = row.querySelector('td:nth-child(7)');
+        if (totalCell) {
+            totalCell.innerHTML = `
+                <div style="text-align: center; line-height: 1.1; padding: 2px; background: linear-gradient(135deg, #fbbf24, #f59e0b); border-radius: 3px;">
+                    <span style="font-size: 16px; font-weight: 900; color: #92400e;">${new Intl.NumberFormat('vi-VN').format(updatedTotal)}</span><span style="font-size: 11px; font-weight: 700; color: #78350f; margin-left: 2px;">VNĐ</span>
+                </div>
+            `;
+        }
     });
+    
     
     const printWindow = window.open('', '_blank');
     const printContent = `
@@ -1335,10 +1745,10 @@ function printConfiguration() {
         <body>
             <div class="header">
                 <div class="company-name">TRƯỜNG PHÁT COMPUTER HÒA BÌNH</div>
-                <div class="company-address">Số 399 Trần Hưng Đạo - Phường Lam - TP Hòa Bình</div>
+                <div class="company-address">Số 399 Trần Hưng Đạo - Phương Lâm - TP Hòa Bình</div>
                 <div class="company-address">SĐT: 083 676 8597</div>
                 <div class="document-title">PHIẾU XUẤT BÁN HÀNG KIÊM BẢO HÀNH</div>
-                <div class="date-info">Hòa Bình, Ngày ${new Date().getDate()} Tháng ${new Date().getMonth() + 1} Năm ${new Date().getFullYear()}</div>
+                <div class="date-info">Ngày ${new Date().getDate()}/${new Date().getMonth() + 1}/${new Date().getFullYear()}</div>
             </div>
             
             <div class="customer-info">
@@ -1351,28 +1761,44 @@ function printConfiguration() {
             
             <div class="warranty-note">
                 <div class="bank-info">
-                    Chú tài khoản: NGUYÊN THÀNH NAM<br>
-                    STK: 8990124112002 - Ngân Hàng Quân Đội MB Bank
+                    STK: 8990124112002 - NGUYÊN THÀNH NAM - MB Bank
                 </div>
                 
-                <em><strong>Lưu ý:</strong> Thời gian làm việc + Bảo hành sản phẩm Sáng 8:00-12:00 Chiều 14:00-18:00 (Chủ nhật nghỉ)</em><br>
-                
-                <strong>Quy chế khuyến mãi:</strong><br>
-                • Hết thời gian BH, mất phiếu BH, sản phẩm biến dạng, rạy nước, không tem BH, tem không hợp lệ, mờ<br>
-                • Sử dụng người điều khiển ổn định, không đúng quy cách, khách hàng tự ý thay linh kiện, update Bios<br>
-                • Sản phẩm bảo quản không tốt, nhiệt độ cao, khí ẩm, oxy hóa, thấm nước, bụi bẩn, sét, nứt gãy
+                <div style="border: 2px solid #000; padding: 8px; margin: 5px 0; background: #f8f9fa;">
+                    <div style="font-weight: bold; text-align: center; margin-bottom: 5px; font-size: 12px; color: #d97706;">⏰ THỜI GIAN LÀM VIỆC & QUY ĐỊNH BẢO HÀNH</div>
+                    
+                    <div style="margin-bottom: 4px;">
+                        <strong>📅 Giờ làm việc:</strong> Sáng 8:00-12:00, Chiều 14:00-18:00 (Chủ nhật nghỉ)
+                    </div>
+                    
+                    <div style="font-weight: bold; margin: 4px 0; color: #dc2626;">🔧 QUY ĐỊNH BẢO HÀNH:</div>
+                    
+                    <div style="margin-left: 10px; line-height: 1.3;">
+                        <div style="margin-bottom: 2px;">
+                            <strong>1.</strong> ❌ Hết thời gian BH, mất phiếu BH, biến dạng, trầy xước, không có tem BH hợp lệ
+                        </div>
+                        <div style="margin-bottom: 2px;">
+                            <strong>2.</strong> ⚡ Nguồn điện không ổn định, tự ý thay linh kiện, update BIOS, thay đổi kỹ thuật
+                        </div>
+                        <div style="margin-bottom: 2px;">
+                            <strong>3.</strong> 🌡️ Môi trường không tốt: ẩm, oxy hóa, thấm nước, gỉ sét, bụi bẩn, vỡ gãy
+                        </div>
+                    </div>
+                </div>							
+
             </div>
             
-            <div class="footer-info">
-                <div style="display: flex; justify-content: space-between; margin-top: 15px;">
-                    <div style="text-align: center;">
-                        <strong>BÊN MUA</strong><br>
-                        <em>(Ký, họ tên)</em>
+            <div class="footer-info" style="margin-top: 30px; padding-top: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: end; height: 150px;">
+                    <div style="text-align: center; width: 45%;">
+                        <strong style="font-size: 16px;">BÊN MUA</strong><br>
+                        <em style="font-size: 12px;">(Ký, họ tên)</em>
+                        <div style="border-bottom: 1px solid #000; margin: 80px 20px 10px 20px;"></div>
                     </div>
-                    <div style="text-align: center;">
-                        <strong>Hòa Bình, Ngày ${new Date().getDate()} Tháng ${new Date().getMonth() + 1} Năm ${new Date().getFullYear()}</strong><br>
-                        <strong>BÊN BÁN</strong><br>
-                        <em>(Ký, họ tên)</em>
+                    <div style="text-align: center; width: 45%;">
+                        <strong style="font-size: 16px;">BÊN BÁN</strong><br>
+                        <em style="font-size: 12px;">(Ký, họ tên)</em>
+                        <div style="border-bottom: 1px solid #000; margin: 80px 20px 10px 20px;"></div>
                     </div>
                 </div>
             </div>
