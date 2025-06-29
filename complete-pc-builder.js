@@ -1081,19 +1081,23 @@ function saveImageHD() {
     }
 
     // Ẩn buttons và header khi save ảnh
-    const actionButtons = element.querySelectorAll('button');
     const headerWithButtons = element.querySelector('div[style*="background: linear-gradient(135deg, #dc2626, #b91c1c)"]');
-    const saveImageButton = element.querySelector('button[onclick*="saveImageHD"]');
-    const printButton = element.querySelector('button[onclick*="printConfiguration"]');
-    const originalButtonsHTML = [];
     
-    // Ẩn cụ thể các nút Lưu Ảnh HD và In Cấu Hình
-    if (saveImageButton) saveImageButton.style.display = 'none';
-    if (printButton) printButton.style.display = 'none';
+    // Tìm và ẩn tất cả các button trong element
+    const allButtons = element.querySelectorAll('button');
+    const buttonContainers = element.querySelectorAll('div[style*="display: flex; justify-content: center; gap: 1rem"]');
     
-    actionButtons.forEach((btn, index) => {
-        originalButtonsHTML[index] = btn.outerHTML;
+    // Ẩn từng button riêng lẻ
+    allButtons.forEach(btn => {
         btn.style.display = 'none';
+        btn.style.visibility = 'hidden';
+        btn.style.opacity = '0';
+    });
+    
+    // Ẩn container chứa buttons
+    buttonContainers.forEach(container => {
+        container.style.display = 'none';
+        container.style.visibility = 'hidden';
     });
     
     // Ẩn cả header có chứa buttons
@@ -1277,13 +1281,17 @@ function saveImageHD() {
             link.click();
 
             // Restore original buttons và header
-            actionButtons.forEach((btn, index) => {
+            allButtons.forEach(btn => {
                 btn.style.display = '';
+                btn.style.visibility = '';
+                btn.style.opacity = '';
             });
             
-            // Restore cụ thể các nút Lưu Ảnh HD và In Cấu Hình
-            if (saveImageButton) saveImageButton.style.display = '';
-            if (printButton) printButton.style.display = '';
+            // Restore container chứa buttons
+            buttonContainers.forEach(container => {
+                container.style.display = '';
+                container.style.visibility = '';
+            });
             
             if (headerWithButtons) {
                 headerWithButtons.style.display = '';
@@ -1299,13 +1307,17 @@ function saveImageHD() {
             alert('❌ Có lỗi khi tạo ảnh! Vui lòng thử lại.');
             
             // Restore original buttons và header on error
-            actionButtons.forEach((btn, index) => {
+            allButtons.forEach(btn => {
                 btn.style.display = '';
+                btn.style.visibility = '';
+                btn.style.opacity = '';
             });
             
-            // Restore cụ thể các nút Lưu Ảnh HD và In Cấu Hình on error
-            if (saveImageButton) saveImageButton.style.display = '';
-            if (printButton) printButton.style.display = '';
+            // Restore container chứa buttons on error
+            buttonContainers.forEach(container => {
+                container.style.display = '';
+                container.style.visibility = '';
+            });
             
             if (headerWithButtons) {
                 headerWithButtons.style.display = '';
@@ -1686,6 +1698,27 @@ const printStyles = `
             }
             .total-row * {
                 color: #000 !important;
+            }
+            
+            /* Tắt mặc định headers and footers */
+            @page {
+                margin: 10mm;
+                /* Loại bỏ header và footer mặc định của trình duyệt */
+                size: A4 portrait;
+            }
+            
+            /* Tắt background graphics và đảm bảo in sạch */
+            html {
+                -webkit-print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            /* Loại bỏ mọi background image khi in */
+            * {
+                background-image: none !important;
+                box-shadow: none !important;
+                text-shadow: none !important;
             }
         }
     </style>
