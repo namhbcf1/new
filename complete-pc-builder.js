@@ -1588,8 +1588,8 @@ function saveImageHD() {
         }).then(canvas => {
             // Tạo link download
             const link = document.createElement('a');
-            link.download = `Cau-Hinh-PC-TruongPhat-${new Date().toISOString().slice(0,10)}.png`;
-            link.href = canvas.toDataURL('image/png', 0.9);
+            link.download = `Cau-Hinh-PC-TruongPhat-${new Date().toISOString().slice(0,10)}.jpg`;
+            link.href = canvas.toDataURL('image/jpeg', 0.92);
             link.click();
 
             // Restore original buttons và header
