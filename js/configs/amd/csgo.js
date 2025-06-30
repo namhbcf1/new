@@ -1,6 +1,16 @@
 // Cấu hình AMD - csgo
 window.amdConfigs = window.amdConfigs || {};
 window.amdConfigs.csgo = {
+    '3M': {
+        cpu: "3600",
+        mainboard: "JGINYUE-B450",
+        vga: "960",
+        ram: "cosair-8",
+        ssd: "sstc-256",
+        case: "GA3",
+        cpuCooler: "CR1000",
+        psu: "DT660"
+    },
     '7M': {
         cpu: "3600",
         mainboard: "JGINYUE-B450",
@@ -123,7 +133,7 @@ window.amdConfigs.csgo = {
     },
     '19M': {
         cpu: "7600x",
-        mainboard: "JGINYUE-B650",
+        mainboard: "MSI-PRO-B650M-E",
         vga: "4060",
         ram: "tridentz-32-6000",
         ssd: "crucial-500",
@@ -133,7 +143,7 @@ window.amdConfigs.csgo = {
     },
     '20M': {
         cpu: "7600x",
-        mainboard: "JGINYUE-B650",
+        mainboard: "MSI-PRO-B650M-E",
         vga: "3070ti",
         ram: "tridentz-32-6000",
         ssd: "crucial-500",
@@ -143,7 +153,7 @@ window.amdConfigs.csgo = {
     },
     '21M': {
         cpu: "7800x3d",
-        mainboard: "JGINYUE-B650",
+        mainboard: "MSI-PRO-B650M-E",
         vga: "2070s",
         ram: "tridentz-16-6000",
         ssd: "crucial-500",
@@ -153,7 +163,7 @@ window.amdConfigs.csgo = {
     },
     '22M': {
         cpu: "7800x3d",
-        mainboard: "JGINYUE-B650",
+        mainboard: "MSI-PRO-B650M-E",
         vga: "3060ti",
         ram: "tridentz-16-6000",
         ssd: "crucial-500",
@@ -163,7 +173,7 @@ window.amdConfigs.csgo = {
     },
     '23M': {
         cpu: "7800x3d",
-        mainboard: "JGINYUE-B650",
+        mainboard: "MSI-PRO-B650M-E",
         vga: "3070",
         ram: "tridentz-16-6000",
         ssd: "crucial-500",
@@ -173,7 +183,7 @@ window.amdConfigs.csgo = {
     },
     '24M': {
         cpu: "7800x3d",
-        mainboard: "JGINYUE-B650",
+        mainboard: "MSI-PRO-B650M-E",
         vga: "4060",
         ram: "tridentz-16-6000",
         ssd: "crucial-500",
@@ -183,7 +193,7 @@ window.amdConfigs.csgo = {
     },
     '25M': {
         cpu: "7800x3d",
-        mainboard: "JGINYUE-B650",
+        mainboard: "MSI-PRO-B650M-E",
         vga: "4060",
         ram: "tridentz-16-6000",
         ssd: "crucial-1tb",
@@ -193,7 +203,7 @@ window.amdConfigs.csgo = {
     },
     '26M': {
         cpu: "7800x3d",
-        mainboard: "JGINYUE-B650",
+        mainboard: "MSI-PRO-B650M-E",
         vga: "4060",
         ram: "tridentz-32-6000",
         ssd: "crucial-500",
@@ -203,7 +213,7 @@ window.amdConfigs.csgo = {
     },
     '27M': {
         cpu: "7800x3d",
-        mainboard: "JGINYUE-B650",
+        mainboard: "MSI-PRO-B650M-E",
         vga: "3080",
         ram: "tridentz-16-6000",
         ssd: "crucial-500",
@@ -213,7 +223,7 @@ window.amdConfigs.csgo = {
     },
     '28M': {
         cpu: "7800x3d",
-        mainboard: "JGINYUE-B650",
+        mainboard: "MSI-PRO-B650M-E",
         vga: "3080",
         ram: "tridentz-16-6000",
         ssd: "crucial-1tb",
@@ -223,7 +233,7 @@ window.amdConfigs.csgo = {
     },
     '29M': {
         cpu: "7800x3d",
-        mainboard: "JGINYUE-B650",
+        mainboard: "MSI-PRO-B650M-E",
         vga: "3080",
         ram: "tridentz-32-6000",
         ssd: "crucial-500",
@@ -233,7 +243,7 @@ window.amdConfigs.csgo = {
     },
     '30M': {
         cpu: "7800x3d",
-        mainboard: "JGINYUE-B650",
+        mainboard: "MSI-PRO-B650M-E",
         vga: "3080",
         ram: "tridentz-32-6000",
         ssd: "crucial-1tb",

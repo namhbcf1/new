@@ -420,6 +420,21 @@ window.mainboardData = {
         "formFactor": "Micro-ATX",
         "score": 7
     },
+    "MSI-PRO-B650M-E": {
+        "name": "DDR5 - MAINBOARD MSI PRO B650M-E (AM5)",
+        "price": 2600000,
+        "image": "images/msi-pro-b650m-p.jpg",
+        "brand": "MSI",
+        "warranty": "36 tháng",
+        "sockets": ["AM5"], // ĐÃ SỬA: socket -> sockets, giá trị là MẢNG
+        "memoryType": "DDR5",
+        "condition": "NEW",
+        "buss": "6000",
+        "nvmeSlots": 1,
+        "pcieVersion": "4.0",
+        "formFactor": "Micro-ATX",
+        "score": 7
+    },
     "ASUS-TUF-GAMING-B650M-E": {
         "name": "DDR5 - MAINBOARD ASUS TUF GAMING B650M-E (AM5)",
         "price": 3390000,

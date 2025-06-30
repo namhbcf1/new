@@ -19,7 +19,7 @@ window.psuData = {
     },
     "DT660": {
         name: "Nguồn VSP Elite DT660 650W",
-        price: 750000,
+        price: 700000,
         image: "images/vsp-elite-dt660-650w.jpg",
         brand: "VSP",
         warranty: "36 tháng",

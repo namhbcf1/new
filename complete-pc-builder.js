@@ -399,22 +399,36 @@ function generateConfiguration() {
     const budgetKey = selectedBudget + 'M';
     console.log(`🔍 Looking for config: ${selectedCPU} - ${selectedGame} - ${budgetKey}`);
     
+    // Debug: Log what configurations are available
+    console.log('🔧 Available AMD configs:', window.amdConfigs ? Object.keys(window.amdConfigs) : 'None');
+    if (window.amdConfigs && window.amdConfigs[selectedGame]) {
+        console.log(`🔧 Available budgets for ${selectedGame}:`, Object.keys(window.amdConfigs[selectedGame]));
+        console.log(`🔧 Config for ${budgetKey}:`, window.amdConfigs[selectedGame][budgetKey]);
+    }
+    
     // Get configuration from loaded data
     let configData = null;
     
     if (selectedCPU === 'intel' && window.intelConfigs && window.intelConfigs[selectedGame]) {
         configData = window.intelConfigs[selectedGame][budgetKey];
+        console.log('🔧 Intel config found:', configData);
     } else if (selectedCPU === 'amd' && window.amdConfigs && window.amdConfigs[selectedGame]) {
         configData = window.amdConfigs[selectedGame][budgetKey];
+        console.log('🔧 AMD config found:', configData);
+        console.log('🔧 AMD config CPU specifically:', configData ? configData.cpu : 'undefined');
+        console.log('🔧 Complete 15M object:', JSON.stringify(window.amdConfigs[selectedGame]['15M'], null, 2));
     }
     
     if (configData) {
         currentConfig = { ...configData };
         console.log('✅ Configuration loaded:', currentConfig);
     } else {
+        console.log('❌ No configuration found, looking for closest budget...');
         // Try to find closest budget
         const availableBudgets = getAvailableBudgets();
+        console.log('🔧 Available budgets:', availableBudgets);
         const closestBudget = findClosestBudget(selectedBudget, availableBudgets);
+        console.log('🔧 Closest budget:', closestBudget);
         
         if (closestBudget) {
             const closestKey = closestBudget + 'M';

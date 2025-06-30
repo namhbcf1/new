@@ -32,7 +32,7 @@ window.cpuData = {
     },
     "10100f": {
         name: "Intel Core i3-10100f",
-        price: 1100000,
+        price: 1000000,
         image: "images/intel-core-i3-10100f.jpg",
         brand: "Intel",
         warranty: "12 tháng",
@@ -122,7 +122,7 @@ window.cpuData = {
     },
     "6500": {
         name: "Intel Core i5-6500 (Cũ)",
-        price: 900000,
+        price: 700000,
         image: "images/intel-core-i5-6500.jpg",
         brand: "Intel (Cũ)",
         warranty: "1 tháng",
@@ -137,7 +137,7 @@ window.cpuData = {
     },
     "9400f": {
         name: "Intel Core i5-9400f",
-        price: 1100000,
+        price: 1000000,
         image: "images/intel-core-i5-9400f.jpg",
         brand: "Intel",
         warranty: "12 tháng",
@@ -152,7 +152,7 @@ window.cpuData = {
     },
     "10400f": {
         name: "Intel Core i5-10400f",
-        price: 1600000,
+        price: 1400000,
         image: "images/intel-core-i5-10400f.jpg",
         brand: "Intel",
         warranty: "12 tháng",
@@ -287,7 +287,7 @@ window.cpuData = {
     },
     "3600": {
         name: "AMD Ryzen 5 3600 (Cũ)",
-        price: 1600000,
+        price: 1500000,
         image: "images/amd-ryzen-5-3600.jpg",
         brand: "AMD (Cũ)",
         warranty: "1 tháng",
@@ -302,7 +302,7 @@ window.cpuData = {
     },
     "5600": {
         name: "AMD Ryzen 5 5600",
-        price: 2400000,
+        price: 2300000,
         image: "images/amd-ryzen-5-5600.jpg",
         brand: "AMD",
         warranty: "36 tháng",
@@ -317,7 +317,7 @@ window.cpuData = {
     },
     "5600x": {
         name: "AMD Ryzen 5 5600X",
-        price: 2800000,
+        price: 2500000,
         image: "images/amd-ryzen-5-5600.jpg",
         brand: "AMD",
         warranty: "36 tháng",
@@ -330,8 +330,8 @@ window.cpuData = {
         condition: "NEW",
         score: 8
     },
-    "7500f": {
-        name: "AMD Ryzen 5 7500f",
+    "7500F": {
+        name: "AMD Ryzen 5 7500F",
         price: 3700000,
         image: "images/amd-ryzen-5-7500f.jpg",
         brand: "AMD",
@@ -347,7 +347,7 @@ window.cpuData = {
     },
     "7600x": {
         name: "AMD Ryzen 5 7600X",
-        price: 4800000,
+        price: 4300000,
         image: "images/amd-ryzen-5-7600x-tray.jpg",
         brand: "AMD",
         warranty: "36 tháng",
@@ -362,7 +362,7 @@ window.cpuData = {
     },
     "5700x": {
         name: "AMD Ryzen 7 5700X",
-        price: 3300000,
+        price: 3100000,
         image: "images/amd-ryzen-7-5700x.jpg",
         brand: "AMD",
         warranty: "36 tháng",
@@ -422,7 +422,7 @@ window.cpuData = {
     },
     "7800x3d": {
         name: "AMD Ryzen 7 7800X3D",
-        price: 9490000,
+        price: 8600000,
         image: "images/amd-ryzen-7-7800x3d-tray.jpg",
         brand: "AMD",
         warranty: "36 tháng",
@@ -516,7 +516,7 @@ window.cpuData = {
     },
     "9900x": {
         name: "AMD Ryzen 9 9900X",
-        price: 11900000,
+        price: 10500000,
         image: "images/amd-ryzen-9-9900x.jpg",
         brand: "AMD",
         warranty: "36 tháng",
@@ -535,7 +535,7 @@ window.cpuData = {
     },
     "9800x3d": {
         name: "AMD Ryzen 7 9800X3D",
-        price: 14100000,
+        price: 13100000,
         image: "images/amd-ryzen-7-9800x3d.jpg",
         brand: "AMD",
         warranty: "36 tháng",
@@ -573,7 +573,7 @@ window.cpuData = {
     },
     "9600x": {
         name: "AMD Ryzen 5 9600X",
-        price: 6000000,
+        price: 5200000,
         image: "images/amd-ryzen-5-9600x.jpg",
         brand: "AMD",
         warranty: "36 tháng",

@@ -11,8 +11,8 @@ window.ssdData = {
         speed: "Read 550MB/s, Write 500MB/s",
         score: 5 // Score out of 10 for SATA SSD
     },
-    "sstc-256": {
-        name: "SSD SSTC Oceanic Whitetip NVMe M.2 MAX-III 256GB",
+    "ymtc-256": {
+        name: "SSD YMTC NVMe M.2 MAX-III 256GB",
         price: 600000,
         image: "images/sstc-oceanic-whitetip-256gb.jpg",
         brand: "SSTC",
@@ -22,8 +22,8 @@ window.ssdData = {
         speed: "Read 3100MB/s, Write 2000MB/s",
         score: 7 // Score out of 10 for NVMe Gen3 SSD
     },
-    "sstc-512": {
-        name: "SSD SSTC Oceanic Whitetip NVMe M.2 MAX-III 512GB",
+    "ymtc-512": {
+        name: "SSD YMTC NVMe M.2 MAX-III 512GB",
         price: 900000,
         image: "images/sstc-oceanic-whitetip-512gb.jpg",
         brand: "SSTC",

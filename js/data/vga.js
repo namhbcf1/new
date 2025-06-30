@@ -38,7 +38,7 @@ window.vgaData = {
     },
     "1060-3g": {
         name: "1060 3GB GDDR5 /GIGA/MSI/ASUS GAMING (Cũ)",
-        price: 1800000,
+        price: 1700000,
         image: "images/1060-3gb-msi.jpg",
         brand: "msi",
         warranty: "3 tháng",
@@ -98,7 +98,7 @@ window.vgaData = {
     },
     "2060t": {
         name: "RTX 2060 6GB GDDR6 /GIGA/MSI/ASUS GAMING (Cũ)",
-        price: 3400000,
+        price: 3600000,
         image: "images/rtx-2060-6gb-msi.jpg",
         brand: "msi",
         warranty: "3 tháng",
@@ -110,7 +110,7 @@ window.vgaData = {
     },
     "2070s": {
         name: "RTX 2070 Super 8GB GDDR6 /GIGA/MSI/ASUS GAMING (Cũ)",
-        price: 4500000,
+        price: 4600000,
         image: "images/rtx-2070-super-8gb-msi.jpg",
         brand: "msi",
         warranty: "3 tháng",
@@ -183,6 +183,18 @@ window.vgaData = {
     "2060s": {
         name: "RTX 2060 Super 8GB GDDR6 /GIGA/MSI/ASUS GAMING (Cũ)",
         price: 3900000,
+        image: "images/colorful--rtx-2060-super-8gb.jpg",
+        brand: "Colorful",
+        warranty: "3 tháng",
+        condition: "2ND",
+        vram: "8GB",
+        vram_type: "GDDR6",
+        card_type: "NVIDIA",
+        score: 6
+    },
+    "2070": {
+        name: "RTX 2070 8GB GDDR6 /GIGA/MSI/ASUS GAMING (Cũ)",
+        price: 4200000,
         image: "images/colorful--rtx-2060-super-8gb.jpg",
         brand: "Colorful",
         warranty: "3 tháng",
