@@ -34,6 +34,17 @@ window.cpuCoolerData = {
         sync: "Hỗ trợ đồng bộ với bo mạch chủ thông qua đầu cắm 5V ARGB",
         score: 4 // Thêm điểm số
     },
+    "THAPDOI": {
+        name: "TẢN NHIỆT KHÍ LEOPARD KF620 DGT LED ARGB (ĐEN, 2 THÁP)",
+        price: 7500000,
+        image: "images/kf620.jpg",
+        brand: "LEOPARD",
+        warranty: "12 tháng",
+        condition: "NEW",
+        sockets: ["Intel LGA1700", "LGA1200", "LGA1151", "LGA1155", "LGA1156", "LGA1150", "AMD AM5", "AM4", "AM3+", "AM3"],
+        sync: "Hỗ trợ đồng bộ với bo mạch chủ thông qua đầu cắm 5V ARGB",
+        score: 4 // Thêm điểm số
+    },
     "AIR01": {
         name: "CT-Air 01",
         price: 290000,

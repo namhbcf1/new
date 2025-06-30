@@ -361,7 +361,7 @@ window.mainboardData = {
         "score": 8
     },
     "JGINYUE-B650": {
-        "name": "DDR5 - MAINBOARD JGINYUE B650M-D (AM5)",
+        "name": " MAINBOARD JGINYUE B650M-D (AM5)",
         "price": 1900000,
         "image": "images/jginyue-b650m-d.jpg",
         "brand": "JGINYUE",
@@ -376,7 +376,7 @@ window.mainboardData = {
         "score": 6
     },
     "JGINYUE-B650-PRO": {
-        "name": "DDR5 - MAINBOARD JGINYUE B650M PRO (AM5)",
+        "name": " MAINBOARD JGINYUE B650M PRO (AM5)",
         "price": 2100000,
         "image": "images/jginyue-b650m-pro.jpg",
         "brand": "JGinyue",
@@ -391,7 +391,7 @@ window.mainboardData = {
         "score": 6
     },
     "ASROCK-B650M-HDV-M2": {
-        "name": "DDR5 - MAINBOARD ASRock B650M-HDV/M.2 (AM5)",
+        "name": " MAINBOARD ASRock B650M-HDV/M.2 (AM5)",
         "price": 2790000,
         "image": "images/asrock-b650m-hdv-m2.jpg",
         "brand": "ASRock",
@@ -406,7 +406,7 @@ window.mainboardData = {
         "score": 7
     },
     "MSI-PRO-B650M-P": {
-        "name": "DDR5 - MAINBOARD MSI PRO B650M-P (AM5)",
+        "name": " MAINBOARD MSI PRO B650M-P (AM5)",
         "price": 2990000,
         "image": "images/msi-pro-b650m-p.jpg",
         "brand": "MSI",
@@ -421,7 +421,7 @@ window.mainboardData = {
         "score": 7
     },
     "MSI-PRO-B650M-E": {
-        "name": "DDR5 - MAINBOARD MSI PRO B650M-E (AM5)",
+        "name": " MAINBOARD MSI PRO B650M-E (AM5)",
         "price": 2600000,
         "image": "images/msi-pro-b650m-p.jpg",
         "brand": "MSI",
@@ -435,8 +435,23 @@ window.mainboardData = {
         "formFactor": "Micro-ATX",
         "score": 7
     },
+    "MSI-PRO-B650VC": {
+        "name": " MAINBOARD MSI PRO B650 VC WIFI (AM5)",
+        "price": 2800000,
+        "image": "images/b650vc.jpg",
+        "brand": "MSI",
+        "warranty": "36 tháng",
+        "sockets": ["AM5"], // ĐÃ SỬA: socket -> sockets, giá trị là MẢNG
+        "memoryType": "DDR5",
+        "condition": "NEW",
+        "buss": "6000",
+        "nvmeSlots": 1,
+        "pcieVersion": "4.0",
+        "formFactor": "Micro-ATX",
+        "score": 7
+    },
     "ASUS-TUF-GAMING-B650M-E": {
-        "name": "DDR5 - MAINBOARD ASUS TUF GAMING B650M-E (AM5)",
+        "name": " MAINBOARD ASUS TUF GAMING B650M-E (AM5)",
         "price": 3390000,
         "image": "images/asus-tuf-gaming-b650m-e.jpg",
         "brand": "ASUS",
@@ -451,7 +466,7 @@ window.mainboardData = {
         "score": 8
     },
     "GIGABYTE-B650M-GAMING-PLUS-WIFI": {
-        "name": "DDR5 - MAINBOARD GIGABYTE B650M GAMING PLUS WIFI (AM5)",
+        "name": " MAINBOARD GIGABYTE B650M GAMING PLUS WIFI (AM5)",
         "price": 3290000,
         "image": "images/gigabyte-b650m-gaming-plus-wifi.jpg",
         "brand": "Gigabyte",
@@ -466,7 +481,7 @@ window.mainboardData = {
         "score": 8
     },
     "ASUS-TUF-GAMING-B650M-E-WIFI": {
-        "name": "DDR5 - MAINBOARD ASUS TUF GAMING B650M-E WIFI (AM5)",
+        "name": " MAINBOARD ASUS TUF GAMING B650M-E WIFI (AM5)",
         "price": 3790000,
         "image": "images/asus-tuf-gaming-b650m-e-wifi.jpg",
         "brand": "ASUS",
@@ -481,7 +496,7 @@ window.mainboardData = {
         "score": 8
     },
     "MSI-B650M-GAMING-PLUS-WIFI": {
-        "name": "DDR5 - MAINBOARD MSI B650M GAMING PLUS WIFI (AM5)",
+        "name": " MAINBOARD MSI B650M GAMING PLUS WIFI (AM5)",
         "price": 3890000,
         "image": "images/msi-b650m-gaming-plus-wifi.jpg",
         "brand": "MSI",
@@ -496,7 +511,7 @@ window.mainboardData = {
         "score": 8
     },
     "GIGABYTE-B650M-AORUS-ELITE": {
-        "name": "DDR5 - MAINBOARD GIGABYTE B650M AORUS ELITE (AM5)",
+        "name": " MAINBOARD GIGABYTE B650M AORUS ELITE (AM5)",
         "price": 4290000,
         "image": "images/gigabyte-b650m-aorus-elite.jpg",
         "brand": "Gigabyte",
