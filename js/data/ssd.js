@@ -12,7 +12,7 @@ window.ssdData = {
         score: 5 // Score out of 10 for SATA SSD
     },
     "ymtc-256": {
-        name: "SSD YMTC NVMe M.2 MAX-III 256GB",
+        name: "SSD YMTC NVMe M.2 256GB",
         price: 600000,
         image: "images/sstc-oceanic-whitetip-256gb.jpg",
         brand: "SSTC",
@@ -23,7 +23,7 @@ window.ssdData = {
         score: 7 // Score out of 10 for NVMe Gen3 SSD
     },
     "ymtc-512": {
-        name: "SSD YMTC NVMe M.2 MAX-III 512GB",
+        name: "SSD YMTC NVMe M.2 512GB",
         price: 900000,
         image: "images/sstc-oceanic-whitetip-512gb.jpg",
         brand: "SSTC",
