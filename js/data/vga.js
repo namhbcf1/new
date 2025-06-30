@@ -215,6 +215,17 @@ window.vgaData = {
         vram_type: "GDDR6",
         card_type: "NVIDIA",
         score: 6
+    },"6600": {
+        name: "ASROCK RX 6600 8GB GDDR6 (NEW)",
+        price: 5300000,
+        image: "images/6600.jpg",
+        brand: "ASROCK",
+        warranty: "36 tháng",
+        condition: "NEW",
+        vram: "8GB",
+        vram_type: "GDDR6",
+        card_type: "AMD",
+        score: 6
     },
     "3060-12g-new": {
         name: "Gigabyte RTX 3060 GAMING OC 12GB (NEW)",
