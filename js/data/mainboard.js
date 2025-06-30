@@ -288,20 +288,6 @@ window.mainboardData = {
         "formFactor": "Micro-ATX",
         "score": 7
     },
-    "GIGA-B450": {
-        "name": "Gigabyte B450M DS3H V2 (AM4)",
-        "price": 1400000,
-        "image": "images/gigabyte-b450m-ds3h-v2.jpg",
-        "brand": "Gigabyte",
-        "warranty": "36 tháng",
-        "sockets": ["AM4"], // ĐÃ SỬA: socket -> sockets, giá trị là MẢNG
-        "memoryType": "DDR4",
-        "condition": "NEW",
-        "nvmeSlots": 1,
-        "pcieVersion": "3.0",
-        "formFactor": "Micro-ATX",
-        "score": 5
-    },
     "JGINYUE-B450": {
         "name": "JGinyue B450M-TI (AM4)",
         "price": 1390000,

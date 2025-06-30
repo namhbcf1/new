@@ -36,7 +36,7 @@ window.cpuCoolerData = {
     },
     "THAPDOI": {
         name: "TẢN NHIỆT KHÍ LEOPARD KF620 DGT LED ARGB (ĐEN, 2 THÁP)",
-        price: 7500000,
+        price: 750000,
         image: "images/kf620.jpg",
         brand: "LEOPARD",
         warranty: "12 tháng",
