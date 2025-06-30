@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 Kho Linh Kiện - Trường Phát Computer</title>
+    <link rel="icon" href="images/icon-192.png" type="image/png">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --warning-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --danger-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --dark-bg: #0f0f23;
+            --card-bg: #1a1a2e;
+            --surface-bg: #16213e;
+            --accent-bg: #0f3460;
+            --text-primary: #ffffff;
+            --text-secondary: #b8b8d1;
+            --text-muted: #8a8aa0;
+            --border-color: #2a2a4a;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.15);
+            --shadow-md: 0 8px 25px rgba(0,0,0,0.25);
+            --shadow-lg: 0 15px 35px rgba(0,0,0,0.35);
+            --border-radius: 16px;
+            --border-radius-sm: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(102, 126, 234, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 80%, rgba(245, 87, 108, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 50%, rgba(67, 233, 123, 0.1) 0%, transparent 60%);
+            z-index: -1;
+            animation: backgroundFloat 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes backgroundFloat {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.05) rotate(1deg); }
+        }
+
+        /* Modern Header */
+        .header {
+            background: var(--primary-gradient);
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 2px,
+                rgba(255,255,255,0.03) 2px,
+                rgba(255,255,255,0.03) 4px
+            );
+            animation: headerPattern 30s linear infinite;
+        }
+
+        @keyframes headerPattern {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -0.02em;
+        }
+
+        .header p {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+            font-weight: 300;
+        }
+
+        /* Enhanced Navigation */
+        .nav-container {
+            background: var(--card-bg);
+            margin: 2rem;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(20px);
+        }
+
+        .nav-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .back-btn {
+            background: var(--success-gradient);
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius-sm);
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: var(--shadow-md);
+        }
+
+        .search-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .search-box, .sort-box {
+            background: var(--surface-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .search-box {
+            width: 250px;
+        }
+
+        .sort-box {
+            width: 200px;
+        }
+
+        .search-box:focus, .sort-box:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .price-filter {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        #priceRange {
+            width: 150px;
+            accent-color: #667eea;
+        }
+
+        #priceDisplay {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .filter-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .filter-tab {
+            background: var(--surface-bg);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.95rem;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .filter-tab.active::before,
+        .filter-tab:hover::before {
+            left: 0;
+        }
+
+        .filter-tab.active,
+        .filter-tab:hover {
+            color: white;
+            border-color: transparent;
+            transform: translateY(-1px);
+        }
+
+        /* Statistics Dashboard */
+        .stats-section {
+            margin: 0 2rem 2rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .stats-title {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--surface-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius-sm);
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary-gradient);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* Modern Component Grid */
+        .components-container {
+            margin: 0 2rem 2rem;
+        }
+
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .component-category {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            overflow: hidden;
+            height: fit-content;
+        }
+
+        .component-category:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .category-header {
+            background: var(--surface-bg);
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .category-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary-gradient);
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-gradient);
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .category-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .category-count {
+            background: var(--warning-gradient);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .category-items {
+            padding: 1.5rem;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .category-items::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .category-items::-webkit-scrollbar-track {
+            background: var(--surface-bg);
+            border-radius: 3px;
+        }
+
+        .category-items::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        .component-item {
+            background: var(--surface-bg);
+            border-radius: var(--border-radius-sm);
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .component-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .component-item:hover::before {
+            left: 100%;
+        }
+
+        .component-item:hover {
+            background: var(--accent-bg);
+            transform: translateX(4px);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .component-image {
+            width: 70px;
+            height: 70px;
+            border-radius: var(--border-radius-sm);
+            object-fit: cover;
+            border: 2px solid var(--border-color);
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .component-item:hover .component-image {
+            border-color: #667eea;
+            transform: scale(1.05);
+        }
+
+        .component-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .component-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .component-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .component-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .badge-price {
+            background: var(--success-gradient);
+        }
+
+        .badge-brand {
+            background: var(--warning-gradient);
+        }
+
+        .badge-condition {
+            background: var(--secondary-gradient);
+        }
+
+        /* Loading State */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 300px;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Enhanced Responsive Design */
+        @media (max-width: 1200px) {
+            .components-grid {
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container,
+            .stats-section,
+            .components-container {
+                margin: 1rem;
+            }
+
+            .components-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .nav-top {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+
+            .search-filters {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.75rem;
+            }
+
+            .search-box, .sort-box {
+                width: 100%;
+            }
+
+            .price-filter {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .filter-tabs {
+                justify-content: center;
+                gap: 0.5rem;
+            }
+
+            .filter-tab {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .header {
+                padding: 2rem 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .stat-card {
+                padding: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .component-item {
+                padding: 1rem;
+                gap: 0.75rem;
+            }
+
+            .component-image {
+                width: 60px;
+                height: 60px;
+            }
+
+            .category-items {
+                max-height: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container,
+            .stats-section,
+            .components-container {
+                margin: 0.5rem;
+                padding: 1rem;
+            }
+
+            .components-grid {
+                gap: 0.75rem;
+            }
+
+            .filter-tabs {
+                gap: 0.25rem;
+            }
+
+            .filter-tab {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .stats-grid {
+                gap: 0.75rem;
+            }
+
+            .stat-card {
+                padding: 1rem;
+            }
+
+            .stat-number {
+                font-size: 1.8rem;
+            }
+
+            .component-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .component-image {
+                width: 80px;
+                height: 80px;
+            }
+
+            .component-details {
+                justify-content: center;
+            }
+
+            .category-items {
+                max-height: 300px;
+                padding: 1rem;
+            }
+        }
+
+        /* Dark mode enhancements */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔧 Kho Linh Kiện Trường Phát Computer</h1>
+        <p>Khám phá bộ sưu tập linh kiện công nghệ hàng đầu</p>
+    </div>
+
+    <div class="nav-container">
+        <div class="nav-top">
+            <a href="index.html" class="back-btn">
+                🏠 Về Trang Chính
+            </a>
+            <div class="search-filters">
+                <input type="text" class="search-box" placeholder="🔍 Tìm kiếm linh kiện..." 
+                       oninput="searchComponents(this.value)">
+                <select class="sort-box" onchange="sortComponents(this.value)">
+                    <option value="name">📝 Sắp xếp theo tên</option>
+                    <option value="price_asc">💰 Giá thấp → cao</option>
+                    <option value="price_desc">💰 Giá cao → thấp</option>
+                    <option value="brand">🏷️ Theo thương hiệu</option>
+                </select>
+                <div class="price-filter">
+                    <input type="range" id="priceRange" min="0" max="20000000" step="100000" 
+                           oninput="filterByPrice(this.value)">
+                    <span id="priceDisplay">Dưới 20 triệu</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="filter-tabs">
+            <button class="filter-tab active" onclick="filterComponents('all', this)">🔧 Tất Cả</button>
+            <button class="filter-tab" onclick="filterComponents('cpu', this)">💻 CPU</button>
+            <button class="filter-tab" onclick="filterComponents('mainboard', this)">🔌 Mainboard</button>
+            <button class="filter-tab" onclick="filterComponents('vga', this)">🎮 VGA</button>
+            <button class="filter-tab" onclick="filterComponents('ram', this)">🧠 RAM</button>
+            <button class="filter-tab" onclick="filterComponents('ssd', this)">💾 SSD</button>
+            <button class="filter-tab" onclick="filterComponents('psu', this)">⚡ PSU</button>
+            <button class="filter-tab" onclick="filterComponents('case', this)">🏠 Case</button>
+            <button class="filter-tab" onclick="filterComponents('cpuCooler', this)">🌪️ Tản Nhiệt</button>
+        </div>
+    </div>
+
+    <div class="stats-section">
+        <h2 class="stats-title">📊 Thống Kê Kho Hàng</h2>
+        <div class="stats-grid" id="stats-grid">
+            <!-- Stats will be loaded here -->
+        </div>
+    </div>
+
+    <div class="components-container">
+        <div class="components-grid" id="components-grid">
+            <div class="loading">
+                <div class="spinner"></div>
+                <div class="loading-text">Đang tải dữ liệu linh kiện...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load component data -->
+    <script src="js/data/cpu.js"></script>
+    <script src="js/data/mainboard.js"></script>
+    <script src="js/data/vga.js"></script>
+    <script src="js/data/ram.js"></script>
+    <script src="js/data/ssd.js"></script>
+    <script src="js/data/psu.js"></script>
+    <script src="js/data/case.js"></script>
+    <script src="js/data/cpuCooler.js"></script>
+
+    <script>
+        const componentTypes = {
+            cpu: { name: 'CPU - Bộ Vi Xử Lý', icon: '💻', data: 'cpuData', gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
+            mainboard: { name: 'Mainboard - Bo Mạch Chủ', icon: '🔌', data: 'mainboardData', gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)' },
+            vga: { name: 'VGA - Card Đồ Họa', icon: '🎮', data: 'vgaData', gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)' },
+            ram: { name: 'RAM - Bộ Nhớ', icon: '🧠', data: 'ramData', gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+            ssd: { name: 'SSD - Ổ Cứng', icon: '💾', data: 'ssdData', gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)' },
+            psu: { name: 'PSU - Nguồn', icon: '⚡', data: 'psuData', gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)' },
+            case: { name: 'Case - Vỏ Máy', icon: '🏠', data: 'caseData', gradient: 'linear-gradient(135deg, #d299c2 0%, #fef9d7 100%)' },
+            cpuCooler: { name: 'CPU Cooler - Tản Nhiệt', icon: '🌪️', data: 'cpuCoolerData', gradient: 'linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%)' }
+        };
+
+        let currentFilter = 'all';
+        let allComponents = {};
+        let searchTerm = '';
+        let currentSort = 'name';
+        let maxPrice = 20000000;
+
+        function formatPrice(price) {
+            if (!price || price === 0) return 'Liên hệ';
+            return new Intl.NumberFormat('vi-VN').format(price) + 'đ';
+        }
+
+        function getComponentImage(type, image) {
+            if (image && image.startsWith('images/')) return image;
+            return `images/components/${type}.jpg`;
+        }
+
+        function renderStats() {
+            const statsGrid = document.getElementById('stats-grid');
+            let totalComponents = 0;
+            let totalValue = 0;
+            let availableTypes = 0;
+            let inStockCount = 0;
+
+            Object.keys(componentTypes).forEach(type => {
+                const data = window[componentTypes[type].data];
+                if (data && Object.keys(data).length > 0) {
+                    availableTypes++;
+                    const count = Object.keys(data).length;
+                    totalComponents += count;
+                    inStockCount += count; // Assuming all are in stock
+                    
+                    Object.values(data).forEach(item => {
+                        if (item.price) totalValue += item.price;
+                    });
+                }
+            });
+
+            statsGrid.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${totalComponents}</div>
+                    <div class="stat-label">Tổng Sản Phẩm</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${availableTypes}</div>
+                    <div class="stat-label">Danh Mục</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${formatPrice(totalValue)}</div>
+                    <div class="stat-label">Tổng Giá Trị</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${inStockCount}</div>
+                    <div class="stat-label">Còn Hàng</div>
+                </div>
+            `;
+        }
+
+        function renderComponents(filter = 'all', search = '') {
+            const grid = document.getElementById('components-grid');
+            let html = '';
+
+            Object.keys(componentTypes).forEach(type => {
+                if (filter !== 'all' && filter !== type) return;
+
+                const typeInfo = componentTypes[type];
+                const data = window[typeInfo.data];
+                
+                if (!data || Object.keys(data).length === 0) return;
+
+                let components = Object.entries(data);
+                
+                // Apply search filter
+                if (search) {
+                    components = components.filter(([id, item]) => 
+                        item.name.toLowerCase().includes(search.toLowerCase()) ||
+                        (item.brand && item.brand.toLowerCase().includes(search.toLowerCase()))
+                    );
+                }
+
+                // Apply price filter
+                components = components.filter(([id, item]) => 
+                    (item.price || 0) <= maxPrice
+                );
+
+                // Apply sorting
+                components = sortComponentArray(components, currentSort);
+
+                if (components.length === 0) return;
+
+                html += `
+                    <div class="component-category" data-type="${type}">
+                        <div class="category-header">
+                            <div class="category-title">
+                                <div class="category-icon" style="background: ${typeInfo.gradient}">${typeInfo.icon}</div>
+                                <div class="category-name">${typeInfo.name}</div>
+                                <span class="category-count">${components.length}</span>
+                            </div>
+                        </div>
+                        <div class="category-items">
+                            ${components.map(([id, item]) => `
+                                <div class="component-item">
+                                    <img src="${getComponentImage(type, item.image)}" 
+                                         alt="${item.name}" 
+                                         class="component-image"
+                                         onerror="this.src='images/components/default.jpg'">
+                                    <div class="component-info">
+                                        <div class="component-name">${item.name}</div>
+                                        <div class="component-details">
+                                            <span class="component-badge badge-price">${formatPrice(item.price)}</span>
+                                            ${item.brand ? `<span class="component-badge badge-brand">${item.brand}</span>` : ''}
+                                            ${item.condition ? `<span class="component-badge badge-condition">${item.condition}</span>` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            if (html === '') {
+                html = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">😕</div>
+                        <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Không tìm thấy sản phẩm</h3>
+                        <p style="color: var(--text-secondary);">Vui lòng thử lại với từ khóa khác hoặc liên hệ với chúng tôi</p>
+                    </div>
+                `;
+            }
+
+            grid.innerHTML = html;
+        }
+
+        function filterComponents(type, element) {
+            currentFilter = type;
+            
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            element.classList.add('active');
+            
+            // Render filtered components
+            renderComponents(type, searchTerm);
+        }
+
+        function searchComponents(search) {
+            searchTerm = search;
+            renderComponents(currentFilter, search);
+        }
+
+        function sortComponents(sortType) {
+            currentSort = sortType;
+            renderComponents(currentFilter, searchTerm);
+        }
+
+        function filterByPrice(price) {
+            maxPrice = parseInt(price);
+            document.getElementById('priceDisplay').textContent = 
+                `Dưới ${formatPrice(maxPrice)}`;
+            renderComponents(currentFilter, searchTerm);
+        }
+
+        function sortComponentArray(components, sortType) {
+            return components.sort(([, a], [, b]) => {
+                switch(sortType) {
+                    case 'price_asc':
+                        return (a.price || 0) - (b.price || 0);
+                    case 'price_desc':
+                        return (b.price || 0) - (a.price || 0);
+                    case 'brand':
+                        return (a.brand || '').localeCompare(b.brand || '');
+                    case 'name':
+                    default:
+                        return a.name.localeCompare(b.name);
+                }
+            });
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                renderStats();
+                renderComponents();
+            }, 100);
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelector('.search-box').value = '';
+                searchTerm = '';
+                renderComponents(currentFilter, '');
+            }
+            if (e.ctrlKey && e.key === 'f') {
+                e.preventDefault();
+                document.querySelector('.search-box').focus();
+            }
+        });
+
+        // Add loading states for images
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('.component-image');
+            images.forEach(img => {
+                img.addEventListener('load', function() {
+                    this.style.opacity = '1';
+                });
+                img.addEventListener('error', function() {
+                    this.style.opacity = '0.7';
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
+</html> 
