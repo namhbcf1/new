@@ -45,17 +45,6 @@ window.cpuCoolerData = {
         sync: "Hỗ trợ đồng bộ với bo mạch chủ thông qua đầu cắm 5V ARGB",
         score: 4 // Thêm điểm số
     },
-    "AIR01": {
-        name: "CT-Air 01",
-        price: 290000,
-        image: "images/fan/ct-air-01.jpg",
-        brand: "Cooler Master",
-        warranty: "12 tháng",
-        condition: "NEW",
-        sockets: ["Intel LGA1151", "LGA1155", "LGA1156", "LGA1200", "LGA1700", "AMD AM4", "AM5"],
-        sync: "Hỗ trợ đồng bộ với bo mạch chủ thông qua đầu cắm 5V ARGB",
-        score: 4 // Thêm điểm số
-    },
     "thermalright-frost-spirit-140": {
         name: "Thermalright Frost Spirit 140",
         price: 1100000,
@@ -82,6 +71,17 @@ window.cpuCoolerData = {
         name: "Thermalright Aqua Elite 360 ARGB Black",
         price: 1400000,
         image: "images/fan/thermalright-aqua-elite-360-argb-black.jpg",
+        brand: "Thermalright",
+        warranty: "24 tháng",
+        condition: "NEW",
+        sockets: ["Intel LGA1150", "LGA1151", "LGA1155", "LGA1156", "LGA1200", "LGA1700", "AMD AM4", "AM5"],
+        sync: "Hỗ trợ đồng bộ với bo mạch chủ thông qua đầu cắm 5V ARGB",
+        score: 8 // Thêm điểm số
+    },
+    "TMR-ELITE-240": {
+        name: "Thermalright Aqua Elite 240 ARGB Black",
+        price: 1000000,
+        image: "images/thermalright-frozen-warframe-240-se-white-argb.jpg",
         brand: "Thermalright",
         warranty: "24 tháng",
         condition: "NEW",
