@@ -1,6 +1,6 @@
-// Cấu hình INTEL - lol
+// Cấu hình INTEL - pubg
 window.intelConfigs = window.intelConfigs || {};
-window.intelConfigs.lol = {
+window.intelConfigs.pubg = {
     '3M': {
         cpu: "1220v3",
         mainboard: "H81",
@@ -54,7 +54,7 @@ window.intelConfigs.lol = {
     '8M': {
         cpu: "13400f",
         mainboard: "HNZ-H610",
-        vga: "960",
+        vga: "1060-3g",
         ram: "cosair-16",
         ssd: "sstc-256",
         case: "GA3",

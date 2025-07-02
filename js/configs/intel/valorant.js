@@ -1,26 +1,6 @@
-// Cấu hình INTEL - valorant
+// Cấu hình INTEL - pubg
 window.intelConfigs = window.intelConfigs || {};
-window.intelConfigs.valorant = {
-    '3M': {
-        cpu: "1220v3",
-        mainboard: "H81",
-        vga: "750ti",
-        ram: "D38G",
-        ssd: "sata-sstc-256",
-        case: "GA3",
-        cpuCooler: "STOCK",
-        psu: "350W"
-    },
-    '4M': {
-        cpu: "9100f",
-        mainboard: "H310",
-        vga: "750ti",
-        ram: "cosair-16",
-        ssd: "sata-sstc-256",
-        case: "GA3",
-        cpuCooler: "STOCK",
-        psu: "350W"
-    },
+window.intelConfigs.pubg = {
     '5M': {
         cpu: "10100f",
         mainboard: "H410",
@@ -54,7 +34,7 @@ window.intelConfigs.valorant = {
     '8M': {
         cpu: "13400f",
         mainboard: "HNZ-H610",
-        vga: "960",
+        vga: "1060-3g",
         ram: "cosair-16",
         ssd: "sstc-256",
         case: "GA3",
@@ -117,7 +97,7 @@ window.intelConfigs.valorant = {
         vga: "3070",
         ram: "cosair-16",
         ssd: "crucial-500",
-        case: "GA",
+        case: "GA3",
         cpuCooler: "CR1000",
         psu: "VSP750"
     },
@@ -274,9 +254,9 @@ window.intelConfigs.valorant = {
     '30M': {
         cpu: "14600kf",
         mainboard: "B760M-E",
-        vga: "4070ti",
+        vga: "4070S",
         ram: "cosair-32",
-        ssd: "crucial-1tb",
+        ssd: "crucial-500",
         case: "GA",
         cpuCooler: "TMR120SE",
         psu: "VSP750"
