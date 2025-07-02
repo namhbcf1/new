@@ -1,4 +1,4 @@
-// Cấu hình INTEL - GTA V
+// Cấu hình INTEL - gta-v
 window.intelConfigs = window.intelConfigs || {};
 window.intelConfigs.gta_v = {
     '3M': {

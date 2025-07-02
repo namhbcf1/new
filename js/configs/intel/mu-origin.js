@@ -36,7 +36,7 @@ window.intelConfigs.mu_origin = {
         mainboard: "HNZ-H610",
         vga: "960",
         ram: "cosair-16",
-        ssd: "sstc-256",
+        ssd: "ymtc-256",
         case: "GA3",
         cpuCooler: "2ongdong",
         psu: "DT660"
@@ -46,7 +46,7 @@ window.intelConfigs.mu_origin = {
         mainboard: "HNZ-H610",
         vga: "1060-3g",
         ram: "cosair-16",
-        ssd: "sstc-256",
+        ssd: "ymtc-256",
         case: "GA3",
         cpuCooler: "2ongdong",
         psu: "DT660"
@@ -56,7 +56,7 @@ window.intelConfigs.mu_origin = {
         mainboard: "HNZ-H610",
         vga: "960",
         ram: "cosair-16",
-        ssd: "sstc-256",
+        ssd: "ymtc-256",
         case: "GA3",
         cpuCooler: "CR1000",
         psu: "DT660"
@@ -66,7 +66,7 @@ window.intelConfigs.mu_origin = {
         mainboard: "HNZ-B760",
         vga: "1060-3g",
         ram: "cosair-16",
-        ssd: "sstc-256",
+        ssd: "ymtc-256",
         case: "GA3",
         cpuCooler: "CR1000",
         psu: "DT660"
@@ -76,7 +76,7 @@ window.intelConfigs.mu_origin = {
         mainboard: "HNZ-B760",
         vga: "1660s",
         ram: "cosair-16",
-        ssd: "sstc-256",
+        ssd: "ymtc-256",
         case: "GA3",
         cpuCooler: "CR1000",
         psu: "DT660"
