@@ -1,4 +1,4 @@
-// Cấu hình INTEL - audition
+// Cấu hình INTEL - Audition
 window.intelConfigs = window.intelConfigs || {};
 window.intelConfigs.audition = {
     '3M': {

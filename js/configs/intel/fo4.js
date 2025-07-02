@@ -1,4 +1,4 @@
-// Cấu hình INTEL - fo4
+// Cấu hình INTEL - Fallout 4
 window.intelConfigs = window.intelConfigs || {};
 window.intelConfigs.fo4 = {
     '3M': {

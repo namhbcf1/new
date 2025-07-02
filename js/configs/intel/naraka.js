@@ -1,6 +1,6 @@
-// Cấu hình INTEL - pubg
+// Cấu hình INTEL - Naraka Bladepoint
 window.intelConfigs = window.intelConfigs || {};
-window.intelConfigs.pubg = {
+window.intelConfigs.naraka = {
     '5M': {
         cpu: "10100f",
         mainboard: "H410",

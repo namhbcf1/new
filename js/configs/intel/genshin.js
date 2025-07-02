@@ -1,4 +1,4 @@
-// Cấu hình INTEL - genshin
+// Cấu hình INTEL - Genshin Impact
 window.intelConfigs = window.intelConfigs || {};
 window.intelConfigs.genshin = {
     '3M': {

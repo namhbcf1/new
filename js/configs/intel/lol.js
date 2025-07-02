@@ -1,6 +1,6 @@
-// Cấu hình INTEL - pubg
+// Cấu hình INTEL - League of Legends
 window.intelConfigs = window.intelConfigs || {};
-window.intelConfigs.pubg = {
+window.intelConfigs.lol = {
     '3M': {
         cpu: "1220v3",
         mainboard: "H81",

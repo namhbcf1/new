@@ -1,7 +1,7 @@
-// Cấu hình AMD - pubg
+// Cấu hình AMD - Battle Teams 2
 // Updated: 2024-01-24 16:30 - Fixed 15M budget CPU to 7500F
 window.amdConfigs = window.amdConfigs || {};
-window.amdConfigs.pubg = {
+window.amdConfigs['battle-teams-2'] = {
 
     '7M': {
         cpu: "3600",

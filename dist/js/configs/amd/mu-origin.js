@@ -1,7 +1,7 @@
-// Cấu hình AMD - pubg
+// Cấu hình AMD - MU Origin
 // Updated: 2024-01-24 16:30 - Fixed 15M budget CPU to 7500F
 window.amdConfigs = window.amdConfigs || {};
-window.amdConfigs.pubg = {
+window.amdConfigs['mu-origin'] = {
 
     '7M': {
         cpu: "3600",

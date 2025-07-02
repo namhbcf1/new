@@ -1,4 +1,4 @@
-// Cấu hình INTEL - csgo
+// Cấu hình INTEL - CS:GO
 window.intelConfigs = window.intelConfigs || {};
 window.intelConfigs.csgo = {
     '5M': {

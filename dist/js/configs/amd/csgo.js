@@ -1,7 +1,7 @@
-// Cấu hình AMD - pubg
+// Cấu hình AMD - CS:GO
 // Updated: 2024-01-24 16:30 - Fixed 15M budget CPU to 7500F
 window.amdConfigs = window.amdConfigs || {};
-window.amdConfigs.pubg = {
+window.amdConfigs.csgo = {
 
     '7M': {
         cpu: "3600",
