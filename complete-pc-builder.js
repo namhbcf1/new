@@ -187,6 +187,11 @@ function selectGame(gameId) {
     setTimeout(() => {
         showSuccessMessage(`Đã chọn ${gameName}! 🎮`);
     }, 300);
+
+    // Auto-navigate to next step (final configuration) after delay
+    setTimeout(() => {
+        nextStep();
+    }, 1000);
 }
 
 function nextStep() {

@@ -2,18 +2,29 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=1200, initial-scale=0.3, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     
-    <!-- Mobile optimizations -->
+    <!-- Safari iOS specific meta tags for optimal performance -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-touch-fullscreen" content="yes">
     <meta name="format-detection" content="telephone=no">
+    
+    <!-- Force hardware acceleration on Safari -->
     <meta name="mobile-web-app-capable" content="yes">
     
     <title>Trường Phát Computer - PC Builder</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Minimal libraries for mobile performance -->
+    <!-- Animation & Effect Libraries -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://unpkg.com/vanilla-tilt@1.8.0/dist/vanilla-tilt.min.js"></script>
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <style>
@@ -29,15 +40,32 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
+            /* Safari iOS specific optimizations */
             -webkit-overflow-scrolling: touch;
+            -webkit-touch-callout: none;
+            -webkit-text-size-adjust: none;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            /* Force desktop layout */
+            min-width: 1200px;
+            width: 100%;
         }
         
-        /* Simplified animations for mobile performance */
+        /* Particles background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        /* Enhanced animations */
         .fade-in {
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
         }
         
         .fade-in.visible {
@@ -45,26 +73,32 @@
             transform: translateY(0);
         }
         
-        /* Simplified card style without heavy effects */
+        /* Glassmorphism effects */
         .glass {
-            background: rgba(30, 41, 59, 0.8);
-            border: 1px solid rgba(79, 172, 254, 0.3);
-            border-radius: 1rem;
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(79, 172, 254, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
         
-        /* Removed floating animation for performance */
+        /* Floating animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
         .floating {
-            /* animation removed for mobile performance */
+            animation: float 3s ease-in-out infinite;
         }
         
-        /* Simplified glow effect */
+        /* Glow effects */
         .glow {
-            box-shadow: 0 0 10px rgba(79, 172, 254, 0.2);
-            transition: box-shadow 0.2s ease;
+            box-shadow: 0 0 20px rgba(79, 172, 254, 0.3);
+            transition: box-shadow 0.3s ease;
         }
         
         .glow:hover {
-            box-shadow: 0 0 15px rgba(79, 172, 254, 0.3);
+            box-shadow: 0 0 30px rgba(79, 172, 254, 0.5);
         }
         
         .container {
@@ -72,10 +106,12 @@
             margin: 0 auto;
             padding: 0 1rem;
             position: relative;
+            z-index: 1;
         }
         
         header {
             background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(79, 172, 254, 0.3);
             padding: 1rem 0;
             position: sticky;
@@ -111,11 +147,11 @@
             border-radius: 0.5rem;
             text-decoration: none;
             font-weight: 600;
-            transition: transform 0.2s;
+            transition: all 0.3s;
         }
         
         .contact-links a:hover {
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
         
         .phone-btn {
@@ -173,12 +209,17 @@
             position: relative;
             z-index: 2;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
         }
         
         .step:hover:not(.disabled) .step-number {
-            transform: scale(1.05);
+            transform: scale(1.1);
             border-color: #4facfe;
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
+        }
+        
+        .step:hover:not(.disabled) .step-title {
+            color: #4facfe;
         }
         
         .step.disabled {
@@ -277,7 +318,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin: 1rem 0;
-            font-family: 'Inter', monospace;
+            font-family: 'JetBrains Mono', monospace;
         }
         
         .cpu-selection {
@@ -505,7 +546,91 @@
             border-radius: 4px;
         }
         
-        /* Mobile optimizations */
+        /* Force desktop layout on all mobile devices */
+        @media (max-width: 768px) {
+            /* Force desktop view - no responsive mobile layout */
+            .container {
+                max-width: 1400px !important;
+                padding: 0 1rem !important;
+            }
+            
+            /* Keep desktop font sizes */
+            .title {
+                font-size: 2.5rem !important;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem !important;
+            }
+            
+            .budget-display {
+                font-size: 3rem !important;
+            }
+            
+            /* Desktop grid layouts */
+            .cpu-selection {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+                gap: 2rem !important;
+            }
+            
+            .game-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+                gap: 1.5rem !important;
+            }
+            
+            .component-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+                gap: 1.5rem !important;
+            }
+            
+            /* Desktop step indicator */
+            .steps-container {
+                flex-direction: row !important;
+                justify-content: space-between !important;
+                max-width: 800px !important;
+                margin: 0 auto !important;
+            }
+            
+            .steps-container::before {
+                display: block !important;
+            }
+            
+            .step-number {
+                width: 3rem !important;
+                height: 3rem !important;
+                font-size: 1.1rem !important;
+            }
+            
+            .step-title {
+                font-size: 0.875rem !important;
+            }
+            
+            /* Keep desktop card styling */
+            .card {
+                padding: 2rem !important;
+                margin-bottom: 2rem !important;
+            }
+            
+            .step-indicator {
+                padding: 2rem !important;
+                margin-bottom: 2rem !important;
+            }
+            
+            /* Desktop buttons */
+            .btn {
+                padding: 1rem 2rem !important;
+                font-size: 1.1rem !important;
+                width: auto !important;
+                margin: 0 !important;
+            }
+            
+            /* Optimize performance while keeping desktop look */
+            .glass {
+                backdrop-filter: blur(15px) !important;
+            }
+        }
+
+        /* Mobile responsive fallback */
         @media (max-width: 768px) {
             body {
                 font-size: 14px;
@@ -713,110 +838,109 @@
             }
         }
     </style>
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <span style="font-size: 2rem;">🖥️</span>
-                    <span>Trường Phát Computer</span>
-                </div>
-                <div class="contact-links">
-                    <a href="components-overview.html" class="components-btn" style="background: linear-gradient(135deg, #22c55e, #16a34a); color: white;">🔧 Xem Tất Cả Linh Kiện</a>
-                    <a href="tel:0836768597" class="phone-btn">📞 0836.768.597</a>
-                    <a href="https://zalo.me/0836768597" target="_blank" class="zalo-btn">Zalo</a>
-                    <a href="https://www.facebook.com/tpcom.hb/" target="_blank" class="facebook-btn">Facebook</a>
-                </div>
-            </div>
-        </div>
-    </header>
+  </head>
+  <body>
+      <!-- Particles Background -->
+      <div id="particles-js"></div>
+      
+            <!-- Header -->
+      <header data-aos="fade-down">
+          <div class="container">
+              <div class="header-content">
+                  <div class="logo floating">
+                      <span style="font-size: 2rem;">🖥️</span>
+                      <span id="logo-text">Trường Phát Computer</span>
+                  </div>
+                  <div class="contact-links">
+                      <a href="components-overview.html" class="components-btn glow" style="background: linear-gradient(135deg, #22c55e, #16a34a); color: white;">🔧 Xem Tất Cả Linh Kiện</a>
+                      <a href="tel:0836768597" class="phone-btn glow">📞 0836.768.597</a>
+                      <a href="https://zalo.me/0836768597" target="_blank" class="zalo-btn glow">Zalo</a>
+                      <a href="https://www.facebook.com/tpcom.hb/" target="_blank" class="facebook-btn glow">Facebook</a>
+                  </div>
+              </div>
+          </div>
+      </header>
 
     <!-- Main Content -->
     <main class="container">
-        <!-- Step Indicator -->
-        <div class="step-indicator glass">
-            <div class="steps-container">
-                <div class="step active" data-step="1" onclick="navigateToStep(1)">
-                    <div class="step-number">1</div>
-                    <div class="step-title">Chọn Ngân Sách</div>
-                </div>
-                <div class="step" data-step="2" onclick="navigateToStep(2)">
-                    <div class="step-number">2</div>
-                    <div class="step-title">Chọn CPU</div>
-                </div>
-                <div class="step" data-step="3" onclick="navigateToStep(3)">
-                    <div class="step-number">3</div>
-                    <div class="step-title">Chọn Game</div>
-                </div>
-                <div class="step" data-step="4" onclick="navigateToStep(4)">
-                    <div class="step-number">4</div>
-                    <div class="step-title">Hoàn Thành</div>
-                </div>
-            </div>
-        </div>
+                  <!-- Step Indicator -->
+          <div class="step-indicator glass" data-aos="fade-up" data-aos-delay="100">
+              <div class="steps-container">
+                  <div class="step active" data-step="1" onclick="navigateToStep(1)" data-tilt>
+                      <div class="step-number">1</div>
+                      <div class="step-title">Chọn Ngân Sách</div>
+                  </div>
+                  <div class="step" data-step="2" onclick="navigateToStep(2)" data-tilt>
+                      <div class="step-number">2</div>
+                      <div class="step-title">Chọn CPU</div>
+                  </div>
+                  <div class="step" data-step="3" onclick="navigateToStep(3)" data-tilt>
+                      <div class="step-number">3</div>
+                      <div class="step-title">Chọn Game</div>
+                  </div>
+                  <div class="step" data-step="4" onclick="navigateToStep(4)" data-tilt>
+                      <div class="step-number">4</div>
+                      <div class="step-title">Hoàn Thành</div>
+                  </div>
+              </div>
+          </div>
         
-        <!-- Step 1: Budget Selection -->
-        <div id="step-1" class="card glass text-center">
-            <h1 class="title">💰 Chọn Ngân Sách</h1>
-            <p class="subtitle">Chọn mức giá phù hợp để chúng tôi tư vấn cấu hình tốt nhất</p>
-            
-            <div class="budget-section">
-                <input type="range" id="budget-slider" class="budget-slider" 
-                       min="3" max="30" step="1" value="15">
-                <div class="budget-display" id="budget-display">15 triệu VNĐ</div>
-                <p style="color: #94a3b8;">Ngân sách dự kiến</p>
-            </div>
-            
-            <button class="btn btn-primary" onclick="nextStep()">Tiếp Theo →</button>
-        </div>
+                  <!-- Step 1: Budget Selection -->
+          <div id="step-1" class="card glass text-center" data-aos="zoom-in" data-aos-delay="200">
+              <h1 class="title">💰 Chọn Ngân Sách</h1>
+              <p class="subtitle">Chọn mức giá phù hợp để chúng tôi tư vấn cấu hình tốt nhất</p>
+              
+              <div class="budget-section">
+                  <input type="range" id="budget-slider" class="budget-slider" 
+                         min="3" max="30" step="1" value="15">
+                  <div class="budget-display" id="budget-display">15 triệu VNĐ</div>
+                  <p style="color: #94a3b8;">Ngân sách dự kiến</p>
+              </div>
+              
+              <button class="btn btn-primary glow" onclick="nextStep()" data-aos="fade-up" data-aos-delay="400">Tiếp Theo →</button>
+          </div>
         
-        <!-- Step 2: CPU Selection -->
-        <div id="step-2" class="card glass text-center hidden">
-            <h2 class="title">⚡ Chọn CPU</h2>
-            <p class="subtitle">Intel hoặc AMD - Chọn theo sở thích của bạn</p>
-            
-            <div class="cpu-selection">
-                <div class="cpu-option" data-cpu="intel" onclick="selectCPU('intel')">
-                    <div class="cpu-logo" style="color: #0071c5;">Intel</div>
-                    <div class="cpu-name">Intel Core</div>
-                    <div class="cpu-description">Hiệu năng ổn định, tối ưu gaming</div>
-                </div>
-                
-                <div class="cpu-option" data-cpu="amd" onclick="selectCPU('amd')">
-                    <div class="cpu-logo" style="color: #ed1c24;">AMD</div>
-                    <div class="cpu-name">AMD Ryzen</div>
-                    <div class="cpu-description">Đa nhiệm mạnh mẽ, giá tốt</div>
-                </div>
-            </div>
-            
-            <button class="btn btn-primary" onclick="nextStep()">Tiếp Theo →</button>
-        </div>
+                  <!-- Step 2: CPU Selection -->
+          <div id="step-2" class="card glass text-center hidden" data-aos="zoom-in">
+              <h2 class="title">⚡ Chọn CPU</h2>
+              <p class="subtitle">Intel hoặc AMD - Chọn theo sở thích của bạn</p>
+              
+              <div class="cpu-selection">
+                  <div class="cpu-option glow" data-cpu="intel" onclick="selectCPUAndNext('intel')" data-tilt data-aos="flip-left" data-aos-delay="100">
+                      <div class="cpu-logo" style="color: #0071c5;">Intel</div>
+                      <div class="cpu-name">Intel Core</div>
+                      <div class="cpu-description">Hiệu năng ổn định, tối ưu gaming</div>
+                  </div>
+                  
+                  <div class="cpu-option glow" data-cpu="amd" onclick="selectCPUAndNext('amd')" data-tilt data-aos="flip-right" data-aos-delay="200">
+                      <div class="cpu-logo" style="color: #ed1c24;">AMD</div>
+                      <div class="cpu-name">AMD Ryzen</div>
+                      <div class="cpu-description">Đa nhiệm mạnh mẽ, giá tốt</div>
+                  </div>
+              </div>
+          </div>
         
-        <!-- Step 3: Game Selection -->
-        <div id="step-3" class="card glass text-center hidden">
-            <h2 class="title">🎮 Chọn Game Yêu Thích</h2>
-            <p class="subtitle">Chọn game bạn thường chơi để tối ưu cấu hình</p>
-            
-            <div class="game-grid" id="game-grid">
-                <!-- Games will be populated here -->
-            </div>
-            
-            <button class="btn btn-primary" onclick="nextStep()">Xem Cấu Hình →</button>
-        </div>
+                  <!-- Step 3: Game Selection -->
+          <div id="step-3" class="card glass text-center hidden" data-aos="zoom-in">
+              <h2 class="title">🎮 Chọn Game Yêu Thích</h2>
+              <p class="subtitle">Chọn game bạn thường chơi để tối ưu cấu hình</p>
+              
+              <div class="game-grid" id="game-grid">
+                  <!-- Games will be populated here -->
+              </div>
+          </div>
         
-        <!-- Step 4: Final Configuration with Component Customization -->
-        <div id="step-4" class="card glass hidden">
-            <div id="final-config-table"></div>
-            
-            <div class="component-selector" style="margin-top: 2rem;">
-                <h3 class="text-center" style="color: #4facfe; margin-bottom: 1rem;">🔧 Tùy Chỉnh Linh Kiện</h3>
-                <div class="component-grid" id="component-grid">
-                    <!-- Component selectors will be populated here -->
-                </div>
-            </div>
-        </div>
+                  <!-- Step 4: Final Configuration with Component Customization -->
+          <div id="step-4" class="card glass hidden" data-aos="zoom-in">
+              <div id="final-config-table"></div>
+              
+              <div class="component-selector" style="margin-top: 2rem;">
+                  <h3 class="text-center" style="color: #4facfe; margin-bottom: 1rem;" data-aos="fade-up">🔧 Tùy Chỉnh Linh Kiện</h3>
+                  <div class="component-grid" id="component-grid">
+                      <!-- Component selectors will be populated here -->
+                  </div>
+              </div>
+          </div>
     </main>
 
     <!-- Component Data Scripts -->
@@ -870,81 +994,278 @@
     <!-- Main PC Builder Script -->
     <script src="complete-pc-builder.js"></script>
     
-    <!-- Simplified JS for mobile performance -->
-    <script>
-        // Simple success/error messages
-        window.showSuccessMessage = function(message) {
-            try {
-                if (typeof Swal !== 'undefined') {
-                    Swal.fire({
-                        title: 'Thành công!',
-                        text: message,
-                        icon: 'success',
-                        background: '#1e293b',
-                        color: '#f8fafc',
-                        confirmButtonColor: '#4facfe',
-                        timer: 2000,
-                        timerProgressBar: true,
-                        showConfirmButton: false
-                    });
-                } else {
-                    console.log('✅ Success:', message);
-                }
-            } catch(e) {
-                console.log('✅ Success:', message);
-            }
-        };
-        
-        window.showErrorMessage = function(message) {
-            try {
-                if (typeof Swal !== 'undefined') {
-                    Swal.fire({
-                        title: 'Thông báo',
-                        text: message,
-                        icon: 'warning',
-                        background: '#1e293b',
-                        color: '#f8fafc',
-                        confirmButtonColor: '#4facfe'
-                    });
-                } else {
-                    alert(message);
-                }
-            } catch(e) {
-                alert(message);
-            }
-        };
-        
-        // Simple mobile-optimized initialization
-        document.addEventListener('DOMContentLoaded', function() {
-            // Simple scroll animations with throttling
-            let scrollTimeout;
-            const handleScroll = () => {
-                const elements = document.querySelectorAll('.fade-in');
-                elements.forEach(element => {
-                    const elementTop = element.getBoundingClientRect().top;
-                    const elementVisible = 100;
-                    
-                    if (elementTop < window.innerHeight - elementVisible) {
-                        element.classList.add('visible');
-                    }
-                });
-            };
-            
-            window.addEventListener('scroll', () => {
-                clearTimeout(scrollTimeout);
-                scrollTimeout = setTimeout(handleScroll, 100);
-            }, { passive: true });
-            
-            // Simple button ripple effect
-            document.querySelectorAll('.btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    this.style.transform = 'scale(0.98)';
-                    setTimeout(() => {
-                        this.style.transform = '';
-                    }, 150);
-                });
-            });
-        });
-    </script>
+          <!-- Enhanced Animation Scripts -->
+      <script>
+          // Safe NProgress wrapper
+          const safeNProgress = {
+              start: function() {
+                  try {
+                      if (typeof NProgress !== 'undefined') {
+                          NProgress.start();
+                      }
+                  } catch(e) {
+                      console.log('NProgress start error:', e);
+                  }
+              },
+              done: function() {
+                  try {
+                      if (typeof NProgress !== 'undefined') {
+                          NProgress.done();
+                      }
+                  } catch(e) {
+                      console.log('NProgress done error:', e);
+                  }
+              },
+              configure: function(options) {
+                  try {
+                      if (typeof NProgress !== 'undefined') {
+                          NProgress.configure(options);
+                      }
+                  } catch(e) {
+                      console.log('NProgress configure error:', e);
+                  }
+              }
+          };
+          
+          // Make safeNProgress globally available
+          window.safeNProgress = safeNProgress;
+          
+          // Global safe animation helpers
+          window.showSuccessMessage = function(message) {
+              try {
+                  if (typeof Swal !== 'undefined') {
+                      Swal.fire({
+                          title: 'Thành công!',
+                          text: message,
+                          icon: 'success',
+                          background: '#1e293b',
+                          color: '#f8fafc',
+                          confirmButtonColor: '#4facfe',
+                          timer: 2000,
+                          timerProgressBar: true,
+                          showConfirmButton: false
+                      });
+                  } else {
+                      console.log('✅ Success:', message);
+                  }
+              } catch(e) {
+                  console.log('✅ Success:', message);
+              }
+          };
+          
+          window.showErrorMessage = function(message) {
+              try {
+                  if (typeof Swal !== 'undefined') {
+                      Swal.fire({
+                          title: 'Thông báo',
+                          text: message,
+                          icon: 'warning',
+                          background: '#1e293b',
+                          color: '#f8fafc',
+                          confirmButtonColor: '#4facfe'
+                      });
+                  } else {
+                      alert(message);
+                  }
+              } catch(e) {
+                  alert(message);
+              }
+          };
+
+          // New function to select CPU and auto-navigate to next step
+          window.selectCPUAndNext = function(cpuType) {
+              // Select CPU first
+              selectCPU(cpuType);
+              
+              // Auto-navigate to next step after brief delay
+              setTimeout(() => {
+                  nextStep();
+              }, 800);
+          };
+          
+          // Initialize all libraries
+          document.addEventListener('DOMContentLoaded', function() {
+              // Configure NProgress before starting
+              safeNProgress.configure({
+                  showSpinner: true,
+                  speed: 400,
+                  minimum: 0.1,
+                  trickle: true,
+                  trickleSpeed: 200,
+                  parent: 'body'
+              });
+              
+              // Start loading progress safely
+              safeNProgress.start();
+              
+              // Initialize AOS safely
+              try {
+                  if (typeof AOS !== 'undefined') {
+                      AOS.init({
+                          duration: 800,
+                          easing: 'ease-out',
+                          once: true,
+                          mirror: false,
+                          disable: false,
+                          offset: 120,
+                          delay: 100
+                      });
+                  }
+              } catch(e) {
+                  console.log('AOS init error:', e);
+              }
+              
+              // Initialize Particles safely
+              try {
+                  if (typeof particlesJS !== 'undefined') {
+                      const particleConfig = {
+                          particles: {
+                              number: { 
+                                  value: 80,
+                                  density: { enable: true, value_area: 800 }
+                              },
+                              color: { value: '#4facfe' },
+                              shape: { type: 'circle' },
+                              opacity: { value: 0.5, random: false },
+                              size: { value: 3, random: true },
+                              line_linked: {
+                                  enable: true,
+                                  distance: 150,
+                                  color: '#4facfe',
+                                  opacity: 0.4,
+                                  width: 1
+                              },
+                              move: {
+                                  enable: true,
+                                  speed: 2,
+                                  direction: 'none',
+                                  random: false,
+                                  straight: false,
+                                  out_mode: 'out',
+                                  bounce: false
+                              }
+                          },
+                          interactivity: {
+                              detect_on: 'canvas',
+                              events: {
+                                  onhover: { enable: true, mode: 'repulse' },
+                                  onclick: { enable: true, mode: 'push' },
+                                  resize: true
+                              },
+                              modes: {
+                                  grab: { distance: 400, line_linked: { opacity: 1 }},
+                                  bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 },
+                                  repulse: { distance: 200, duration: 0.4 },
+                                  push: { particles_nb: 4 },
+                                  remove: { particles_nb: 2 }
+                              }
+                          },
+                          retina_detect: true
+                      };
+                      
+                      particlesJS('particles-js', particleConfig);
+                  }
+              } catch(e) {
+                  console.log('Particles.js init error:', e);
+              }
+              
+              // Initialize Vanilla Tilt safely
+              try {
+                  if (typeof VanillaTilt !== 'undefined') {
+                      VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+                          max: 15,
+                          speed: 400,
+                          glare: true,
+                          "max-glare": 0.2,
+                      });
+                  }
+              } catch(e) {
+                  console.log('VanillaTilt init error:', e);
+              }
+              
+              // Initialize Typed.js for logo safely
+              try {
+                  if (typeof Typed !== 'undefined' && document.getElementById('logo-text')) {
+                      new Typed('#logo-text', {
+                          strings: ['Trường Phát Computer', 'PC Builder Professional', 'Trường Phát Computer'],
+                          typeSpeed: 100,
+                          backSpeed: 50,
+                          loop: false,
+                          showCursor: false
+                      });
+                  }
+              } catch(e) {
+                  console.log('Typed.js init error:', e);
+              }
+              
+              // Finish loading progress
+              setTimeout(() => {
+                  safeNProgress.done();
+              }, 1000);
+              
+              // Add scroll animations with debouncing
+              let scrollTimeout;
+              const handleScroll = () => {
+                  const elements = document.querySelectorAll('.fade-in');
+                  elements.forEach(element => {
+                      const elementTop = element.getBoundingClientRect().top;
+                      const elementVisible = 150;
+                      
+                      if (elementTop < window.innerHeight - elementVisible) {
+                          element.classList.add('visible');
+                      }
+                  });
+              };
+              
+              window.addEventListener('scroll', () => {
+                  clearTimeout(scrollTimeout);
+                  scrollTimeout = setTimeout(handleScroll, 100);
+              }, { passive: true });
+              
+              // Enhanced button interactions
+              document.querySelectorAll('.btn').forEach(btn => {
+                  btn.addEventListener('click', function(e) {
+                      // Ripple effect
+                      const ripple = document.createElement('span');
+                      const rect = this.getBoundingClientRect();
+                      const size = Math.max(rect.width, rect.height);
+                      const x = e.clientX - rect.left - size / 2;
+                      const y = e.clientY - rect.top - size / 2;
+                      
+                      ripple.style.width = ripple.style.height = size + 'px';
+                      ripple.style.left = x + 'px';
+                      ripple.style.top = y + 'px';
+                      ripple.classList.add('ripple');
+                      
+                      this.appendChild(ripple);
+                      
+                      setTimeout(() => {
+                          ripple.remove();
+                      }, 600);
+                  });
+              });
+              
+              // Add ripple CSS
+              const style = document.createElement('style');
+              style.textContent = `
+                  .ripple {
+                      position: absolute;
+                      border-radius: 50%;
+                      background: rgba(255, 255, 255, 0.3);
+                      transform: scale(0);
+                      animation: ripple 0.6s linear;
+                      pointer-events: none;
+                  }
+                  
+                  @keyframes ripple {
+                      to {
+                          transform: scale(4);
+                          opacity: 0;
+                      }
+                  }
+              `;
+              document.head.appendChild(style);
+          });
+      </script>
 </body>
 </html>
