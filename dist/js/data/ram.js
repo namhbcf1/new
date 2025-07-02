@@ -4,7 +4,7 @@ window.ramData = {
     "Kingbank-16-6000": {
         name: "RAM KINGBANK LED 16GB DDR5 16X1 (Bus 6000) ",
         price: 1200000,
-        brand: "TridentZ",
+        brand: "Kingbank",
         type: "DDR5",
         speed: "6000MHz",
         size: "16GB",
@@ -16,7 +16,7 @@ window.ramData = {
     "Kingbank-32-6000": {
         name: "RAM KINGBANK LED 16GB DDR5 16X2 (Bus 6000) ",
         price: 2400000,
-        brand: "TridentZ",
+        brand: "Kingbank",
         type: "DDR5",
         speed: "6000MHz",
         size: "32GB",
