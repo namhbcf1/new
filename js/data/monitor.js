@@ -1,5 +1,19 @@
 // Dữ liệu Monitor
 window.monitorData = {
+
+    "vx24g10": {
+    name: "Màn hình ViewSonic VX24G10 23.8 inch Fast IPS 240Hz 1ms HDR10",
+    price: 2599000,
+    image: "images/vx24g10.jpg",
+    brand: "ViewSonic",
+    warranty: "36 tháng",
+    condition: "NEW",
+    panelType: "Fast IPS",
+    refreshRate: "240Hz",
+    screenSize: "23.8 inch",
+    score: 8
+},
+
     "ip25f180": {
         name: "Màn hình DUAN IP25F180 25 inch IPS 180Hz 1ms",
         price: 2200000,
