@@ -1737,6 +1737,10 @@ const printStyles = `
             margin: 10mm;
         }
         
+        html, body { 
+            height: auto;
+        }
+        
         body { 
             margin: 0; 
             padding: 0; 
@@ -1745,7 +1749,18 @@ const printStyles = `
             line-height: 0.9;
             color: #000;
             background: white;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
         }
+        
+        /* Container giúp nội dung luôn vừa A4 */
+        .print-container {
+            width: 100%;
+            max-width: 190mm; /* A4 width minus margins */
+            margin: 0 auto;
+        }
+        
+        img { max-width: 100%; height: auto; }
         
         .header {
             text-align: center;
@@ -1814,7 +1829,12 @@ const printStyles = `
             color: #000;
             height: 12px;
             line-height: 1.1;
+            page-break-inside: avoid;
         }
+        
+        tr { page-break-inside: avoid; }
+        table { page-break-inside: auto; }
+        .no-break { page-break-inside: avoid; }
         
         /* Xóa border đen cho các ô trong hàng tổng cộng */
         .total-row th,
@@ -2109,6 +2129,7 @@ function printConfiguration() {
             ${printStyles}
         </head>
         <body>
+            <div class="print-container">
             <div class="header">
                 <div class="company-name">TRƯỜNG PHÁT COMPUTER HÒA BÌNH</div>
                 <div class="company-address">Số 399 Trần Hưng Đạo - Phương Lâm - TP Hòa Bình</div>
