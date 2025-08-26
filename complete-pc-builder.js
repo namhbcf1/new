@@ -1827,8 +1827,8 @@ const printStyles = `
             text-align: center;
             vertical-align: middle;
             color: #000;
-            height: 12px;
-            line-height: 1.1;
+            height: 10px;
+            line-height: 1.0;
             page-break-inside: avoid;
         }
         
@@ -1850,8 +1850,8 @@ const printStyles = `
             font-weight: bold; 
             font-size: 6px;
             text-transform: uppercase;
-            height: 14px;
-            padding: 2px 3px;
+            height: 12px;
+            padding: 1px 2px;
             line-height: 1.0;
         }
         
@@ -1876,16 +1876,16 @@ const printStyles = `
         
         td:nth-child(3) { 
             text-align: left; 
-            font-size: 12px;
-            padding: 2px 3px;
+            font-size: 10px;
+            padding: 1px 2px;
             color: #000;
             line-height: 1.0;
-            height: 14px;
+            height: 12px;
         }
         
         /* Cân bằng 3 dòng text trong component names */
         td:nth-child(3) div {
-            font-size: 12px !important;
+            font-size: 10px !important;
             font-weight: bold !important;
             color: #000 !important;
             margin: 0 !important;
@@ -1894,8 +1894,8 @@ const printStyles = `
         }
         
         img { 
-            max-width: 40px; 
-            max-height: 40px; 
+            max-width: 30px; 
+            max-height: 30px; 
             object-fit: cover;
             border-radius: 2px;
         }
@@ -1973,34 +1973,33 @@ const printStyles = `
         }
         
         .warranty-note {
-            page-break-before: always;
-            margin-top: 20px;
-            font-size: 14px;
+            margin-top: 10px;
+            font-size: 10px;
             color: #000;
-            line-height: 1.1;
+            line-height: 1.0;
         }
         
         .bank-info {
-            font-size: 14px;
+            font-size: 10px;
             font-weight: bold;
             color: #000;
             margin-bottom: 1px;
         }
         
         .footer-info {
-            margin-top: 30px;
-            padding-top: 20px;
-            font-size: 14px;
+            margin-top: 10px;
+            padding-top: 10px;
+            font-size: 10px;
             text-align: center;
             color: #000;
-            height: 200px;
+            height: 80px;
         }
         
-        /* Đảm bảo warranty-note và footer luôn ở trang mới */
+        /* Đảm bảo tất cả nội dung vừa trong 1 trang A4 */
         @media print {
             .warranty-note {
-                break-before: page;
-                page-break-before: always;
+                break-before: avoid;
+                page-break-before: avoid;
             }
             .footer-info {
                 break-before: avoid;
@@ -2151,23 +2150,23 @@ function printConfiguration() {
                     STK: 8990124112002 - NGUYÊN THÀNH NAM - MB Bank
                 </div>
                 
-                <div style="border: 2px solid #000; padding: 8px; margin: 5px 0; background: #f8f9fa;">
-                    <div style="font-weight: bold; text-align: center; margin-bottom: 5px; font-size: 12px; color: #d97706;">⏰ THỜI GIAN LÀM VIỆC & QUY ĐỊNH BẢO HÀNH</div>
+                <div style="border: 1px solid #000; padding: 4px; margin: 2px 0; background: #f8f9fa;">
+                    <div style="font-weight: bold; text-align: center; margin-bottom: 2px; font-size: 8px; color: #d97706;">⏰ THỜI GIAN LÀM VIỆC & QUY ĐỊNH BẢO HÀNH</div>
                     
-                    <div style="margin-bottom: 4px;">
+                    <div style="margin-bottom: 2px; font-size: 8px;">
                         <strong>📅 Giờ làm việc:</strong> Sáng 8:00-12:00, Chiều 14:00-18:00 (Chủ nhật nghỉ)
                     </div>
                     
-                    <div style="font-weight: bold; margin: 4px 0; color: #dc2626;">🔧 QUY ĐỊNH BẢO HÀNH:</div>
+                    <div style="font-weight: bold; margin: 2px 0; color: #dc2626; font-size: 8px;">🔧 QUY ĐỊNH BẢO HÀNH:</div>
                     
-                    <div style="margin-left: 10px; line-height: 1.3;">
-                        <div style="margin-bottom: 2px;">
+                    <div style="margin-left: 5px; line-height: 1.0; font-size: 8px;">
+                        <div style="margin-bottom: 1px;">
                             <strong>1.</strong> ❌ Hết thời gian BH, mất phiếu BH, biến dạng, trầy xước, không có tem BH hợp lệ
                         </div>
-                        <div style="margin-bottom: 2px;">
+                        <div style="margin-bottom: 1px;">
                             <strong>2.</strong> ⚡ Nguồn điện không ổn định, tự ý thay linh kiện, update BIOS, thay đổi kỹ thuật
                         </div>
-                        <div style="margin-bottom: 2px;">
+                        <div style="margin-bottom: 1px;">
                             <strong>3.</strong> 🌡️ Môi trường không tốt: ẩm, oxy hóa, thấm nước, gỉ sét, bụi bẩn, vỡ gãy
                         </div>
                     </div>
@@ -2175,17 +2174,17 @@ function printConfiguration() {
 
             </div>
             
-            <div class="footer-info" style="margin-top: 30px; padding-top: 20px;">
-                <div style="display: flex; justify-content: space-between; align-items: end; height: 150px;">
+            <div class="footer-info" style="margin-top: 10px; padding-top: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: end; height: 60px;">
                     <div style="text-align: center; width: 45%;">
-                        <strong style="font-size: 16px;">BÊN MUA</strong><br>
-                        <em style="font-size: 12px;">(Ký, họ tên)</em>
-                        <div style="border-bottom: 1px solid #000; margin: 80px 20px 10px 20px;"></div>
+                        <strong style="font-size: 12px;">BÊN MUA</strong><br>
+                        <em style="font-size: 8px;">(Ký, họ tên)</em>
+                        <div style="border-bottom: 1px solid #000; margin: 30px 20px 5px 20px;"></div>
                     </div>
                     <div style="text-align: center; width: 45%;">
-                        <strong style="font-size: 16px;">BÊN BÁN</strong><br>
-                        <em style="font-size: 12px;">(Ký, họ tên)</em>
-                        <div style="border-bottom: 1px solid #000; margin: 80px 20px 10px 20px;"></div>
+                        <strong style="font-size: 12px;">BÊN BÁN</strong><br>
+                        <em style="font-size: 8px;">(Ký, họ tên)</em>
+                        <div style="border-bottom: 1px solid #000; margin: 30px 20px 5px 20px;"></div>
                     </div>
                 </div>
             </div>
