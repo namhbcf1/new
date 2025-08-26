@@ -60,9 +60,39 @@ window.cpuData = {
         condition: "NEW",
         score: 6
     },
+    "12100": {
+        name: "Intel Core i3-12100",
+        price: 2450000,
+        image: "images/intel-core-i3-12100f.jpg",
+        brand: "Intel",
+        warranty: "36 tháng",
+        socket: "LGA1700",
+        cores: 4,
+        threads: 8,
+        technology: "Intel 7",
+        ram_support: "DDR4/DDR5",
+        ram_bus: "3200MHz",
+        condition: "NEW",
+        score: 6
+    },
     "13100f": {
+        name: "Intel Core i3-13100f",
+        price: 1500000,
+        image: "images/intel-core-i3-13100.jpg",
+        brand: "Intel",
+        warranty: "36 tháng",
+        socket: "LGA1700",
+        cores: 4,
+        threads: 8,
+        technology: "Intel 7",
+        ram_support: "DDR4/DDR5",
+        ram_bus: "3200MHz",
+        condition: "NEW",
+        score: 7
+    },
+    "13100": {
         name: "Intel Core i3-13100",
-        price: 2100000,
+        price: 26000000,
         image: "images/intel-core-i3-13100.jpg",
         brand: "Intel",
         warranty: "36 tháng",
@@ -165,6 +195,21 @@ window.cpuData = {
         condition: "NEW",
         score: 5
     },
+    "10400": {
+        name: "Intel Core i5-10400",
+        price: 2300000,
+        image: "images/intel-core-i5-10400f.jpg",
+        brand: "Intel",
+        warranty: "12 tháng",
+        socket: "LGA1200",
+        cores: 6,
+        threads: 12,
+        technology: "14nm",
+        ram_support: "DDR4",
+        ram_bus: "2666MHz",
+        condition: "NEW",
+        score: 5
+    },
     "11400f": {
         name: "Intel Core i5-11400f",
         price: 1700000,
@@ -227,7 +272,7 @@ window.cpuData = {
     },
     "13600kf": {
         name: "Intel Core i5-13600KF",
-        price: 4400000,
+        price: 4000000,
         image: "images/intel-core-i5-13600kf.jpg",
         brand: "Intel",
         warranty: "36 tháng",
@@ -257,7 +302,7 @@ window.cpuData = {
     },
     "12700f": {
         name: "Intel Core i7-12700f",
-        price: 8800000,
+        price: 5800000,
         image: "images/intel-core-i7-12700f.jpg",
         brand: "Intel",
         warranty: "36 tháng",
@@ -377,7 +422,7 @@ window.cpuData = {
     },
     "5700x3d": {
         name: "AMD Ryzen 7 5700X3D",
-        price: 5800000,
+        price: 5700000,
         image: "images/amd-ryzen-7-5700x3d.jpg",
         brand: "AMD",
         warranty: "36 tháng",
@@ -420,9 +465,24 @@ window.cpuData = {
         condition: "NEW",
         score: 10
     },
+    "7700": {
+        name: "AMD Ryzen 7 7700",
+        price: 5200000,
+        image: "images/amd-ryzen-7-7700x.jpg",
+        brand: "AMD",
+        warranty: "36 tháng",
+        socket: "AM5",
+        cores: 8,
+        threads: 16,
+        technology: "5nm",
+        ram_support: "DDR5",
+        ram_bus: "6000",
+        condition: "NEW",
+        score: 10
+    },
     "7800x3d": {
         name: "AMD Ryzen 7 7800X3D",
-        price: 8600000,
+        price: 8400000,
         image: "images/amd-ryzen-7-7800x3d-tray.jpg",
         brand: "AMD",
         warranty: "36 tháng",

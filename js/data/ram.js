@@ -64,7 +64,7 @@ window.ramData = {
 
     "cosair-16": {
         name: "RAM Corsair Vengeance LPX 16GB DDR4 (Bus 3200)",
-        price: 700000,
+        price: 850000,
         brand: "Corsair",
         type: "DDR4",
         speed: "3200MHz",
@@ -74,9 +74,32 @@ window.ramData = {
         image: "images/ram-corsair-vengeance-16gb-ddr4-3200.jpg",
         score: 4 // Added score
     },
+    "jginyue-16": {
+        name: "RAM JGINYUE 16GB DDR4 (Bus 3200) CL 16",
+        price: 700000,
+        brand: "JGINYUE",
+        type: "DDR4",
+        speed: "3200MHz",
+        size: "16GB",
+        warranty: "36 tháng",
+        condition: "NEW",
+        image: "images/ram-corsair-vengeance-16gb-ddr4-3200.jpg",
+        score: 4 // Added score
+    },"JGINYUE-32": {
+        name: "RAM JGINYUE 32GB DDR4 (Bus 3200) CL 16",
+        price: 700000,
+        brand: "JGINYUE",
+        type: "DDR4",
+        speed: "3200MHz",
+        size: "16GB",
+        warranty: "36 tháng",
+        condition: "NEW",
+        image: "images/ram-corsair-vengeance-16gb-ddr4-3200.jpg",
+        score: 4 // Added score
+    },
     "cosair-32": {
-        name: "RAM Corsair Vengeance LPX 16GB DDR4 (Bus 3200)",
-        price: 1400000,
+        name: "RAM Corsair Vengeance LPX 32GB DDR4 (Bus 3200)",
+        price: 1500000,
         brand: "Corsair",
         type: "DDR4",
         speed: "3200MHz",

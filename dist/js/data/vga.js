@@ -110,8 +110,32 @@ window.vgaData = {
     },
     "2070s": {
         name: "RTX 2070 Super 8GB GDDR6 /GIGA/MSI/ASUS GAMING (Cũ)",
-        price: 4600000,
+        price: 4500000,
         image: "images/rtx-2070-super-8gb-msi.jpg",
+        brand: "msi",
+        warranty: "3 tháng",
+        condition: "2ND",
+        vram: "8GB",
+        vram_type: "GDDR6",
+        card_type: "NVIDIA",
+        score: 7
+    },
+    "2080": {
+        name: "RTX 2080 8GB GDDR6 /GIGA/MSI/ASUS GAMING (Cũ)",
+        price: 4600000,
+        image: "images/2080.jpg",
+        brand: "msi",
+        warranty: "3 tháng",
+        condition: "2ND",
+        vram: "8GB",
+        vram_type: "GDDR6",
+        card_type: "NVIDIA",
+        score: 7
+    },
+    "2080s": {
+        name: "RTX 2080 Super 8GB GDDR6 /GIGA/MSI/ASUS GAMING (Cũ)",
+        price: 5000000,
+        image: "images/2080.jpg",
         brand: "msi",
         warranty: "3 tháng",
         condition: "2ND",
@@ -251,9 +275,33 @@ window.vgaData = {
         card_type: "NVIDIA",
         score: 7
     },
+    "5060ti-16G": {
+        name: "MSI RTX 5060 TI 16GB GDDR6 (NEW)",
+        price: 12900000,
+        image: "images/msi-rtx-4060-ti-16gb-amp.jpg",
+        brand: "msi",
+        warranty: "36 tháng",
+        condition: "NEW",
+        vram: "16GB",
+        vram_type: "GDDR6",
+        card_type: "NVIDIA",
+        score: 7
+    },
     "4060": {
         name: "ASUS DUAL RTX 4060 OC 8GB GDDR6 (NEW)",
         price: 7500000,
+        image: "images/asus-dual-rtx-4060-oc-8gb.jpg",
+        brand: "ASUS",
+        warranty: "36 tháng",
+        condition: "NEW",
+        vram: "8GB",
+        vram_type: "GDDR6",
+        card_type: "NVIDIA",
+        score: 7
+    },
+    "5060": {
+        name: "ASUS DUAL RTX 5060 OC 8GB GDDR6 (NEW)",
+        price: 8600000,
         image: "images/asus-dual-rtx-4060-oc-8gb.jpg",
         brand: "ASUS",
         warranty: "36 tháng",
