@@ -134,7 +134,7 @@ window.vgaData = {
     },
     "3060ti": {
         name: "RTX 3060ti 8GB GDDR6 /GIGA/MSI/ASUS GAMING (Cũ)",
-        price: 5900000,
+        price: 5700000,
         image: "images/rtx-3060ti-8gb-msi.jpg",
         brand: "msi",
         warranty: "3 tháng",
