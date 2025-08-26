@@ -1734,7 +1734,7 @@ const printStyles = `
     <style>
         @page {
             size: A4 portrait;
-            margin: 10mm;
+            margin: 15mm;
         }
         
         html, body { 
@@ -1756,7 +1756,7 @@ const printStyles = `
         /* Container giúp nội dung luôn vừa A4 */
         .print-container {
             width: 100%;
-            max-width: 190mm; /* A4 width minus margins */
+            max-width: 180mm; /* Giảm width để đảm bảo không bị tràn */
             margin: 0 auto;
         }
         
@@ -1823,7 +1823,7 @@ const printStyles = `
         
         th, td { 
             border: 1px solid #000; 
-            padding: 1px 2px; 
+            padding: 1px 1px; 
             text-align: center;
             vertical-align: middle;
             color: #000;
@@ -1851,33 +1851,33 @@ const printStyles = `
             font-size: 6px;
             text-transform: uppercase;
             height: 12px;
-            padding: 1px 2px;
+            padding: 1px 1px;
             line-height: 1.0;
         }
         
         /* Cột STT - cân bằng lại */
-        th:nth-child(1), td:nth-child(1) { width: 6%; }
-        /* Cột Hình ảnh - tăng lên để cân đối */
-        th:nth-child(2), td:nth-child(2) { width: 10%; }
+        th:nth-child(1), td:nth-child(1) { width: 5%; }
+        /* Cột Hình ảnh - giảm xuống */
+        th:nth-child(2), td:nth-child(2) { width: 8%; }
         /* Cột Tên linh kiện - giảm xuống để cân bằng */
-        th:nth-child(3), td:nth-child(3) { width: 28%; }
+        th:nth-child(3), td:nth-child(3) { width: 25%; }
         /* Cột ĐVT */
-        th:nth-child(4), td:nth-child(4) { width: 8%; }
+        th:nth-child(4), td:nth-child(4) { width: 7%; }
         /* Cột Số lượng */
-        th:nth-child(5), td:nth-child(5) { width: 8%; }
-        /* Cột Đơn giá - tăng lên để đẹp hơn */
-        th:nth-child(6), td:nth-child(6) { width: 14%; }
-        /* Cột Thành tiền - tăng lên để nổi bật */
-        th:nth-child(7), td:nth-child(7) { width: 14%; }
+        th:nth-child(5), td:nth-child(5) { width: 7%; }
+        /* Cột Đơn giá - giảm xuống */
+        th:nth-child(6), td:nth-child(6) { width: 13%; }
+        /* Cột Thành tiền - giảm xuống */
+        th:nth-child(7), td:nth-child(7) { width: 13%; }
         /* Cột Bảo hành */
-        th:nth-child(8), td:nth-child(8) { width: 8%; }
-        /* Cột Ghi chú */
-        th:nth-child(9), td:nth-child(9) { width: 4%; }
+        th:nth-child(8), td:nth-child(8) { width: 7%; }
+        /* Cột Ghi chú - tăng lên để đủ chỗ */
+        th:nth-child(9), td:nth-child(9) { width: 5%; }
         
         td:nth-child(3) { 
             text-align: left; 
-            font-size: 10px;
-            padding: 1px 2px;
+            font-size: 9px;
+            padding: 1px 1px;
             color: #000;
             line-height: 1.0;
             height: 12px;
@@ -1885,7 +1885,7 @@ const printStyles = `
         
         /* Cân bằng 3 dòng text trong component names */
         td:nth-child(3) div {
-            font-size: 10px !important;
+            font-size: 9px !important;
             font-weight: bold !important;
             color: #000 !important;
             margin: 0 !important;
@@ -1894,8 +1894,8 @@ const printStyles = `
         }
         
         img { 
-            max-width: 30px; 
-            max-height: 30px; 
+            max-width: 25px; 
+            max-height: 25px; 
             object-fit: cover;
             border-radius: 2px;
         }
