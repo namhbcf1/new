@@ -1876,7 +1876,7 @@ const printStyles = `
         
         td:nth-child(3) { 
             text-align: left; 
-            font-size: 9px;
+            font-size: 11px;
             padding: 1px 1px;
             color: #000;
             line-height: 1.0;
@@ -1885,7 +1885,7 @@ const printStyles = `
         
         /* Cân bằng 3 dòng text trong component names */
         td:nth-child(3) div {
-            font-size: 9px !important;
+            font-size: 11px !important;
             font-weight: bold !important;
             color: #000 !important;
             margin: 0 !important;
