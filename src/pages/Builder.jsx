@@ -362,7 +362,6 @@ export default function Builder() {
               textDecoration: 'none',
               fontWeight: 700
             }}>⚙️ Thay đổi logic theo tầm tiền (Admin)</a>
-            <span style={{ marginLeft: 8, color: '#94a3b8', fontSize: 12 }}>(Mật khẩu: namhbcf12)</span>
           </div>
           {!config ? (
             <div style={{ color: '#94a3b8' }}>Chưa có cấu hình</div>

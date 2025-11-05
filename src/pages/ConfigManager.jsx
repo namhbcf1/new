@@ -115,7 +115,7 @@ export default function ConfigManager() {
             type="password"
             value={password}
             onChange={e => setPassword(e.target.value)}
-            placeholder="Mật khẩu: namhbcf12"
+            placeholder="Nhập mật khẩu..."
             style={{ width: '100%', padding: 12, borderRadius: 8, border: '1px solid rgba(79,172,254,0.3)', background: '#0b1220', color: '#fff', marginBottom: 12 }}
           />
           <button onClick={() => authenticate(password)} style={{ width: '100%', padding: 12, border: 0, borderRadius: 8, background: 'linear-gradient(135deg,#4facfe,#00f2fe)', color: '#fff', fontWeight: 700, cursor: 'pointer' }}>
@@ -348,16 +348,9 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
   const formatPrice = fmt
   const getOptions = (cat) => {
     const invList = Object.values(inventory?.[cat] || {})
+    if (invList.length > 0) return invList
     const baseList = Object.values(catalogs?.[cat] || {})
-    // merge unique by id
-    const seen = new Set()
-    const out = []
-    ;[...invList, ...baseList].forEach(it => {
-      if (!it?.id || seen.has(it.id)) return
-      seen.add(it.id)
-      out.push(it)
-    })
-    return out
+    return baseList
   }
 
   const updatePayload = (key, value) => {
