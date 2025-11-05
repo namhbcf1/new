@@ -69,7 +69,7 @@ export default function Components() {
 
   async function handleUpdate(cat, id, payload) {
     try {
-      const response = await fetch(`${API_URL}/inventory?password=${encodeURIComponent(password)}`, {
+      const response = await fetch(`${API_URL}/inventory`, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ cat, id, ...payload })
@@ -99,9 +99,7 @@ export default function Components() {
     if (!confirm.isConfirmed) return
 
     try {
-      const response = await fetch(`${API_URL}/inventory/${cat}/${id}?password=${encodeURIComponent(password)}`, {
-        method: 'DELETE'
-      })
+      const response = await fetch(`${API_URL}/inventory/${cat}/${id}`, { method: 'DELETE' })
       if (!response.ok) throw new Error('Delete failed')
 
       // Reload inventory
