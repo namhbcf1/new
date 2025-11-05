@@ -465,7 +465,15 @@ function ItemEditor({ item, categories, onSave, onCancel }) {
     id: item.id || '',
     name: item.name || '',
     price: item.price || 0,
-    quantity: item.quantity || 1
+    quantity: item.quantity || 1,
+    // optional metadata to improve compatibility and UI
+    brand: item.brand || '',
+    socket: item.socket || item.sockets?.[0] || '',
+    ddr: item.ddr || '',
+    memoryType: item.memoryType || '',
+    warranty: item.warranty || '',
+    condition: item.condition || 'NEW',
+    image: item.image || ''
   })
 
   const handleSubmit = () => {
@@ -477,7 +485,12 @@ function ItemEditor({ item, categories, onSave, onCancel }) {
       alert('Giá không được âm')
       return
     }
-    onSave(formData)
+    // Normalize: prefer memoryType for mainboard/ram, ddr for cpu/ram; strip empties
+    const payload = { ...formData }
+    ;['brand','socket','ddr','memoryType','warranty','condition','image'].forEach(k => {
+      if (payload[k] === '') delete payload[k]
+    })
+    onSave(payload)
   }
 
   return (
@@ -632,6 +645,93 @@ function ItemEditor({ item, categories, onSave, onCancel }) {
             <div style={{ fontSize: '13px', color: '#10b981', marginTop: '6px', fontWeight: 600 }}>
               = {formData.price.toLocaleString('vi-VN')} VNĐ
             </div>
+          </div>
+
+          {/* Brand */}
+          <div>
+            <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: 600, color: '#cbd5e1' }}>
+              Thương hiệu:
+            </label>
+            <input
+              type="text"
+              value={formData.brand}
+              onChange={e => setFormData(prev => ({ ...prev, brand: e.target.value }))}
+              placeholder={formData.cat === 'cpu' ? 'AMD / Intel' : 'ASUS / MSI / Gigabyte ...'}
+              style={{ width: '100%', padding: '12px 16px', borderRadius: '6px', border: '1px solid rgba(79,172,254,0.3)', background: 'rgba(15,23,42,0.8)', color: '#f8fafc', fontSize: '14px' }}
+            />
+          </div>
+
+          {/* Socket / DDR / MemoryType - context dependent */}
+          {(formData.cat === 'cpu' || formData.cat === 'mainboard') && (
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              <div>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: 600, color: '#cbd5e1' }}>
+                  Socket:
+                </label>
+                <input
+                  type="text"
+                  value={formData.socket}
+                  onChange={e => setFormData(prev => ({ ...prev, socket: e.target.value }))}
+                  placeholder={formData.cat === 'cpu' ? 'AM4 / AM5 / LGA1700 ...' : 'LGA1700 / AM4 ...'}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '6px', border: '1px solid rgba(79,172,254,0.3)', background: 'rgba(15,23,42,0.8)', color: '#f8fafc', fontSize: '14px' }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: 600, color: '#cbd5e1' }}>
+                  {formData.cat === 'cpu' ? 'DDR' : 'Memory Type'}:
+                </label>
+                <input
+                  type="text"
+                  value={formData.cat === 'cpu' ? formData.ddr : formData.memoryType}
+                  onChange={e => setFormData(prev => ({ ...prev, [formData.cat === 'cpu' ? 'ddr' : 'memoryType']: e.target.value }))}
+                  placeholder="DDR4 / DDR5"
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '6px', border: '1px solid rgba(79,172,254,0.3)', background: 'rgba(15,23,42,0.8)', color: '#f8fafc', fontSize: '14px' }}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Warranty / Condition */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+            <div>
+              <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: 600, color: '#cbd5e1' }}>
+                Bảo hành:
+              </label>
+              <input
+                type="text"
+                value={formData.warranty}
+                onChange={e => setFormData(prev => ({ ...prev, warranty: e.target.value }))}
+                placeholder="12 tháng / 36 tháng ..."
+                style={{ width: '100%', padding: '12px 16px', borderRadius: '6px', border: '1px solid rgba(79,172,254,0.3)', background: 'rgba(15,23,42,0.8)', color: '#f8fafc', fontSize: '14px' }}
+              />
+            </div>
+            <div>
+              <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: 600, color: '#cbd5e1' }}>
+                Tình trạng:
+              </label>
+              <select
+                value={formData.condition}
+                onChange={e => setFormData(prev => ({ ...prev, condition: e.target.value }))}
+                style={{ width: '100%', padding: '12px 16px', borderRadius: '6px', border: '1px solid rgba(79,172,254,0.3)', background: 'rgba(15,23,42,0.8)', color: '#f8fafc', fontSize: '14px', cursor: 'pointer' }}
+              >
+                <option value="NEW">NEW - Hàng mới 100%</option>
+                <option value="2nd">2ND - Hàng đã qua sử dụng</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Image path */}
+          <div>
+            <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: 600, color: '#cbd5e1' }}>
+              Ảnh (đường dẫn trong images/...):
+            </label>
+            <input
+              type="text"
+              value={formData.image}
+              onChange={e => setFormData(prev => ({ ...prev, image: e.target.value }))}
+              placeholder="images/xigmatek-nyx-air-3f.jpg"
+              style={{ width: '100%', padding: '12px 16px', borderRadius: '6px', border: '1px solid rgba(79,172,254,0.3)', background: 'rgba(15,23,42,0.8)', color: '#f8fafc', fontSize: '14px' }}
+            />
           </div>
 
           {/* Quantity */}
