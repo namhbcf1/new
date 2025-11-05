@@ -364,6 +364,20 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
     if (s.includes('DDR3')) return 'DDR3'
     return null
   }
+  function socketFromItem(it) {
+    return (
+      normalizeSocket(it?.socket) ||
+      (it?.name && normalizeSocket(it.name)) ||
+      null
+    )
+  }
+  function ddrFromItem(it) {
+    return (
+      normalizeDDR(it?.memoryType || it?.ddr) ||
+      (it?.name && normalizeDDR(it.name)) ||
+      null
+    )
+  }
   const allOf = (cat) => {
     const invObj = inventory?.[cat]
     if (invObj && typeof invObj === 'object') {
@@ -391,16 +405,16 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
 
     // If CPU chosen → filter mainboard/ram by compatibility
     const selCpu = findItem('cpu', formData.payload.cpu)
-    const cpuSock = normalizeSocket(selCpu?.socket)
-    const cpuDdr = normalizeDDR(selCpu?.ddr)
+    const cpuSock = socketFromItem(selCpu)
+    const cpuDdr = ddrFromItem(selCpu)
     const selMb = findItem('mainboard', formData.payload.mainboard)
-    const mbSock = normalizeSocket(selMb?.socket)
-    const mbDdr = normalizeDDR(selMb?.memoryType || selMb?.ddr)
+    const mbSock = socketFromItem(selMb)
+    const mbDdr = ddrFromItem(selMb)
 
     if (!showAll && cat === 'mainboard' && (cpuSock || cpuDdr)) {
       list = list.filter(mb => {
-        const ms = normalizeSocket(mb.socket)
-        const md = normalizeDDR(mb.memoryType || mb.ddr)
+        const ms = socketFromItem(mb)
+        const md = ddrFromItem(mb)
         if (cpuSock && ms && ms !== cpuSock) return false
         if (cpuDdr && md && md !== cpuDdr) return false
         return true
@@ -408,7 +422,7 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
     }
     if (!showAll && cat === 'ram' && (mbDdr || cpuDdr)) {
       list = list.filter(r => {
-        const rd = normalizeDDR(r.type || r.ddr)
+        const rd = ddrFromItem(r)
         const want = mbDdr || cpuDdr
         return !want || !rd || rd === want
       })
