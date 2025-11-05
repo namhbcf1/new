@@ -364,10 +364,23 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
     if (s.includes('DDR3')) return 'DDR3'
     return null
   }
+  function inferBoardSocketByChipset(name='') {
+    const n = String(name).toUpperCase()
+    const has = (re) => re.test(n)
+    if (has(/\b(H610(M)?|B660(M)?|B760(M)?|H770|Z690|Z790)\b/)) return 'LGA1700'
+    if (has(/\b(H410(M)?|B460(M)?|Z490|H510(M)?|B560(M)?|Z590)\b/)) return 'LGA1200'
+    if (has(/\b(H310(M)?|B360(M)?|B365(M)?|Z370|Z390)\b/)) return 'LGA1151'
+    if (has(/\b(H110(M)?|B150(M)?|B250(M)?|Z270)\b/)) return 'LGA1151'
+    if (has(/\b(H81(M)?|B85(M)?|Z87|Z97)\b/)) return 'LGA1150'
+    if (has(/\bH61(?!0)\w*\b/) || has(/\bB75(M)?\b/) || has(/\bZ77\b/)) return 'LGA1155'
+    if (has(/\b(B650(M)?|X670(E)?|A620(M)?)\b/)) return 'AM5'
+    if (has(/\b(B550(M)?|X570|A520(M)?|B450(M)?|X470|A320(M)?)\b/)) return 'AM4'
+    return null
+  }
   function socketFromItem(it) {
     return (
       normalizeSocket(it?.socket) ||
-      (it?.name && normalizeSocket(it.name)) ||
+      (it?.name && (normalizeSocket(it.name) || inferBoardSocketByChipset(it.name))) ||
       null
     )
   }
