@@ -537,11 +537,9 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
             <label style={{ display: 'block', marginBottom: '6px', fontSize: '14px', fontWeight: 600 }}>
               Game:
             </label>
-            <input
-              type="text"
+            <select
               value={formData.game}
               onChange={e => setFormData(prev => ({ ...prev, game: e.target.value }))}
-              placeholder="vd: pubg, lol, csgo"
               style={{
                 width: '100%',
                 padding: '8px 12px',
@@ -551,7 +549,12 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
                 color: '#f8fafc',
                 fontSize: '14px'
               }}
-            />
+            >
+              <option value="">-- Chọn Game --</option>
+              {['valorant','csgo','pubg','lol','gta_v','elden_ring','naraka','genshin','fo4','black_myth_wukong','audition','battle_teams_2','crossfire','delta_force','mu_origin'].map(g => (
+                <option key={g} value={g}>{g.replace(/_/g,' ')}</option>
+              ))}
+            </select>
           </div>
 
           {/* Budget Key */}
@@ -559,11 +562,9 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
             <label style={{ display: 'block', marginBottom: '6px', fontSize: '14px', fontWeight: 600 }}>
               Budget Key:
             </label>
-            <input
-              type="text"
+            <select
               value={formData.budget_key}
               onChange={e => setFormData(prev => ({ ...prev, budget_key: e.target.value }))}
-              placeholder="vd: 3M, 4M, 5M"
               style={{
                 width: '100%',
                 padding: '8px 12px',
@@ -573,7 +574,12 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
                 color: '#f8fafc',
                 fontSize: '14px'
               }}
-            />
+            >
+              <option value="">-- Chọn Budget --</option>
+              {[3,4,5,6,7,8,10,12,15,18,20,25,30].map(n => (
+                <option key={n} value={`${n}M`}>{`${n}M`}</option>
+              ))}
+            </select>
           </div>
 
           {/* Components */}
