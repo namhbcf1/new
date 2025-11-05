@@ -340,6 +340,7 @@ function ConfigCard({ config, onEdit, onDelete }) {
 function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
   const showAll = false
   const [query, setQuery] = useState('')
+  const [queryDebounced, setQueryDebounced] = useState('')
   const [formData, setFormData] = useState({
     cpu_type: config.cpu_type || 'intel',
     game: config.game || '',
@@ -399,6 +400,10 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
     }
     return Object.values(catalogs?.[cat] || {})
   }
+  useEffect(() => {
+    const t = setTimeout(()=> setQueryDebounced(query.trim()), 200)
+    return () => clearTimeout(t)
+  }, [query])
   const findItem = (cat, id) => {
     if (!id) return null
     return (inventory?.[cat]?.[id]) || (catalogs?.[cat]?.[id]) || null
@@ -442,8 +447,8 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
     }
 
     // Text search
-    if (query.trim()) {
-      const q = query.trim().toLowerCase()
+    if (queryDebounced) {
+      const q = queryDebounced.toLowerCase()
       list = list.filter(it => (it.name || '').toLowerCase().includes(q))
     }
 
@@ -458,6 +463,13 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
       payload: { ...prev.payload, [key]: value }
     }))
   }
+
+  // Preview helpers
+  const getItem = (cat, id) => findItem(cat, id)
+  const selectedList = [
+    ['cpu','CPU'], ['mainboard','Mainboard'], ['vga','VGA'], ['ram','RAM'], ['ssd','SSD'], ['case','Case'], ['cpuCooler','CPU Cooler'], ['psu','PSU']
+  ].map(([k,label])=> ({ key:k, label, item:getItem(k, formData.payload[k]) }))
+  const total = selectedList.reduce((sum, r)=> sum + (r.item?.price||0), 0)
 
   const handleSubmit = () => {
     if (!formData.game || !formData.budget_key) {
@@ -592,18 +604,82 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
                     style={{ width: '100%', padding: 12, borderRadius: 8, border: '1px solid rgba(79,172,254,0.25)', background: '#0b1220', color: '#fff' }}
                   >
                     <option value="">-- Chọn {label} --</option>
-                    {getOptions(key).map(it => (
-                      <option key={it.id} value={it.id}>
-                        {it.name}
-                        {it.socket ? ` (${normalizeSocket(it.socket)}` : ''}
-                        {(!it.socket && (it.memoryType||it.ddr)) ? ` (${normalizeDDR(it.memoryType||it.ddr)})` : ''}
-                        {it.socket ? `${(it.memoryType||it.ddr)?`, ${normalizeDDR(it.memoryType||it.ddr)}`:''})` : ''}
-                        {it.price ? ` - ${formatPrice(it.price)}` : ''}
-                      </option>
-                    ))}
+                    {getOptions(key).map(it => {
+                      let hint = ''
+                      if (key === 'mainboard' && (formData.payload.cpu)) {
+                        const ms = socketFromItem(it)
+                        const md = ddrFromItem(it)
+                        const cpu = findItem('cpu', formData.payload.cpu)
+                        const okSock = !socketFromItem(cpu) || ms === socketFromItem(cpu)
+                        const okDdr = !ddrFromItem(cpu) || !md || md === ddrFromItem(cpu)
+                        hint = okSock && okDdr ? ' [OK]' : ' [!]'
+                      }
+                      if (key === 'ram' && (formData.payload.mainboard || formData.payload.cpu)) {
+                        const want = ddrFromItem(findItem('mainboard', formData.payload.mainboard)) || ddrFromItem(findItem('cpu', formData.payload.cpu))
+                        const rd = ddrFromItem(it)
+                        hint = (!want || !rd || want === rd) ? ' [OK]' : ' [!]'
+                      }
+                      return (
+                        <option key={it.id} value={it.id}>
+                          {it.name}{hint}
+                          {it.socket ? ` (${normalizeSocket(it.socket)}` : ''}
+                          {(!it.socket && (it.memoryType||it.ddr)) ? ` (${normalizeDDR(it.memoryType||it.ddr)})` : ''}
+                          {it.socket ? `${(it.memoryType||it.ddr)?`, ${normalizeDDR(it.memoryType||it.ddr)}`:''})` : ''}
+                          {it.price ? ` - ${formatPrice(it.price)}` : ''}
+                        </option>
+                      )
+                    })}
                   </select>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* Preview */}
+          <div style={{
+            background: 'rgba(15,23,42,0.6)',
+            padding: 16,
+            borderRadius: 10,
+            border: '1px solid rgba(79,172,254,0.25)'
+          }}>
+            <h3 style={{ marginTop: 0, marginBottom: 10, fontSize: 16 }}>Preview</h3>
+            <div style={{ display: 'grid', gap: 8 }}>
+              {selectedList.map(r => (
+                <div key={r.key} style={{ display: 'flex', justifyContent: 'space-between', gap: 8, fontSize: 13 }}>
+                  <div style={{ color: '#cbd5e1' }}>{r.label}</div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ color: '#f8fafc' }}>{r.item?.name || '—'}</div>
+                    {r.item && <div style={{ color: '#22c55e' }}>{formatPrice(r.item.price)}</div>}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div style={{ marginTop: 12, borderTop: '1px dashed rgba(148,163,184,0.3)', paddingTop: 12, display: 'flex', justifyContent: 'space-between', fontWeight: 800 }}>
+              <div>Tổng</div>
+              <div style={{ color: '#22c55e' }}>{formatPrice(total)}</div>
+            </div>
+            <div style={{ marginTop: 12, display: 'flex', gap: 8 }}>
+              <button onClick={()=>{
+                const data = JSON.stringify({ ...formData, payload: { ...formData.payload } }, null, 2)
+                const blob = new Blob([data], { type: 'application/json' })
+                const url = URL.createObjectURL(blob)
+                const a = document.createElement('a')
+                a.href = url; a.download = `config-${Date.now()}.json`; a.click()
+                URL.revokeObjectURL(url)
+              }} style={{ flex: 1, padding: '8px 10px', borderRadius: 8, border: '1px solid rgba(79,172,254,0.25)', background: 'rgba(79,172,254,0.15)', color: '#4facfe', cursor: 'pointer' }}>Export JSON</button>
+              <label style={{ flex: 1, padding: '8px 10px', borderRadius: 8, border: '1px solid rgba(79,172,254,0.25)', background: 'rgba(34,197,94,0.15)', color: '#22c55e', cursor: 'pointer', textAlign: 'center' }}>
+                Import JSON
+                <input type="file" accept="application/json" style={{ display: 'none' }} onChange={async (e)=>{
+                  const file = e.target.files?.[0]
+                  if (!file) return
+                  try {
+                    const text = await file.text()
+                    const obj = JSON.parse(text)
+                    setFormData(prev => ({ ...prev, cpu_type: obj.cpu_type || prev.cpu_type, game: obj.game || prev.game, budget_key: obj.budget_key || prev.budget_key, payload: { ...prev.payload, ...(obj.payload||{}) } }))
+                  } catch(err) { alert('Import lỗi: ' + err.message) }
+                  e.target.value = ''
+                }} />
+              </label>
             </div>
           </div>
 
