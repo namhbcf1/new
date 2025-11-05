@@ -346,11 +346,72 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
   })
 
   const formatPrice = fmt
-  const getOptions = (cat) => {
+  function normalizeSocket(v) {
+    if (!v) return null
+    const s = String(v).toUpperCase().replace(/\s+/g,'')
+    if (s.startsWith('AM5')) return 'AM5'
+    if (s.startsWith('AM4')) return 'AM4'
+    const lga = s.match(/LGA\s*([0-9]{3,4})/i) || s.match(/LGA([0-9]{3,4})/i)
+    return lga ? `LGA${lga[1]}` : null
+  }
+  function normalizeDDR(v) {
+    if (!v) return null
+    const s = String(v).toUpperCase()
+    if (s.includes('DDR5')) return 'DDR5'
+    if (s.includes('DDR4')) return 'DDR4'
+    if (s.includes('DDR3')) return 'DDR3'
+    return null
+  }
+  const allOf = (cat) => {
     const invList = Object.values(inventory?.[cat] || {})
     if (invList.length > 0) return invList
-    const baseList = Object.values(catalogs?.[cat] || {})
-    return baseList
+    return Object.values(catalogs?.[cat] || {})
+  }
+  const findItem = (cat, id) => {
+    if (!id) return null
+    return (inventory?.[cat]?.[id]) || (catalogs?.[cat]?.[id]) || null
+  }
+  const getOptions = (cat) => {
+    // Base list (prefer D1)
+    let list = allOf(cat)
+
+    // Filter CPUs by selected cpu_type
+    if (cat === 'cpu') {
+      list = list.filter(it => {
+        const brand = (it.brand || it.name || '').toUpperCase()
+        if (formData.cpu_type === 'amd') return brand.includes('AMD') || (normalizeSocket(it.socket)?.startsWith('AM'))
+        return brand.includes('INTEL') || (normalizeSocket(it.socket)?.startsWith('LGA'))
+      })
+    }
+
+    // If CPU chosen → filter mainboard/ram by compatibility
+    const selCpu = findItem('cpu', formData.payload.cpu)
+    const cpuSock = normalizeSocket(selCpu?.socket)
+    const cpuDdr = normalizeDDR(selCpu?.ddr)
+    const selMb = findItem('mainboard', formData.payload.mainboard)
+    const mbSock = normalizeSocket(selMb?.socket)
+    const mbDdr = normalizeDDR(selMb?.memoryType || selMb?.ddr)
+
+    if (cat === 'mainboard' && (cpuSock || cpuDdr)) {
+      list = list.filter(mb => {
+        const ms = normalizeSocket(mb.socket)
+        const md = normalizeDDR(mb.memoryType || mb.ddr)
+        if (cpuSock && ms && ms !== cpuSock) return false
+        if (cpuDdr && md && md !== cpuDdr) return false
+        return true
+      })
+    }
+    if (cat === 'ram' && (mbDdr || cpuDdr)) {
+      list = list.filter(r => {
+        const rd = normalizeDDR(r.type || r.ddr)
+        const want = mbDdr || cpuDdr
+        return !want || !rd || rd === want
+      })
+    }
+
+    // Sort by price asc if available
+    list = [...list].sort((a,b)=> (a.price||0)-(b.price||0))
+    return list
   }
 
   const updatePayload = (key, value) => {
@@ -487,7 +548,11 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
                     <option value="">-- Chọn {label} --</option>
                     {getOptions(key).map(it => (
                       <option key={it.id} value={it.id}>
-                        {it.name} {it.price ? `- ${formatPrice(it.price)}` : ''}
+                        {it.name}
+                        {it.socket ? ` (${normalizeSocket(it.socket)}` : ''}
+                        {(!it.socket && (it.memoryType||it.ddr)) ? ` (${normalizeDDR(it.memoryType||it.ddr)})` : ''}
+                        {it.socket ? `${(it.memoryType||it.ddr)?`, ${normalizeDDR(it.memoryType||it.ddr)}`:''})` : ''}
+                        {it.price ? ` - ${formatPrice(it.price)}` : ''}
                       </option>
                     ))}
                   </select>
