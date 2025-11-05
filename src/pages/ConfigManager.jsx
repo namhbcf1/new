@@ -338,7 +338,7 @@ function ConfigCard({ config, onEdit, onDelete }) {
 }
 
 function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
-  const [showAll, setShowAll] = useState(true)
+  const showAll = false
   const [query, setQuery] = useState('')
   const [formData, setFormData] = useState({
     cpu_type: config.cpu_type || 'intel',
@@ -546,10 +546,6 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
           }}>
             <h3 style={{ margin: '0 0 12px 0', fontSize: '16px' }}>Linh kiện:</h3>
             <div style={{ display: 'flex', gap: 12, marginBottom: 12, alignItems: 'center' }}>
-              <label style={{ display: 'flex', gap: 8, alignItems: 'center', color: '#cbd5e1', fontSize: 13 }}>
-                <input type="checkbox" checked={showAll} onChange={e=>setShowAll(e.target.checked)} />
-                Hiện tất cả (bỏ lọc socket/DDR)
-              </label>
               <input
                 placeholder="Tìm theo tên..."
                 value={query}
