@@ -1,7 +1,7 @@
-const API_BASE = import.meta.env.VITE_API_BASE || ''
+// Fallback to the same API used by Builder when env is not set
+const API_BASE = import.meta.env.VITE_API_BASE || 'https://tp-pc-builder-api.bangachieu4.workers.dev'
 
 export async function fetchInventory() {
-  if (!API_BASE) return null
   const r = await fetch(API_BASE + '/inventory')
   if (!r.ok) throw new Error('fetchInventory failed')
   return await r.json()
