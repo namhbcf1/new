@@ -1,6 +1,7 @@
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import Builder from './pages/Builder.jsx'
 import Components from './pages/Components.jsx'
+import ConfigManager from './pages/ConfigManager.jsx'
 
 function Navbar() {
   const location = useLocation()
@@ -67,6 +68,19 @@ function Navbar() {
             >
               🔧 Xem Tất Cả Linh Kiện
             </Link>
+            <Link
+              to="/config-manager"
+              style={{
+                background: 'linear-gradient(135deg, #64748b, #0ea5e9)',
+                color: 'white',
+                padding: '12px 24px',
+                borderRadius: 8,
+                textDecoration: 'none',
+                fontWeight: 600
+              }}
+            >
+              ⚙️ Đổi Cấu Hình (Admin)
+            </Link>
             <a
               href="tel:0836768597"
               style={{
@@ -126,6 +140,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Builder />} />
             <Route path="/components" element={<Components />} />
+            <Route path="/config-manager" element={<ConfigManager />} />
           </Routes>
         </div>
       </main>

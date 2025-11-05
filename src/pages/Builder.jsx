@@ -352,6 +352,18 @@ export default function Builder() {
       {step === 4 && (
         <div style={{ background: 'rgba(30,41,59,0.8)', border: '1px solid rgba(79,172,254,0.3)', borderRadius: 16, padding: 24 }}>
           <h2 style={{ marginBottom: 12, background: 'linear-gradient(135deg,#4facfe,#00f2fe)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>📋 Cấu hình đề xuất</h2>
+          <div style={{ marginBottom: 12 }}>
+            <a href="/config-manager" style={{
+              display: 'inline-block',
+              padding: '8px 12px',
+              borderRadius: 8,
+              background: 'linear-gradient(135deg,#64748b,#0ea5e9)',
+              color: '#fff',
+              textDecoration: 'none',
+              fontWeight: 700
+            }}>⚙️ Thay đổi logic theo tầm tiền (Admin)</a>
+            <span style={{ marginLeft: 8, color: '#94a3b8', fontSize: 12 }}>(Mật khẩu: namhbcf12)</span>
+          </div>
           {!config ? (
             <div style={{ color: '#94a3b8' }}>Chưa có cấu hình</div>
           ) : (
