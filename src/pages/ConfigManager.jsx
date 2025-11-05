@@ -363,8 +363,11 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
     return null
   }
   const allOf = (cat) => {
-    const invList = Object.values(inventory?.[cat] || {})
-    if (invList.length > 0) return invList
+    const invObj = inventory?.[cat]
+    if (invObj && typeof invObj === 'object') {
+      const list = Object.entries(invObj).map(([id, val]) => ({ id, ...(val || {}) }))
+      if (list.length > 0) return list
+    }
     return Object.values(catalogs?.[cat] || {})
   }
   const findItem = (cat, id) => {
