@@ -385,10 +385,17 @@ export default function Builder() {
                         <td style={{ padding: '8px', textAlign: 'center', border: '1px solid rgba(79,172,254,0.1)' }}>
                           <div style={{ width: 48, height: 48, background: '#334155', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto', overflow: 'hidden' }}>
                             {(() => {
-                              const src = item?.image ? (item.image.startsWith('/') ? item.image : `/${item.image}`) : null
+                              const hasImgLikePath = (v) => /\.(png|jpg|jpeg|webp|gif)$/i.test(v || '')
+                              const raw = (item?.image || '').trim()
+                              const src = raw && hasImgLikePath(raw) ? (raw.startsWith('/') ? raw : `/${raw}`) : null
                               if (src) {
                                 return (
-                                  <img src={src} alt={item?.name || k} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                  <img
+                                    src={src}
+                                    alt={item?.name || k}
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                    onError={(e) => { e.currentTarget.style.display = 'none' }}
+                                  />
                                 )
                               }
                               return (
