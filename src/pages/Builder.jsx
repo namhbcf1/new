@@ -390,10 +390,22 @@ export default function Builder() {
                               const hasImgLikePath = (v) => /\.(png|jpg|jpeg|webp|gif)$/i.test(v || '')
                               const raw = (item?.image || '').trim()
                               const src = raw && hasImgLikePath(raw) ? (raw.startsWith('/') ? raw : `/${raw}`) : null
-                              if (src) {
+                              const fallbackByCat = {
+                                cpu: '/images/components/cpu.jpg',
+                                mainboard: '/images/components/mainboard.jpg',
+                                vga: '/images/components/vga.jpg',
+                                ram: '/images/components/ram.jpg',
+                                ssd: '/images/components/ssd.jpg',
+                                psu: '/images/components/psu.jpg',
+                                case: '/images/components/case.jpg',
+                                cpuCooler: '/images/components/cooler.jpg',
+                                hdd: '/images/components/ssd.jpg',
+                                monitor: '/images/monitor/750ti.jpg'
+                              }
+                              if (src || fallbackByCat[k]) {
                                 return (
                                   <img
-                                    src={src}
+                                    src={src || fallbackByCat[k]}
                                     alt={item?.name || k}
                                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                     onError={(e) => { e.currentTarget.style.display = 'none' }}
