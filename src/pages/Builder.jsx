@@ -383,17 +383,29 @@ export default function Builder() {
                       <tr key={k} style={{ background: idx % 2 === 0 ? '#1e293b' : '#0f172a', borderBottom: '1px solid rgba(79,172,254,0.1)' }}>
                         <td style={{ padding: '12px 8px', textAlign: 'center', color: '#f8fafc', fontSize: 16, fontWeight: 600, border: '1px solid rgba(79,172,254,0.1)' }}>{idx + 1}</td>
                         <td style={{ padding: '8px', textAlign: 'center', border: '1px solid rgba(79,172,254,0.1)' }}>
-                          <div style={{ width: 48, height: 48, background: '#334155', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}>
-                            {k === 'cpu' && '🔷'}
-                            {k === 'mainboard' && '🔷'}
-                            {k === 'vga' && '🔷'}
-                            {k === 'ram' && '🔷'}
-                            {k === 'ssd' && '💾'}
-                            {k === 'psu' && '⚡'}
-                            {k === 'case' && '🏠'}
-                            {k === 'cpuCooler' && '🌀'}
-                            {k === 'hdd' && '💾'}
-                            {k === 'monitor' && '🖥️'}
+                          <div style={{ width: 48, height: 48, background: '#334155', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto', overflow: 'hidden' }}>
+                            {(() => {
+                              const src = item?.image ? (item.image.startsWith('/') ? item.image : `/${item.image}`) : null
+                              if (src) {
+                                return (
+                                  <img src={src} alt={item?.name || k} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                )
+                              }
+                              return (
+                                <span>
+                                  {k === 'cpu' && '🔷'}
+                                  {k === 'mainboard' && '🔷'}
+                                  {k === 'vga' && '🔷'}
+                                  {k === 'ram' && '🔷'}
+                                  {k === 'ssd' && '💾'}
+                                  {k === 'psu' && '⚡'}
+                                  {k === 'case' && '🏠'}
+                                  {k === 'cpuCooler' && '🌀'}
+                                  {k === 'hdd' && '💾'}
+                                  {k === 'monitor' && '🖥️'}
+                                </span>
+                              )
+                            })()}
                           </div>
                         </td>
                         <td style={{ padding: '12px 16px', border: '1px solid rgba(79,172,254,0.1)' }}>
