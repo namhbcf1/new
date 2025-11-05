@@ -13,6 +13,8 @@ export default function ConfigManager() {
   const [showAddNew, setShowAddNew] = useState(false)
   const [inventory, setInventory] = useState(null)
   const catalogs = getCatalogs()
+  const [showAll, setShowAll] = useState(false)
+  const [query, setQuery] = useState('')
 
   useEffect(() => {
     const saved = sessionStorage.getItem('tp_admin_pwd')
@@ -379,7 +381,7 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
     let list = allOf(cat)
 
     // Filter CPUs by selected cpu_type
-    if (cat === 'cpu') {
+    if (!showAll && cat === 'cpu') {
       list = list.filter(it => {
         const brand = (it.brand || it.name || '').toUpperCase()
         if (formData.cpu_type === 'amd') return brand.includes('AMD') || (normalizeSocket(it.socket)?.startsWith('AM'))
@@ -395,7 +397,7 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
     const mbSock = normalizeSocket(selMb?.socket)
     const mbDdr = normalizeDDR(selMb?.memoryType || selMb?.ddr)
 
-    if (cat === 'mainboard' && (cpuSock || cpuDdr)) {
+    if (!showAll && cat === 'mainboard' && (cpuSock || cpuDdr)) {
       list = list.filter(mb => {
         const ms = normalizeSocket(mb.socket)
         const md = normalizeDDR(mb.memoryType || mb.ddr)
@@ -404,12 +406,18 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
         return true
       })
     }
-    if (cat === 'ram' && (mbDdr || cpuDdr)) {
+    if (!showAll && cat === 'ram' && (mbDdr || cpuDdr)) {
       list = list.filter(r => {
         const rd = normalizeDDR(r.type || r.ddr)
         const want = mbDdr || cpuDdr
         return !want || !rd || rd === want
       })
+    }
+
+    // Text search
+    if (query.trim()) {
+      const q = query.trim().toLowerCase()
+      list = list.filter(it => (it.name || '').toLowerCase().includes(q))
     }
 
     // Sort by price asc if available
@@ -537,6 +545,18 @@ function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
             border: '1px solid rgba(79,172,254,0.25)'
           }}>
             <h3 style={{ margin: '0 0 12px 0', fontSize: '16px' }}>Linh kiện:</h3>
+            <div style={{ display: 'flex', gap: 12, marginBottom: 12, alignItems: 'center' }}>
+              <label style={{ display: 'flex', gap: 8, alignItems: 'center', color: '#cbd5e1', fontSize: 13 }}>
+                <input type="checkbox" checked={showAll} onChange={e=>setShowAll(e.target.checked)} />
+                Hiện tất cả (bỏ lọc socket/DDR)
+              </label>
+              <input
+                placeholder="Tìm theo tên..."
+                value={query}
+                onChange={e=>setQuery(e.target.value)}
+                style={{ flex: 1, minWidth: 160, padding: 10, borderRadius: 8, border: '1px solid rgba(79,172,254,0.25)', background: '#0b1220', color: '#fff' }}
+              />
+            </div>
             <div style={{ display: 'grid', gap: 12 }}>
               {[
                 ['cpu','CPU'], ['mainboard','MAINBOARD'], ['vga','VGA'], ['ram','RAM'], ['ssd','SSD'], ['case','CASE'], ['cpuCooler','CPUCOOLER'], ['psu','PSU']
