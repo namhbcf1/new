@@ -338,7 +338,7 @@ function ConfigCard({ config, onEdit, onDelete }) {
 }
 
 function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
-  const [showAll, setShowAll] = useState(false)
+  const [showAll, setShowAll] = useState(true)
   const [query, setQuery] = useState('')
   const [formData, setFormData] = useState({
     cpu_type: config.cpu_type || 'intel',
