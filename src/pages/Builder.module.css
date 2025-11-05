@@ -1,0 +1,252 @@
+/* Responsive Builder Styles */
+
+.stepIndicator {
+  background: rgba(30,41,59,0.8);
+  border: 1px solid rgba(79,172,254,0.3);
+  borderRadius: 16px;
+  padding: 24px 16px;
+  marginBottom: 20px;
+}
+
+.stepsContainer {
+  display: flex;
+  justifyContent: space-between;
+  maxWidth: 800px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.stepsContainer::before {
+  content: '';
+  position: absolute;
+  top: 24px;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: rgba(79,172,254,0.3);
+  zIndex: 0;
+}
+
+.stepItem {
+  display: flex;
+  flexDirection: column;
+  alignItems: center;
+  gap: 8px;
+  position: relative;
+  zIndex: 1;
+}
+
+.stepCircle {
+  width: 48px;
+  height: 48px;
+  borderRadius: 50%;
+  display: flex;
+  alignItems: center;
+  justifyContent: center;
+  fontSize: 18px;
+  fontWeight: 700;
+}
+
+.stepLabel {
+  fontSize: 13px;
+  fontWeight: 600;
+  textAlign: center;
+}
+
+.card {
+  background: rgba(30,41,59,0.8);
+  border: 1px solid rgba(79,172,254,0.3);
+  borderRadius: 16px;
+  padding: 40px;
+  textAlign: center;
+}
+
+.title {
+  fontSize: 42px;
+  marginBottom: 12px;
+  fontWeight: 700;
+  color: #4facfe;
+}
+
+.subtitle {
+  color: #94a3b8;
+  marginBottom: 32px;
+  fontSize: 16px;
+}
+
+.budgetSlider {
+  width: 100%;
+  height: 8px;
+  borderRadius: 4px;
+  outline: none;
+  WebkitAppearance: none;
+  appearance: none;
+}
+
+.budgetDisplay {
+  fontSize: 56px;
+  fontWeight: 800;
+  marginTop: 32px;
+  color: #4facfe;
+  fontFamily: monospace;
+}
+
+.cpuGrid {
+  display: grid;
+  gridTemplateColumns: repeat(2, 1fr);
+  gap: 40px;
+  maxWidth: 900px;
+  margin: 0 auto;
+}
+
+.cpuCard {
+  border: 3px solid #475569;
+  borderRadius: 16px;
+  padding: 48px;
+  cursor: pointer;
+  transition: all 0.3s;
+  textAlign: center;
+}
+
+.gameGrid {
+  display: grid;
+  gridTemplateColumns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.gameCard {
+  background: rgba(51,65,85,0.8);
+  border: 3px solid #475569;
+  borderRadius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  textAlign: center;
+}
+
+.gameImage {
+  width: 100%;
+  height: 120px;
+  objectFit: cover;
+  borderRadius: 8px;
+  marginBottom: 12px;
+}
+
+.componentGrid {
+  display: grid;
+  gridTemplateColumns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .title {
+    fontSize: 36px;
+  }
+
+  .budgetDisplay {
+    fontSize: 46px;
+  }
+
+  .cpuGrid {
+    gap: 30px;
+  }
+
+  .cpuCard {
+    padding: 40px;
+  }
+
+  .gameGrid {
+    gridTemplateColumns: repeat(3, 1fr);
+  }
+
+  .componentGrid {
+    gridTemplateColumns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .stepIndicator {
+    padding: 16px;
+  }
+
+  .stepsContainer::before {
+    display: none;
+  }
+
+  .stepItem {
+    flex: 1;
+    gap: 4px;
+  }
+
+  .stepCircle {
+    width: 40px;
+    height: 40px;
+    fontSize: 16px;
+  }
+
+  .stepLabel {
+    fontSize: 10px;
+    maxWidth: 60px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .title {
+    fontSize: 28px;
+  }
+
+  .subtitle {
+    fontSize: 14px;
+    marginBottom: 24px;
+  }
+
+  .budgetDisplay {
+    fontSize: 36px;
+  }
+
+  .cpuGrid {
+    gridTemplateColumns: 1fr;
+    gap: 20px;
+  }
+
+  .cpuCard {
+    padding: 32px;
+  }
+
+  .gameGrid {
+    gridTemplateColumns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .gameCard {
+    padding: 12px;
+  }
+
+  .gameImage {
+    height: 80px;
+  }
+
+  .componentGrid {
+    gridTemplateColumns: 1fr;
+    gap: 12px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .title {
+    fontSize: 24px;
+  }
+
+  .budgetDisplay {
+    fontSize: 32px;
+  }
+
+  .cpuCard {
+    padding: 24px;
+  }
+}
