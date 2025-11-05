@@ -13,8 +13,6 @@ export default function ConfigManager() {
   const [showAddNew, setShowAddNew] = useState(false)
   const [inventory, setInventory] = useState(null)
   const catalogs = getCatalogs()
-  const [showAll, setShowAll] = useState(false)
-  const [query, setQuery] = useState('')
 
   useEffect(() => {
     const saved = sessionStorage.getItem('tp_admin_pwd')
@@ -340,6 +338,8 @@ function ConfigCard({ config, onEdit, onDelete }) {
 }
 
 function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
+  const [showAll, setShowAll] = useState(false)
+  const [query, setQuery] = useState('')
   const [formData, setFormData] = useState({
     cpu_type: config.cpu_type || 'intel',
     game: config.game || '',
