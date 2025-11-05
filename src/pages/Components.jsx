@@ -398,7 +398,12 @@ function ItemRow({ item, catKey, onUpdate, onDelete, formatPrice }) {
     quantity: item.quantity || 1,
     brand: item.brand || '',
     warranty: item.warranty || '',
-    condition: item.condition || 'new'
+    condition: item.condition || 'new',
+    // optional compatibility fields
+    socket: item.socket || item.sockets?.[0] || '',
+    ddr: item.ddr || '',
+    memoryType: item.memoryType || '',
+    image: item.image || ''
   })
 
   if (editing) {
@@ -647,6 +652,68 @@ function ItemRow({ item, catKey, onUpdate, onDelete, formatPrice }) {
                 </div>
               </div>
 
+              {/* Compatibility fields */}
+              {(catKey === 'cpu' || catKey === 'mainboard' || catKey === 'ram') && (
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }}>
+                  <div>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#4facfe', fontSize: 13, fontWeight: 600, marginBottom: 8 }}>
+                      <span>🔌</span> Socket / DDR
+                    </label>
+                    {catKey === 'cpu' && (
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                        <input
+                          value={form.socket}
+                          onChange={e => setForm(s => ({ ...s, socket: e.target.value }))}
+                          placeholder="AM4 / AM5 / LGA1700 ..."
+                          style={{ width: '100%', padding: '14px 16px', borderRadius: 10, border: '2px solid #374151', background: '#111827', color: '#fff', fontSize: 14 }}
+                        />
+                        <input
+                          value={form.ddr}
+                          onChange={e => setForm(s => ({ ...s, ddr: e.target.value }))}
+                          placeholder="DDR4 / DDR5"
+                          style={{ width: '100%', padding: '14px 16px', borderRadius: 10, border: '2px solid #374151', background: '#111827', color: '#fff', fontSize: 14 }}
+                        />
+                      </div>
+                    )}
+                    {catKey === 'mainboard' && (
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                        <input
+                          value={form.socket}
+                          onChange={e => setForm(s => ({ ...s, socket: e.target.value }))}
+                          placeholder="LGA1700 / AM4 ..."
+                          style={{ width: '100%', padding: '14px 16px', borderRadius: 10, border: '2px solid #374151', background: '#111827', color: '#fff', fontSize: 14 }}
+                        />
+                        <input
+                          value={form.memoryType}
+                          onChange={e => setForm(s => ({ ...s, memoryType: e.target.value }))}
+                          placeholder="DDR4 / DDR5"
+                          style={{ width: '100%', padding: '14px 16px', borderRadius: 10, border: '2px solid #374151', background: '#111827', color: '#fff', fontSize: 14 }}
+                        />
+                      </div>
+                    )}
+                    {catKey === 'ram' && (
+                      <input
+                        value={form.ddr}
+                        onChange={e => setForm(s => ({ ...s, ddr: e.target.value }))}
+                        placeholder="DDR4 / DDR5"
+                        style={{ width: '100%', padding: '14px 16px', borderRadius: 10, border: '2px solid #374151', background: '#111827', color: '#fff', fontSize: 14 }}
+                      />
+                    )}
+                  </div>
+                  <div>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#94a3b8', fontSize: 13, fontWeight: 600, marginBottom: 8 }}>
+                      <span>🖼️</span> Ảnh (images/...)
+                    </label>
+                    <input
+                      value={form.image}
+                      onChange={e => setForm(s => ({ ...s, image: e.target.value }))}
+                      placeholder="images/xigmatek-nyx-air-3f.jpg"
+                      style={{ width: '100%', padding: '14px 16px', borderRadius: 10, border: '2px solid #374151', background: '#111827', color: '#fff', fontSize: 14 }}
+                    />
+                  </div>
+                </div>
+              )}
+
               {/* Tình trạng */}
               <div>
                 <label style={{
@@ -845,7 +912,11 @@ function AddItemForm({ catKey, onAdd }) {
     quantity: 1,
     brand: '',
     warranty: '',
-    condition: 'new'
+    condition: 'new',
+    socket: '',
+    ddr: '',
+    memoryType: '',
+    image: ''
   })
 
   return (
@@ -951,11 +1022,69 @@ function AddItemForm({ catKey, onAdd }) {
           }}
         />
       </div>
+
+      {/* Compatibility + image fields based on category */}
+      {(catKey === 'cpu' || catKey === 'mainboard' || catKey === 'ram') && (
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+          {catKey === 'cpu' && (
+            <>
+              <input
+                value={form.socket}
+                onChange={e => setForm(s => ({ ...s, socket: e.target.value }))}
+                placeholder="Socket (AM4/AM5/LGA1700)"
+                style={{ padding: 10, borderRadius: 6, border: '1px solid #475569', background: '#0b1220', color: '#fff' }}
+              />
+              <input
+                value={form.ddr}
+                onChange={e => setForm(s => ({ ...s, ddr: e.target.value }))}
+                placeholder="DDR (DDR4/DDR5)"
+                style={{ padding: 10, borderRadius: 6, border: '1px solid #475569', background: '#0b1220', color: '#fff' }}
+              />
+            </>
+          )}
+          {catKey === 'mainboard' && (
+            <>
+              <input
+                value={form.socket}
+                onChange={e => setForm(s => ({ ...s, socket: e.target.value }))}
+                placeholder="Socket (LGA1700/AM4/...)"
+                style={{ padding: 10, borderRadius: 6, border: '1px solid #475569', background: '#0b1220', color: '#fff' }}
+              />
+              <input
+                value={form.memoryType}
+                onChange={e => setForm(s => ({ ...s, memoryType: e.target.value }))}
+                placeholder="Memory Type (DDR4/DDR5)"
+                style={{ padding: 10, borderRadius: 6, border: '1px solid #475569', background: '#0b1220', color: '#fff' }}
+              />
+            </>
+          )}
+          {catKey === 'ram' && (
+            <>
+              <input
+                value={form.ddr}
+                onChange={e => setForm(s => ({ ...s, ddr: e.target.value }))}
+                placeholder="DDR (DDR4/DDR5)"
+                style={{ padding: 10, borderRadius: 6, border: '1px solid #475569', background: '#0b1220', color: '#fff' }}
+              />
+              <div></div>
+            </>
+          )}
+        </div>
+      )}
+      <input
+        value={form.image}
+        onChange={e => setForm(s => ({ ...s, image: e.target.value }))}
+        placeholder="Ảnh (images/...)"
+        style={{ padding: 10, borderRadius: 6, border: '1px solid #475569', background: '#0b1220', color: '#fff' }}
+      />
       <button
         disabled={!form.id || !form.name}
         onClick={() => {
-          onAdd(catKey, form)
-          setForm({ id: '', name: '', price: 0, quantity: 1, brand: '', warranty: '', condition: 'new' })
+          const payload = { ...form }
+          // strip empty optional fields
+          ;['socket','ddr','memoryType','brand','warranty','image'].forEach(k => { if (!payload[k]) delete payload[k] })
+          onAdd(catKey, payload)
+          setForm({ id: '', name: '', price: 0, quantity: 1, brand: '', warranty: '', condition: 'new', socket: '', ddr: '', memoryType: '', image: '' })
         }}
         style={{
           padding: 12,

@@ -20,9 +20,16 @@ async function main() {
   const source = path.join(repoRoot, 'images');
   const target = path.resolve(process.cwd(), 'public', 'images');
   try {
-    await copyDirectory(source, target);
-    // eslint-disable-next-line no-console
-    console.log(`[sync-images] Copied images from ${source} to ${target}`);
+    // If source doesn't exist, skip silently
+    try {
+      await fs.access(source);
+      await copyDirectory(source, target);
+      // eslint-disable-next-line no-console
+      console.log(`[sync-images] Copied images from ${source} to ${target}`);
+    } catch {
+      // eslint-disable-next-line no-console
+      console.log(`[sync-images] Source not found, skip: ${source}`);
+    }
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[sync-images] Failed to copy images:', error);
