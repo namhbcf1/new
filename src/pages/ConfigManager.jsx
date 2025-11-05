@@ -1,26 +1,52 @@
 import { useState, useEffect } from 'react'
-import { fetchAllConfigs, upsertConfig, deleteConfig } from '../services/api'
+import { fetchAllConfigs, upsertConfig, deleteConfig, fetchInventory } from '../services/api'
+import { getCatalogs, formatPrice as fmt } from '../data/components'
 
 export default function ConfigManager() {
   const [configs, setConfigs] = useState([])
   const [loading, setLoading] = useState(true)
-  const [password, setPassword] = useState('namhbcf12')
+  const [password, setPassword] = useState('')
+  const [authenticated, setAuthenticated] = useState(false)
   const [selectedCpuType, setSelectedCpuType] = useState('all')
   const [selectedGame, setSelectedGame] = useState('all')
   const [editingConfig, setEditingConfig] = useState(null)
   const [showAddNew, setShowAddNew] = useState(false)
+  const [inventory, setInventory] = useState(null)
+  const catalogs = getCatalogs()
 
   useEffect(() => {
-    loadConfigs()
+    const saved = sessionStorage.getItem('tp_admin_pwd')
+    if (saved) {
+      setPassword(saved)
+      authenticate(saved)
+    } else {
+      setLoading(false)
+    }
   }, [])
+
+  async function authenticate(pwd) {
+    setLoading(true)
+    try {
+      // Load inventory & configs when authenticated
+      const inv = await fetchInventory()
+      setInventory(inv?.inventory || inv)
+      const data = await fetchAllConfigs()
+      setConfigs(data?.configs || [])
+      setAuthenticated(true)
+      sessionStorage.setItem('tp_admin_pwd', pwd)
+    } catch (err) {
+      console.error(err)
+      alert('Không thể kết nối tới API. Kiểm tra cấu hình API_BASE và mật khẩu.')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   async function loadConfigs() {
     setLoading(true)
     try {
       const data = await fetchAllConfigs()
-      if (data && data.configs) {
-        setConfigs(data.configs)
-      }
+      if (data && data.configs) setConfigs(data.configs)
     } catch (err) {
       console.error('Failed to load configs:', err)
       alert('Lỗi khi tải configs: ' + err.message)
@@ -75,6 +101,27 @@ export default function ConfigManager() {
     return (
       <div style={{ textAlign: 'center', padding: '40px' }}>
         <div style={{ fontSize: '24px' }}>⏳ Đang tải...</div>
+      </div>
+    )
+  }
+
+  if (!authenticated) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '70vh' }}>
+        <div style={{ background: 'rgba(30,41,59,0.95)', padding: 32, borderRadius: 12, border: '1px solid rgba(79,172,254,0.3)', width: 360 }}>
+          <h2 style={{ marginTop: 0, marginBottom: 12 }}>🔐 Đăng nhập Admin</h2>
+          <p style={{ color: '#94a3b8', marginTop: 0, marginBottom: 16 }}>Nhập mật khẩu để quản lý cấu hình đề xuất.</p>
+          <input
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            placeholder="Mật khẩu: namhbcf12"
+            style={{ width: '100%', padding: 12, borderRadius: 8, border: '1px solid rgba(79,172,254,0.3)', background: '#0b1220', color: '#fff', marginBottom: 12 }}
+          />
+          <button onClick={() => authenticate(password)} style={{ width: '100%', padding: 12, border: 0, borderRadius: 8, background: 'linear-gradient(135deg,#4facfe,#00f2fe)', color: '#fff', fontWeight: 700, cursor: 'pointer' }}>
+            🔓 Đăng nhập
+          </button>
+        </div>
       </div>
     )
   }
@@ -205,6 +252,8 @@ export default function ConfigManager() {
       {editingConfig && (
         <ConfigEditor
           config={editingConfig}
+          inventory={inventory}
+          catalogs={catalogs}
           onSave={handleSave}
           onCancel={() => setEditingConfig(null)}
         />
@@ -219,6 +268,8 @@ export default function ConfigManager() {
             budget_key: '',
             payload: { cpu: '', mainboard: '', vga: '', ram: '', ssd: '', case: '', cpuCooler: '', psu: '' }
           }}
+          inventory={inventory}
+          catalogs={catalogs}
           onSave={handleSave}
           onCancel={() => setShowAddNew(false)}
         />
@@ -286,13 +337,28 @@ function ConfigCard({ config, onEdit, onDelete }) {
   )
 }
 
-function ConfigEditor({ config, onSave, onCancel }) {
+function ConfigEditor({ config, onSave, onCancel, inventory, catalogs }) {
   const [formData, setFormData] = useState({
     cpu_type: config.cpu_type || 'intel',
     game: config.game || '',
     budget_key: config.budget_key || '',
     payload: typeof config.payload === 'string' ? JSON.parse(config.payload) : config.payload
   })
+
+  const formatPrice = fmt
+  const getOptions = (cat) => {
+    const invList = Object.values(inventory?.[cat] || {})
+    const baseList = Object.values(catalogs?.[cat] || {})
+    // merge unique by id
+    const seen = new Set()
+    const out = []
+    ;[...invList, ...baseList].forEach(it => {
+      if (!it?.id || seen.has(it.id)) return
+      seen.add(it.id)
+      out.push(it)
+    })
+    return out
+  }
 
   const updatePayload = (key, value) => {
     setFormData(prev => ({
@@ -410,31 +476,28 @@ function ConfigEditor({ config, onSave, onCancel }) {
           <div style={{
             background: 'rgba(15,23,42,0.6)',
             padding: '16px',
-            borderRadius: '6px',
-            border: '1px solid rgba(79,172,254,0.2)'
+            borderRadius: '10px',
+            border: '1px solid rgba(79,172,254,0.25)'
           }}>
             <h3 style={{ margin: '0 0 12px 0', fontSize: '16px' }}>Linh kiện:</h3>
-            <div style={{ display: 'grid', gap: '12px' }}>
-              {['cpu', 'mainboard', 'vga', 'ram', 'ssd', 'case', 'cpuCooler', 'psu'].map(key => (
+            <div style={{ display: 'grid', gap: 12 }}>
+              {[
+                ['cpu','CPU'], ['mainboard','MAINBOARD'], ['vga','VGA'], ['ram','RAM'], ['ssd','SSD'], ['case','CASE'], ['cpuCooler','CPUCOOLER'], ['psu','PSU']
+              ].map(([key,label]) => (
                 <div key={key}>
-                  <label style={{ display: 'block', marginBottom: '4px', fontSize: '13px', textTransform: 'uppercase' }}>
-                    {key}:
-                  </label>
-                  <input
-                    type="text"
+                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 600 }}>{label}:</label>
+                  <select
                     value={formData.payload[key] || ''}
                     onChange={e => updatePayload(key, e.target.value)}
-                    placeholder={`ID của ${key}`}
-                    style={{
-                      width: '100%',
-                      padding: '6px 10px',
-                      borderRadius: '4px',
-                      border: '1px solid rgba(79,172,254,0.2)',
-                      background: 'rgba(15,23,42,0.8)',
-                      color: '#f8fafc',
-                      fontSize: '13px'
-                    }}
-                  />
+                    style={{ width: '100%', padding: 12, borderRadius: 8, border: '1px solid rgba(79,172,254,0.25)', background: '#0b1220', color: '#fff' }}
+                  >
+                    <option value="">-- Chọn {label} --</option>
+                    {getOptions(key).map(it => (
+                      <option key={it.id} value={it.id}>
+                        {it.name} {it.price ? `- ${formatPrice(it.price)}` : ''}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               ))}
             </div>
