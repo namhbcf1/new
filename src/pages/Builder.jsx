@@ -372,7 +372,9 @@ export default function Builder() {
                 </thead>
                 <tbody>
                   {Object.entries(config).map(([k,v], idx) => {
-                    const item = inventory?.[k]?.[v] || catalogs[k]?.[v]
+                    const localItem = catalogs[k]?.[v]
+                    const invItem = inventory?.[k]?.[v]
+                    const item = { ...(localItem || {}), ...(invItem || {}) }
                     const price = item?.price || 0
                     const quantity = item?.quantity || 1
                     const warranty = item?.warranty || 'N/A'
