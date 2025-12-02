@@ -813,11 +813,11 @@ function ItemRow({ item, catKey, onUpdate, onDelete, formatPrice }) {
   return (
       <div style={{
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'row',
+        gap: 16,
         padding: 16,
         borderRadius: 10,
         background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
-        gap: 12,
         position: 'relative'
       }}>
       <div style={{
@@ -829,12 +829,42 @@ function ItemRow({ item, catKey, onUpdate, onDelete, formatPrice }) {
         background: item.condition === '2nd' ? '#f59e0b' : '#10b981',
         color: '#fff',
         fontSize: 11,
-        fontWeight: 700
+        fontWeight: 700,
+        zIndex: 1
       }}>
         {item.condition === '2nd' ? '2ND' : 'NEW'}
       </div>
 
-      <div style={{ paddingRight: 60 }}>
+      {/* Image */}
+      {item.image && (
+        <div style={{
+          width: 80,
+          height: 80,
+          borderRadius: 8,
+          overflow: 'hidden',
+          background: '#0f172a',
+          flexShrink: 0,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <img
+            src={item.image}
+            alt={item.name}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain'
+            }}
+            onError={(e) => {
+              e.target.style.display = 'none'
+              e.target.parentElement.innerHTML = '<div style="color: #64748b; font-size: 24px;">📦</div>'
+            }}
+          />
+        </div>
+      )}
+
+      <div style={{ flex: 1, paddingRight: 60 }}>
         <div style={{
           fontWeight: 700,
           marginBottom: 8,
