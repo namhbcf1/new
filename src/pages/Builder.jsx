@@ -6,7 +6,7 @@ import { generateSmartConfig, getCompatibleMainboards, getCompatibleRAMs, totalP
 
 // Toggle D1 usage. Set to true to fetch inventory/configs from Cloudflare D1
 const USE_D1 = true
-const API_URL = 'https://tp-pc-builder-api.bangachieu4.workers.dev'
+const API_URL = 'https://tp-pc-builder-api.bangachieu2.workers.dev'
 
 const ALL_GAMES = [
   { id: 'valorant', name: 'Valorant', image: '/images/valorant.jpg' },

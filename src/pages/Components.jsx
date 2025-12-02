@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect } from 'react'
 import Swal from 'sweetalert2'
 
-const API_URL = 'https://tp-pc-builder-api.bangachieu4.workers.dev'
+const API_URL = 'https://tp-pc-builder-api.bangachieu2.workers.dev'
 const DEFAULT_PASSWORD = 'namhbcf12'
 
 const sections = [

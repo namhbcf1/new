@@ -1,5 +1,5 @@
 // Fallback to the same API used by Builder when env is not set
-const API_BASE = import.meta.env.VITE_API_BASE || 'https://tp-pc-builder-api.bangachieu4.workers.dev'
+const API_BASE = import.meta.env.VITE_API_BASE || 'https://tp-pc-builder-api.bangachieu2.workers.dev'
 
 export async function fetchInventory() {
   const r = await fetch(API_BASE + '/inventory')
