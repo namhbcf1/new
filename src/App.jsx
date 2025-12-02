@@ -1,7 +1,10 @@
+import { lazy, Suspense } from 'react'
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
-import Builder from './pages/Builder.jsx'
-import Components from './pages/Components.jsx'
-import ConfigManager from './pages/ConfigManager.jsx'
+
+// Lazy load pages for code splitting
+const Builder = lazy(() => import('./pages/Builder.jsx'))
+const Components = lazy(() => import('./pages/Components.jsx'))
+const ConfigManager = lazy(() => import('./pages/ConfigManager.jsx'))
 
 function Navbar() {
   const location = useLocation()
@@ -131,17 +134,37 @@ function Navbar() {
   )
 }
 
+function LoadingFallback() {
+  return (
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: '60vh',
+      fontSize: 24,
+      color: '#4facfe'
+    }}>
+      <div style={{ textAlign: 'center' }}>
+        <div style={{ fontSize: 48, marginBottom: 16 }}>⏳</div>
+        <div>Đang tải...</div>
+      </div>
+    </div>
+  )
+}
+
 export default function App() {
   return (
     <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg,#0f172a,#1e293b)', color: '#f8fafc' }}>
       <Navbar />
       <main style={{ padding: '20px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <Routes>
-            <Route path="/" element={<Builder />} />
-            <Route path="/components" element={<Components />} />
-            <Route path="/config-manager" element={<ConfigManager />} />
-          </Routes>
+          <Suspense fallback={<LoadingFallback />}>
+            <Routes>
+              <Route path="/" element={<Builder />} />
+              <Route path="/components" element={<Components />} />
+              <Route path="/config-manager" element={<ConfigManager />} />
+            </Routes>
+          </Suspense>
         </div>
       </main>
     </div>
