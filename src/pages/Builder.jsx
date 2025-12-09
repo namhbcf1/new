@@ -754,35 +754,58 @@ export default function Builder() {
                       const banner = document.querySelector('.print-header')
                       if (!el) return
 
-                      // Get all input and select elements in the table
-                      const inputs = el.querySelectorAll('input, select')
-                      const originalStyles = []
+                      // Clone the element
+                      const clone = el.cloneNode(true)
+                      clone.style.position = 'absolute'
+                      clone.style.left = '-9999px'
+                      document.body.appendChild(clone)
 
-                      // Temporarily show banner and clean up input fields for capture
-                      if (banner) banner.style.setProperty('display', 'block', 'important')
-
-                      // Make inputs look like plain text
-                      inputs.forEach((input, idx) => {
-                        originalStyles[idx] = {
-                          border: input.style.border,
-                          background: input.style.background
-                        }
-                        input.style.border = 'none'
-                        input.style.background = 'transparent'
+                      // Replace all inputs and selects with their text values
+                      const inputs = clone.querySelectorAll('input')
+                      inputs.forEach(input => {
+                        const span = document.createElement('span')
+                        span.textContent = input.value
+                        span.style.cssText = input.style.cssText
+                        span.style.border = 'none'
+                        span.style.background = 'transparent'
+                        span.style.display = 'inline-block'
+                        span.style.width = input.style.width
+                        span.style.textAlign = input.style.textAlign
+                        span.style.padding = input.style.padding
+                        span.style.fontSize = input.style.fontSize
+                        span.style.fontWeight = input.style.fontWeight
+                        span.style.color = input.style.color
+                        input.parentNode.replaceChild(span, input)
                       })
+
+                      const selects = clone.querySelectorAll('select')
+                      selects.forEach(select => {
+                        const span = document.createElement('span')
+                        span.textContent = select.options[select.selectedIndex]?.text || select.value
+                        span.style.cssText = select.style.cssText
+                        span.style.border = 'none'
+                        span.style.cursor = 'default'
+                        span.style.padding = select.style.padding
+                        span.style.fontSize = select.style.fontSize
+                        span.style.fontWeight = select.style.fontWeight
+                        span.style.color = select.style.color
+                        span.style.background = select.style.background
+                        span.style.borderRadius = select.style.borderRadius
+                        select.parentNode.replaceChild(span, select)
+                      })
+
+                      // Show banner in clone
+                      const cloneBanner = clone.querySelector('.print-header')
+                      if (cloneBanner) cloneBanner.style.setProperty('display', 'block', 'important')
 
                       // Wait for render
-                      await new Promise(resolve => setTimeout(resolve, 150))
+                      await new Promise(resolve => setTimeout(resolve, 100))
 
-                      // Capture
-                      const canvas = await html2canvas(el, { backgroundColor: '#fff', scale: 2 })
+                      // Capture the clone
+                      const canvas = await html2canvas(clone, { backgroundColor: '#fff', scale: 2, logging: false })
 
-                      // Restore original styles
-                      if (banner) banner.style.setProperty('display', 'none', 'important')
-                      inputs.forEach((input, idx) => {
-                        input.style.border = originalStyles[idx].border
-                        input.style.background = originalStyles[idx].background
-                      })
+                      // Remove clone
+                      document.body.removeChild(clone)
 
                       // Download
                       const link = document.createElement('a')
