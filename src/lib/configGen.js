@@ -4,13 +4,29 @@ import { intelConfigs, amdConfigs } from '../data/configs'
 export function getCompatibleMainboards(cpuId) {
   const cpu = cpuData[cpuId]
   if (!cpu) return []
-  return Object.values(mainboardData).filter(mb => mb.socket === cpu.socket && (cpu.ddr ? mb.ddr === cpu.ddr : true))
+  const cpuDDR = cpu.ddr || cpu.ram_support
+  return Object.values(mainboardData).filter(mb => {
+    // Match socket - support both socket (string) and sockets (array)
+    const mbSocket = mb.socket || (mb.sockets && mb.sockets[0])
+    if (mbSocket !== cpu.socket) return false
+
+    // If CPU has DDR requirement, match it with mainboard's ddr or memoryType
+    if (cpuDDR) {
+      const mbDDR = mb.ddr || mb.memoryType
+      return mbDDR === cpuDDR
+    }
+    return true
+  })
 }
 
 export function getCompatibleRAMs(mainboardId) {
   const mb = mainboardData[mainboardId]
   if (!mb) return []
-  return Object.values(ramData).filter(r => r.ddr === mb.ddr)
+  const mbDDR = mb.ddr || mb.memoryType
+  return Object.values(ramData).filter(r => {
+    const ramDDR = r.ddr || r.type
+    return ramDDR === mbDDR
+  })
 }
 
 export function estimatePSUWatts(vgaId) {
@@ -58,7 +74,25 @@ export function generateSmartConfig({ budgetM, cpuType, game }) {
   if (budgetM <= 8) cpuId = pool[0]
   else if (budgetM >= 25) cpuId = pool[2]
 
-  const mb = getCompatibleMainboards(cpuId)[0]
+  const compatibleMbs = getCompatibleMainboards(cpuId)
+  const mb = compatibleMbs[0]
+  // If no compatible mainboard found in local data, use a placeholder
+  // The Builder component will handle mainboard selection from inventory
+  if (!mb || !mb.id) {
+    console.warn(`No compatible mainboard in local data for CPU ${cpuId}, using placeholder`)
+    // Return a minimal config that Builder.jsx can work with
+    return {
+      cpu: cpuId,
+      mainboard: null, // Will be selected from inventory in Builder
+      vga: budgetM >= 15 ? '3070' : '1660s',
+      ram: null,
+      ssd: budgetM >= 15 ? 'crucial-500' : 'sstc-256',
+      psu: null,
+      case: budgetM >= 15 ? 'GA' : 'GA3',
+      cpuCooler: 'STOCK'
+    }
+  }
+
   // vga by budget tier, game could be used to bump tier
   let vgaId = '1660s'
   if (budgetM >= 15) vgaId = '3070'

@@ -71,7 +71,10 @@ export default function Components() {
     try {
       const response = await fetch(`${API_URL}/inventory`, {
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
+        headers: { 
+          'content-type': 'application/json',
+          'x-edit-password': password || DEFAULT_PASSWORD
+        },
         body: JSON.stringify({ cat, id, ...payload })
       })
       if (!response.ok) throw new Error('Update failed')
@@ -99,7 +102,12 @@ export default function Components() {
     if (!confirm.isConfirmed) return
 
     try {
-      const response = await fetch(`${API_URL}/inventory/${cat}/${id}`, { method: 'DELETE' })
+      const response = await fetch(`${API_URL}/inventory/${cat}/${id}`, { 
+        method: 'DELETE',
+        headers: {
+          'x-edit-password': password || DEFAULT_PASSWORD
+        }
+      })
       if (!response.ok) throw new Error('Delete failed')
 
       // Reload inventory

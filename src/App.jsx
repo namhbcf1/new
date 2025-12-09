@@ -10,124 +10,134 @@ function Navbar() {
   const location = useLocation()
   return (
     <header style={{
-      background: 'rgba(30,41,59,0.98)',
-      borderBottom: '1px solid rgba(79,172,254,0.3)',
-      padding: '16px 0',
+      background: '#1e293b',
+      borderBottom: '2px solid #334155',
+      padding: '12px 0',
       position: 'sticky',
       top: 0,
       zIndex: 100
     }}>
       <div style={{
-        maxWidth: 1100,
+        maxWidth: 1400,
         margin: '0 auto',
-        padding: '0 16px'
+        padding: '0 20px'
       }}>
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
           flexWrap: 'wrap',
-          gap: 16
+          gap: 12
         }}>
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 8,
-            fontSize: 24,
-            fontWeight: 700
+            gap: 10,
+            fontSize: 22,
+            fontWeight: 700,
+            color: '#f8fafc'
           }}>
-            <span style={{ fontSize: 32 }}>🖥️</span>
+            <span style={{ fontSize: 28 }}>🖥️</span>
             <span>Trường Phát Computer</span>
           </div>
           <div style={{
             display: 'flex',
-            gap: 16,
+            gap: 12,
             alignItems: 'center',
             flexWrap: 'wrap'
           }}>
             <Link
               to="/"
               style={{
-                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                background: location.pathname === '/' ? '#8b5cf6' : '#6b7280',
                 color: 'white',
-                padding: '12px 24px',
-                borderRadius: 8,
+                padding: '10px 20px',
+                borderRadius: 6,
                 textDecoration: 'none',
-                fontWeight: 600
+                fontWeight: 600,
+                fontSize: 14
               }}
             >
-              🖥️ BUILD PC
+              Xem Cấu Hình
             </Link>
             <Link
               to="/components"
               style={{
-                background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                background: location.pathname === '/components' ? '#22c55e' : '#6b7280',
                 color: 'white',
-                padding: '12px 24px',
-                borderRadius: 8,
+                padding: '10px 20px',
+                borderRadius: 6,
                 textDecoration: 'none',
-                fontWeight: 600
+                fontWeight: 600,
+                fontSize: 14
               }}
             >
-              🔧 Xem Tất Cả Linh Kiện
+              Xem Tất Cả Linh Kiện
             </Link>
             <Link
               to="/config-manager"
               style={{
-                background: 'linear-gradient(135deg, #64748b, #0ea5e9)',
+                background: location.pathname === '/config-manager' ? '#f59e0b' : '#6b7280',
                 color: 'white',
-                padding: '12px 24px',
-                borderRadius: 8,
+                padding: '10px 20px',
+                borderRadius: 6,
                 textDecoration: 'none',
-                fontWeight: 600
+                fontWeight: 600,
+                fontSize: 14
               }}
             >
-              ⚙️ Đổi Cấu Hình (Admin)
+              Quản Lý Cấu Hình
             </Link>
             <a
               href="tel:0836768597"
               style={{
-                background: 'linear-gradient(135deg, #4facfe, #00f2fe)',
+                background: '#3b82f6',
                 color: 'white',
-                padding: '12px 24px',
-                borderRadius: 8,
+                padding: '10px 20px',
+                borderRadius: 6,
                 textDecoration: 'none',
-                fontWeight: 600
+                fontWeight: 600,
+                fontSize: 14,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6
               }}
             >
-              📞 0836.768.597
-        </a>
+              📞 083.6768.597
+            </a>
             <a
-              href="https://zalo.me/0836768597"
+              href="https://id.zalo.me/account?continue=http%3A%2F%2Fzalo.me%2F0836768597"
               target="_blank"
               rel="noopener noreferrer"
               style={{
                 background: '#0084ff',
                 color: 'white',
-                padding: '12px 24px',
-                borderRadius: 8,
+                padding: '10px 20px',
+                borderRadius: 6,
                 textDecoration: 'none',
-                fontWeight: 600
+                fontWeight: 600,
+                fontSize: 14
               }}
             >
               Zalo
             </a>
             <a
-              href="https://www.facebook.com/tpcom.hb/"
+              href="https://www.facebook.com/tpcom.hb"
               target="_blank"
               rel="noopener noreferrer"
               style={{
                 background: '#1877f2',
                 color: 'white',
-                padding: '12px 24px',
-                borderRadius: 8,
+                padding: '10px 20px',
+                borderRadius: 6,
                 textDecoration: 'none',
-                fontWeight: 600
+                fontWeight: 600,
+                fontSize: 14
               }}
             >
               Facebook
-        </a>
-      </div>
+            </a>
+          </div>
         </div>
       </div>
     </header>
@@ -154,10 +164,10 @@ function LoadingFallback() {
 
 export default function App() {
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg,#0f172a,#1e293b)', color: '#f8fafc' }}>
+    <div style={{ minHeight: '100vh', background: '#0f172a', color: '#f8fafc' }}>
       <Navbar />
       <main style={{ padding: '20px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+        <div style={{ maxWidth: 1400, margin: '0 auto' }}>
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
               <Route path="/" element={<Builder />} />

@@ -1,5 +1,5 @@
 // Fallback to the same API used by Builder when env is not set
-const API_BASE = import.meta.env.VITE_API_BASE || 'https://tp-pc-builder-api.bangachieu2.workers.dev'
+const API_BASE = 'https://tp-pc-builder-api.bangachieu2.workers.dev'
 
 export async function fetchInventory() {
   const r = await fetch(API_BASE + '/inventory')
@@ -30,16 +30,33 @@ export async function fetchAllConfigs() {
 }
 
 export async function upsertConfig(password, payload) {
+  const headers = { 'content-type': 'application/json' }
+  if (password) {
+    headers['x-edit-password'] = password
+  }
   const r = await fetch(API_BASE + `/configs`, {
-    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload)
+    method: 'POST', headers, body: JSON.stringify(payload)
   })
-  if (!r.ok) throw new Error('upsertConfig failed')
+  if (!r.ok) {
+    const errorText = await r.text()
+    throw new Error(`upsertConfig failed: ${r.status} ${errorText}`)
+  }
   return await r.json()
 }
 
 export async function deleteConfig(password, cpuType, game, budgetKey) {
-  const r = await fetch(API_BASE + `/configs/${encodeURIComponent(cpuType)}/${encodeURIComponent(game)}/${encodeURIComponent(budgetKey)}`, { method: 'DELETE' })
-  if (!r.ok) throw new Error('deleteConfig failed')
+  const headers = {}
+  if (password) {
+    headers['x-edit-password'] = password
+  }
+  const r = await fetch(API_BASE + `/configs/${encodeURIComponent(cpuType)}/${encodeURIComponent(game)}/${encodeURIComponent(budgetKey)}`, {
+    method: 'DELETE',
+    headers
+  })
+  if (!r.ok) {
+    const errorText = await r.text()
+    throw new Error(`deleteConfig failed: ${r.status} ${errorText}`)
+  }
   return await r.json()
 }
 
