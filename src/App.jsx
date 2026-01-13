@@ -1,142 +1,82 @@
 import { lazy, Suspense } from 'react'
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
+import { Monitor, Cpu, Settings, Phone, MessageCircle, Facebook, Loader2 } from 'lucide-react'
 
-// Lazy load pages for code splitting
+// Lazy load pages
 const Builder = lazy(() => import('./pages/Builder.jsx'))
 const Components = lazy(() => import('./pages/Components.jsx'))
 const ConfigManager = lazy(() => import('./pages/ConfigManager.jsx'))
 
 function Navbar() {
   const location = useLocation()
+
+  const navItemClass = (path) => `
+    flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300
+    ${location.pathname === path
+      ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'
+      : 'text-slate-400 hover:text-white hover:bg-slate-800'}
+  `
+
+  const contactClass = `
+    flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200
+    hover:opacity-90 active:scale-95 text-white shadow-md
+  `
+
   return (
-    <header style={{
-      background: '#1e293b',
-      borderBottom: '2px solid #334155',
-      padding: '12px 0',
-      position: 'sticky',
-      top: 0,
-      zIndex: 100
-    }}>
-      <div style={{
-        maxWidth: 1400,
-        margin: '0 auto',
-        padding: '0 20px'
-      }}>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: 12
-        }}>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 10,
-            fontSize: 22,
-            fontWeight: 700,
-            color: '#f8fafc'
-          }}>
-            <span style={{ fontSize: 28 }}>🖥️</span>
-            <span>Trường Phát Computer</span>
+    <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-slate-950/80 border-b border-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+
+          {/* Logo */}
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl shadow-lg shadow-indigo-500/20">
+              <Monitor className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
+                Trường Phát
+              </h1>
+              <p className="text-[10px] text-slate-500 font-medium tracking-wider uppercase">Computer Store</p>
+            </div>
           </div>
-          <div style={{
-            display: 'flex',
-            gap: 12,
-            alignItems: 'center',
-            flexWrap: 'wrap'
-          }}>
-            <Link
-              to="/"
-              style={{
-                background: location.pathname === '/' ? '#8b5cf6' : '#6b7280',
-                color: 'white',
-                padding: '10px 20px',
-                borderRadius: 6,
-                textDecoration: 'none',
-                fontWeight: 600,
-                fontSize: 14
-              }}
-            >
-              Xem Cấu Hình
+
+          {/* Navigation - Desktop */}
+          <nav className="hidden md:flex items-center gap-2 p-1 bg-slate-900/50 rounded-xl border border-slate-800">
+            <Link to="/" className={navItemClass('/')}>
+              <Monitor size={16} /> Build PC
             </Link>
-            <Link
-              to="/components"
-              style={{
-                background: location.pathname === '/components' ? '#22c55e' : '#6b7280',
-                color: 'white',
-                padding: '10px 20px',
-                borderRadius: 6,
-                textDecoration: 'none',
-                fontWeight: 600,
-                fontSize: 14
-              }}
-            >
-              Xem Tất Cả Linh Kiện
+            <Link to="/components" className={navItemClass('/components')}>
+              <Cpu size={16} /> Linh Kiện
             </Link>
-            <Link
-              to="/config-manager"
-              style={{
-                background: location.pathname === '/config-manager' ? '#f59e0b' : '#6b7280',
-                color: 'white',
-                padding: '10px 20px',
-                borderRadius: 6,
-                textDecoration: 'none',
-                fontWeight: 600,
-                fontSize: 14
-              }}
-            >
-              Quản Lý Cấu Hình
+            <Link to="/config-manager" className={navItemClass('/config-manager')}>
+              <Settings size={16} /> Quản Lý
             </Link>
-            <a
-              href="tel:0836768597"
-              style={{
-                background: '#3b82f6',
-                color: 'white',
-                padding: '10px 20px',
-                borderRadius: 6,
-                textDecoration: 'none',
-                fontWeight: 600,
-                fontSize: 14,
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6
-              }}
-            >
-              📞 083.6768.597
+          </nav>
+
+          {/* Contact (Hidden on small mobile) */}
+          <div className="flex items-center gap-3">
+            <a href="tel:0836768597" className={`${contactClass} bg-emerald-600 shadow-emerald-500/20`}>
+              <Phone size={14} /> 083.6768.597
             </a>
-            <a
-              href="https://id.zalo.me/account?continue=http%3A%2F%2Fzalo.me%2F0836768597"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                background: '#0084ff',
-                color: 'white',
-                padding: '10px 20px',
-                borderRadius: 6,
-                textDecoration: 'none',
-                fontWeight: 600,
-                fontSize: 14
-              }}
-            >
-              Zalo
-            </a>
-            <a
-              href="https://www.facebook.com/tpcom.hb"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                background: '#1877f2',
-                color: 'white',
-                padding: '10px 20px',
-                borderRadius: 6,
-                textDecoration: 'none',
-                fontWeight: 600,
-                fontSize: 14
-              }}
-            >
-              Facebook
-            </a>
+            <div className="h-6 w-px bg-slate-800 hidden sm:block"></div>
+            <div className="flex gap-2 hidden sm:flex">
+              <a
+                href="https://zalo.me/0836768597"
+                target="_blank"
+                rel="noreferrer"
+                className={`${contactClass} bg-blue-500 shadow-blue-500/20`}
+              >
+                <span className="font-bold">Z</span>
+              </a>
+              <a
+                href="https://www.facebook.com/tpcom.hb"
+                target="_blank"
+                rel="noreferrer"
+                className={`${contactClass} bg-[#1877f2] shadow-blue-600/20`}
+              >
+                <Facebook size={14} />
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -146,28 +86,19 @@ function Navbar() {
 
 function LoadingFallback() {
   return (
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      minHeight: '60vh',
-      fontSize: 24,
-      color: '#4facfe'
-    }}>
-      <div style={{ textAlign: 'center' }}>
-        <div style={{ fontSize: 48, marginBottom: 16 }}>⏳</div>
-        <div>Đang tải...</div>
-      </div>
+    <div className="flex flex-col items-center justify-center min-h-[60vh] text-slate-500">
+      <Loader2 className="w-10 h-10 animate-spin text-blue-500 mb-4" />
+      <p className="text-sm font-medium animate-pulse">Đang tải dữ liệu...</p>
     </div>
   )
 }
 
 export default function App() {
   return (
-    <div style={{ minHeight: '100vh', background: '#0f172a', color: '#f8fafc' }}>
+    <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-blue-500/30">
       <Navbar />
-      <main style={{ padding: '20px' }}>
-        <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+      <main className="relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
               <Route path="/" element={<Builder />} />
@@ -177,6 +108,12 @@ export default function App() {
           </Suspense>
         </div>
       </main>
+
+      {/* Background Ambience */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-900/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-900/10 rounded-full blur-[120px]" />
+      </div>
     </div>
   )
 }
